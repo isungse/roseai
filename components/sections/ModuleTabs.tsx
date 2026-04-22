@@ -159,7 +159,10 @@ export function ModuleTabs({ modules }: ModuleTabsProps) {
           {t("liveDemo")} <span aria-hidden="true">→</span>
         </a>
 
-        <div
+        {/* Module preview placeholder — hidden until the demo HTML files
+            are linked in per module. When restoring, decide whether this
+            becomes an <iframe> loading the demo page or a static thumbnail. */}
+        {/* <div
           aria-hidden="true"
           className="mono relative mt-10 hidden aspect-[16/9] w-[44%] items-end justify-between border border-hair p-2.5 text-[10px] text-g500 lg:absolute lg:bottom-10 lg:right-10 lg:mt-0 lg:flex"
           style={{
@@ -170,7 +173,7 @@ export function ModuleTabs({ modules }: ModuleTabsProps) {
           <span className="absolute left-2.5 top-2.5 h-2 w-2 bg-brand" />
           <span>{t("previewLabel")}</span>
           <span>{MODULE_STATUS.previewSize}</span>
-        </div>
+        </div> */}
       </div>
     </div>
   );
