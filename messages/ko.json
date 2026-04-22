@@ -22,9 +22,17 @@
     "title": "ROSE-AI — Architecture of Intelligence",
     "description": "비즈니스의 본질을 설계하는 하이엔드 AI 솔루션. 인력 운영, 그룹웨어, 지식 관리, 게시판, 모바일 모니터링을 단일 아키텍처로 제공합니다."
   },
-  "scaffold": {
-    "badge": "PHASE 01 / SCAFFOLD",
-    "title": "Site scaffold is live.",
-    "body": "다국어 라우팅·디자인 토큰·폰트·레이아웃 쉘이 배치되었습니다. Hero, Modules, Philosophy, Evidence, Contact 섹션은 다음 단계에서 구현됩니다."
+  "hero": {
+    "sub": "비즈니스의 본질을 설계하는 하이엔드 AI 솔루션. 밀리초 단위로 시간을 측정하는 기업을 위해 만들어집니다.",
+    "cta": {
+      "cases": "VIEW CASE STUDIES",
+      "demo": "REQUEST DEMO"
+    },
+    "kpi": {
+      "deployed": "의료·산업 분야 엔터프라이즈 도입 현황.",
+      "modules": "현장에서 가동 중인 프로덕션 시스템 수.",
+      "uptime": "전 리전 12개월 SLA 평균치.",
+      "latency": "서울 엣지 기준 TTFB — p95."
+    }
   }
 }

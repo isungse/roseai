@@ -22,9 +22,17 @@
     "title": "ROSE-AI — Architecture of Intelligence",
     "description": "High-end AI solutions that redesign the essence of your business — engineered for the enterprises that measure time in milliseconds."
   },
-  "scaffold": {
-    "badge": "PHASE 01 / SCAFFOLD",
-    "title": "Site scaffold is live.",
-    "body": "Locale routing, design tokens, fonts, and the layout shell are in place. Hero, Modules, Philosophy, Evidence, and Contact sections will be built in the next phase."
+  "hero": {
+    "sub": "High-end AI solutions that redesign the essence of your business — engineered for the enterprises that measure time in milliseconds.",
+    "cta": {
+      "cases": "VIEW CASE STUDIES",
+      "demo": "REQUEST DEMO"
+    },
+    "kpi": {
+      "deployed": "Enterprise clients in medical & industrial sectors.",
+      "modules": "Production systems running in the field today.",
+      "uptime": "12-month SLA average across all regions.",
+      "latency": "TTFB measured from Seoul edge — p95."
+    }
   }
 }
