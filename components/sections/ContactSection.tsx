@@ -6,6 +6,7 @@ import { ContactForm } from "./ContactForm";
 
 export function ContactSection() {
   const t = useTranslations("contact");
+  const em = t("headingEm");
 
   return (
     <section
@@ -23,7 +24,13 @@ export function ContactSection() {
           >
             {t("headingLineOne")}
             <br />
-            {t("headingLineTwo")}
+            {t("headingLineTwoIntro")}{" "}
+            <span className="text-brand">{t("headingLineTwoAccent")}</span>
+            {em && (
+              <span className="mt-4 block font-bold leading-[1.1] tracking-[-0.02em] text-g500 text-[clamp(24px,3vw,40px)]">
+                {em}
+              </span>
+            )}
           </h2>
           <p className="mt-8 max-w-[44ch] text-[17px] leading-[1.55] text-g500">
             {t("sub")}

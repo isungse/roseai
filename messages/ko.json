@@ -57,8 +57,10 @@
     }
   },
   "contact": {
-    "headingLineOne": "당신의 시스템을",
-    "headingLineTwo": "다시 설계합니다.",
+    "headingLineOne": "Let's redesign",
+    "headingLineTwoIntro": "your",
+    "headingLineTwoAccent": "system.",
+    "headingEm": "당신의 시스템을 다시 설계합니다.",
     "sub": "ROSE-AI는 귀사의 비즈니스 본질을 분석하고, 가장 정밀한 AI 솔루션을 설계합니다. 먼저 대화를 시작하세요.",
     "form": {
       "labels": {

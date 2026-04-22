@@ -58,7 +58,9 @@
   },
   "contact": {
     "headingLineOne": "Let's redesign",
-    "headingLineTwo": "your system.",
+    "headingLineTwoIntro": "your",
+    "headingLineTwoAccent": "system.",
+    "headingEm": "",
     "sub": "ROSE-AI analyzes the essence of your business and designs the most precise AI solution. Start the conversation.",
     "form": {
       "labels": {
