@@ -26,12 +26,37 @@
     "sub": "High-end AI solutions that redesign the essence of your business — engineered for the enterprises that measure time in milliseconds.",
     "cta": {
       "demo": "REQUEST DEMO"
+    }
+  },
+  "modules": {
+    "headingMain": "Five systems.",
+    "headingEm": "One architecture.",
+    "liveDemo": "LIVE DEMO",
+    "previewLabel": "MODULE PREVIEW",
+    "workforcePlanner": {
+      "title": "Workforce Planner",
+      "em": "People Control Plane",
+      "desc": "Shift-level visibility across clinical and operational staff. Predicts short-handed windows, rebalances rosters, and surfaces the smallest possible intervention to restore coverage — typically before a manager notices."
     },
-    "kpi": {
-      "deployed": "Enterprise clients in medical & industrial sectors.",
-      "modules": "Production systems running in the field today.",
-      "uptime": "12-month SLA average across all regions.",
-      "latency": "TTFB measured from Seoul edge — p95."
+    "groupware": {
+      "title": "Groupware",
+      "em": "Seamless Collaboration & Approval",
+      "desc": "A single surface for approvals, documents, and team comms. Chains that used to cross five tools collapse into one timeline with deterministic SLAs and full audit trail."
+    },
+    "intranet": {
+      "title": "Intranet",
+      "em": "Internal Knowledge Management",
+      "desc": "A searchable, versioned knowledge layer for the organisation. Documents are chunked, embedded, and cross-linked — institutional memory that does not leave with the author."
+    },
+    "boardArchive": {
+      "title": "Board / Archive",
+      "em": "Text-dense Bulletin Systems",
+      "desc": "High-readability publishing for text-dense teams. Typography-first layouts with regulated hierarchy, strict columns, and a reader mode calibrated for 30-minute sessions."
+    },
+    "mobileHub": {
+      "title": "Mobile Hub",
+      "em": "Real-time Operations on the Go",
+      "desc": "A purpose-built mobile surface for floor managers and on-call engineers. Push-native alerts, one-thumb approvals, and an incident view that mirrors the control-room screen exactly."
     }
   }
 }

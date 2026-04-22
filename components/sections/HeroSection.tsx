@@ -1,7 +1,7 @@
 import { useTranslations } from "next-intl";
 
 import { SectionLabel } from "@/components/ui/SectionLabel";
-import { HERO_EYEBROW, HERO_KPI, HERO_META } from "@/lib/data/hero";
+import { HERO_EYEBROW, HERO_META } from "@/lib/data/hero";
 
 import { HeroDiagram } from "./HeroDiagram";
 import { HeroTimestamp } from "./HeroTimestamp";
@@ -17,7 +17,7 @@ export function HeroSection() {
     >
       <SectionLabel code="01 / HERO" />
 
-      <div className="mx-auto max-w-screen-xl px-6 pt-16 md:px-8 md:pt-20">
+      <div className="mx-auto max-w-screen-xl px-6 pb-20 pt-16 md:px-8 md:pb-28 md:pt-20">
         <div className="mb-10 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-g500">
           {[
             HERO_EYEBROW.seoul,
@@ -73,7 +73,7 @@ export function HeroSection() {
           </dl>
         </div>
 
-        <div className="mt-12 flex flex-wrap border-t border-ink lg:flex-nowrap">
+        <div className="mt-14 flex flex-wrap border-y border-ink md:mt-16 lg:flex-nowrap">
           <button
             type="button"
             className="mono cap group inline-flex items-center gap-6 bg-brand px-7 py-[18px] text-[13px] font-semibold tracking-[0.02em] text-paper transition-colors hover:bg-ink"
@@ -83,34 +83,6 @@ export function HeroSection() {
               →
             </span>
           </button>
-        </div>
-
-        <div
-          role="list"
-          className="grid grid-cols-2 border-b border-t border-ink md:grid-cols-4"
-        >
-          {HERO_KPI.map((cell, i) => (
-            <div
-              key={cell.tag}
-              role="listitem"
-              className={`relative px-6 pb-6 pt-7 ${
-                i > 0 ? "border-l border-hair md:[&:nth-child(3)]:border-l-0" : ""
-              } ${i >= 2 ? "border-t border-hair md:border-t-0" : ""}`}
-            >
-              <div className="mono flex items-center gap-2.5 text-[11px] font-semibold tracking-[0.04em] text-brand">
-                <span>{cell.tag}</span>
-              </div>
-              <div className="mt-[18px] font-display text-[44px] font-bold leading-none tracking-[-0.03em] tabular-nums">
-                {cell.num}{" "}
-                <small className="text-[20px] font-medium text-g500 tracking-normal">
-                  {cell.unit}
-                </small>
-              </div>
-              <div className="mt-2.5 text-xs text-g500">
-                {t(`kpi.${cell.i18nKey}`)}
-              </div>
-            </div>
-          ))}
         </div>
       </div>
     </section>
