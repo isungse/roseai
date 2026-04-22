@@ -46,6 +46,7 @@ public/                  # 정적 에셋
 - `interface`는 공개 객체 모양, `type`은 union/유틸리티.
 - Props는 컴포넌트 파일 상단에 `interface ComponentNameProps` 로 명시.
 - `import type` 을 사용해 런타임/타입 import 분리.
+- 필드 종류마다 렌더가 갈리는 데이터는 **discriminated union** 으로 모델링한다. 예: `CONTACT_FIELDS` 는 `kind: "input" | "textarea"` 로 분기되고, 폼 컴포넌트는 `switch (field.kind)` 로 narrow 한 뒤 각 브랜치에서 해당 필드만 접근한다. optional 필드 + 런타임 체크 조합을 쓰지 않는다 (`lib/data/contact.ts`, `components/sections/ContactForm.tsx` 참조).
 
 ## React / Next.js
 
@@ -75,6 +76,22 @@ public/                  # 정적 에셋
 | `TopBar` shell | Server. 내부 `LangToggle` 만 Client leaf |
 
 원칙: Server Component 가 데이터와 children 을 Client Component 에 props 로 내려준다. Client 안에서 다시 Server 를 import 하는 것은 불가능하므로, Client → Server 의존이 생기면 경계 설계가 잘못된 것이다.
+
+### 시간·난수 등 클라이언트-의존 값
+
+`new Date()`, `Math.random()`, `window.*` 처럼 서버·클라이언트 값이 달라질 수밖에 없는 값은 **`useSyncExternalStore` + 고정폭 placeholder** 패턴을 쓴다.
+
+- `getServerSnapshot` 은 플레이스홀더 문자열(예: `"——.——.—— · ——:—— KST"`) 을 반환해 SSR 출력과 첫 하이드레이션 결과를 일치시킨다.
+- `getClientSnapshot` 이 실제 값을 반환하며, 구독은 interval / event listener 로 notify.
+- `useState + useEffect` 로 초기값을 업데이트하는 구식 패턴은 금지 (hydration flash, setState-in-effect 린트 경고).
+- 래핑 요소에는 `suppressHydrationWarning` 을 붙여 의도된 불일치임을 명시.
+
+참고 구현: `components/sections/HeroTimestamp.tsx`.
+
+### 리스트 렌더의 key
+
+- 배열 인덱스를 key 로 쓰지 않는다. 의미 있는 식별자(`m.id`, `code` 등) 를 사용.
+- `null` 을 끼워 map 하는 sparse 패턴 대신, 요소가 고정 N개라면 sibling 으로 직접 나열한다 (예: Hero eyebrow 4-column meta). CSS pseudo (`before:content-['/'] first:before:content-none`) 로 구분자 처리.
 
 ## 스타일
 

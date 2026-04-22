@@ -22,6 +22,8 @@ WCAG 2.1 AA 기준. Lighthouse A11y ≥ 95. 한국어 사용자 환경도 함께
 - 장식 이미지: `alt=""`. 의미 있는 이미지: 내용을 기술하는 `alt`.
 - 동적 상태 변화는 `aria-live="polite"` (중요도 낮음) / `"assertive"` (오류).
 - `role` 은 시맨틱 태그로 충분하지 않을 때만. 남용하면 오히려 해롭다.
+- `aria-labelledby` / `aria-controls` / `aria-describedby` 는 **실제로 그 id 를 가진 요소가 DOM 에 존재해야** 작동한다. 탭 패턴에서 패널이 `aria-labelledby={`tab-${id}`}` 를 쓰면, 각 탭 버튼에 동일한 `id` 를 반드시 부여 (예: `ModuleTabs`).
+- 시각적 강조 용도의 `<em>` / `<strong>` 을 레이아웃/색상 목적으로 쓰지 않는다. 스크린리더가 강세로 읽어 의미가 왜곡된다. 색만 바꾸려면 `<span>` + 유틸리티 클래스.
 
 ## 색·대비
 

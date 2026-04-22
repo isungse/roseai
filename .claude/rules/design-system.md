@@ -43,8 +43,8 @@
 
 폰트 스택 — 모두 `app/[locale]/layout.tsx` 에서 통합 로드. CDN 링크/`<link rel="stylesheet">` 금지.
 
-- **Inter** — `next/font/google`. 본문·헤딩 기본. weights: 400/500/600/700/800.
-- **JetBrains Mono** — `next/font/google`. 모노스페이스 (인덱스 숫자, 메타 라인, 버튼 화살표). weights: 400/500/600.
+- **Inter** — `next/font/google`. 본문·헤딩 기본. **variable font — weight 배열을 지정하지 않는다**, `next/font` 가 전 축(100–900)을 로드한다.
+- **JetBrains Mono** — `next/font/google`. 모노스페이스 (인덱스 숫자, 메타 라인, 버튼 화살표). variable font, weight 배열 없음.
 - **Pretendard Variable** — `npm i pretendard` → `next/font/local` 로 variable woff2 로드. 한국어 본문 우선.
   - 경로: `node_modules/pretendard/dist/web/variable/woff2/PretendardVariable.woff2`
   - 프로젝트에서는 `public/fonts/` 로 복사하지 말고 로컬 import 로 번들링. 자체 호스팅으로 CLS·개인정보·오프라인 빌드 모두 해결.
@@ -81,6 +81,10 @@ Tailwind 기본 스케일 (4px grid) 만 사용. 섹션 세로 리듬은 다음 
 - 섹션 수직 패딩: `py-20 md:py-28 lg:py-32`
 - 컨테이너 가로 패딩: `px-6 md:px-8`
 - 최대 너비: `max-w-screen-xl` (1280px). 좁은 독해 영역은 `max-w-prose`.
+
+### Sticky TopBar 클리어런스
+
+`SectionLabel` 은 섹션 상단에 `top-6` 로 absolute 포지셔닝된다. Sticky TopBar 와 첫 페인트에서 겹치지 않게 하려면 섹션 상단 패딩을 **`pt-24 md:pt-32`** 이상으로 잡는다 (`pt-20` 은 겹침 발생). Hero 는 이 기준을 따른다.
 
 ## Radius / Shadow
 
