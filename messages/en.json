@@ -57,20 +57,24 @@
     }
   },
   "contact": {
-    "headingPrimary": "Let's redesign",
-    "headingIntro": "your",
-    "headingAccent": "system.",
-    "headingEm": "",
+    "headingLineOne": "Let's redesign",
+    "headingLineTwo": "your system.",
+    "sub": "ROSE-AI analyzes the essence of your business and designs the most precise AI solution. Start the conversation.",
     "form": {
-      "placeholders": {
-        "company": "e.g. ACME Holdings",
-        "email": "you@company.com",
-        "message": "Tell us which module, which team, which timeline."
+      "labels": {
+        "company": "COMPANY",
+        "email": "EMAIL",
+        "message": "MESSAGE"
       },
-      "consent": "I agree to the processing of this data per",
+      "placeholders": {
+        "company": "Enter your company name",
+        "email": "Enter your email address",
+        "message": "Enter your message"
+      },
+      "send": "SEND",
+      "cancel": "Cancel",
       "required": "Please fill in all required fields.",
       "invalidEmail": "Please enter a valid email address.",
-      "consentRequired": "Consent is required to proceed.",
       "success": "Thank you — we'll reach out within 24 hours.",
       "error": "Something went wrong. Please try again shortly."
     }
