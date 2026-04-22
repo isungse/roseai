@@ -1,7 +1,7 @@
 import { useTranslations } from "next-intl";
 
 import { SectionLabel } from "@/components/ui/SectionLabel";
-import { HERO_EYEBROW, HERO_META } from "@/lib/data/hero";
+import { HERO_EYEBROW } from "@/lib/data/hero";
 
 import { HeroDiagram } from "./HeroDiagram";
 import { HeroTimestamp } from "./HeroTimestamp";
@@ -59,18 +59,6 @@ export function HeroSection() {
           <p className="mt-2 pr-0 text-[17px] leading-[1.55] lg:col-span-7 lg:pr-10">
             {t("sub")}
           </p>
-
-          <dl className="mono mt-2 flex flex-col gap-3 text-xs lg:col-span-4 lg:col-start-9">
-            {HERO_META.map((row) => (
-              <div
-                key={row.label}
-                className="flex items-baseline justify-between border-b border-hair pb-1.5 text-g500"
-              >
-                <dt>{row.label}</dt>
-                <dd className="font-semibold text-ink">{row.value}</dd>
-              </div>
-            ))}
-          </dl>
         </div>
 
       </div>
