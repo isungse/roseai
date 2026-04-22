@@ -13,7 +13,7 @@ const EMPTY_FORM: FormState = { company: "", email: "", message: "" };
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const INPUT_BASE =
-  "w-full border-0 border-b border-paper/20 bg-transparent pb-3 pt-2 text-[17px] text-paper outline-none transition-colors placeholder:text-paper/40 focus:border-brand";
+  "w-full border-0 border-b border-hair bg-transparent pb-3 pt-2 text-[17px] text-ink outline-none transition-colors placeholder:text-[#bdbdbd] focus:border-brand";
 
 export function ContactForm() {
   const t = useTranslations("contact.form");
@@ -82,7 +82,7 @@ export function ContactForm() {
           <div key={field.name}>
             <label
               htmlFor={inputId}
-              className="mono cap block text-[11px] font-medium tracking-[0.04em] text-paper/60"
+              className="mono cap block text-[11px] font-medium tracking-[0.04em] text-g500"
             >
               {t(`labels.${field.name}`)}
             </label>
@@ -120,7 +120,7 @@ export function ContactForm() {
         <button
           type="submit"
           disabled={status === "sending"}
-          className="mono cap inline-flex items-center gap-4 bg-brand px-8 py-[18px] text-[13px] font-semibold tracking-[0.04em] text-paper transition-colors hover:bg-paper hover:text-ink disabled:cursor-not-allowed disabled:opacity-60"
+          className="mono cap inline-flex items-center gap-4 bg-brand px-8 py-[18px] text-[13px] font-semibold tracking-[0.04em] text-paper transition-colors hover:bg-ink disabled:cursor-not-allowed disabled:opacity-60"
         >
           <span>{t("send")}</span>
           <span aria-hidden="true" className="mono font-medium">
@@ -130,7 +130,7 @@ export function ContactForm() {
         <button
           type="button"
           onClick={handleCancel}
-          className="mono cap inline-flex items-center gap-4 border border-paper/30 px-8 py-[18px] text-[13px] font-semibold tracking-[0.04em] text-paper transition-colors hover:border-paper hover:bg-paper/10"
+          className="mono cap inline-flex items-center gap-4 border border-hair bg-paper px-8 py-[18px] text-[13px] font-semibold tracking-[0.04em] text-ink transition-colors hover:border-ink hover:bg-g50"
         >
           {t("cancel")}
         </button>
@@ -143,7 +143,7 @@ export function ContactForm() {
           aria-live={status === "error" ? "assertive" : "polite"}
           className={cn(
             "mt-1 text-sm",
-            status === "success" ? "text-paper" : "text-brand",
+            status === "success" ? "text-ink" : "text-brand",
           )}
         >
           {feedback}

@@ -11,7 +11,7 @@ export function ContactSection() {
     <section
       id="contact"
       aria-labelledby="contact-heading"
-      className="relative bg-ink text-paper"
+      className="relative bg-paper text-ink"
     >
       <SectionLabel code="03 / CONTACT" />
 
@@ -25,7 +25,7 @@ export function ContactSection() {
             <br />
             {t("headingLineTwo")}
           </h2>
-          <p className="mt-8 max-w-[44ch] text-[17px] leading-[1.55] text-paper/80">
+          <p className="mt-8 max-w-[44ch] text-[17px] leading-[1.55] text-g500">
             {t("sub")}
           </p>
         </div>
