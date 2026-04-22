@@ -1,0 +1,30 @@
+{
+  "common": {
+    "skipToContent": "Skip to content",
+    "siteName": "ROSE·AI"
+  },
+  "nav": {
+    "modules": "MODULES",
+    "philosophy": "PHILOSOPHY",
+    "contact": "CONTACT"
+  },
+  "footer": {
+    "copyright": "© 2026 ROSE-AI · ALL SYSTEMS NOMINAL",
+    "office": "SEOUL · KR",
+    "links": {
+      "modules": "MODULES",
+      "philosophy": "PHILOSOPHY",
+      "evidence": "EVIDENCE",
+      "contact": "CONTACT"
+    }
+  },
+  "meta": {
+    "title": "ROSE-AI — Architecture of Intelligence",
+    "description": "High-end AI solutions that redesign the essence of your business — engineered for the enterprises that measure time in milliseconds."
+  },
+  "scaffold": {
+    "badge": "PHASE 01 / SCAFFOLD",
+    "title": "Site scaffold is live.",
+    "body": "Locale routing, design tokens, fonts, and the layout shell are in place. Hero, Modules, Philosophy, Evidence, and Contact sections will be built in the next phase."
+  }
+}

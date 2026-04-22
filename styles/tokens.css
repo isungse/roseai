@@ -1,0 +1,13 @@
+:root {
+  --ink: #000000;
+  --paper: #ffffff;
+  --brand: #e03131;
+  --g50: #f4f4f4;
+  --g500: #737373;
+  --hair: #e5e5e5;
+
+  --ease-out-quint: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --dur-micro: 150ms;
+  --dur-std: 250ms;
+  --dur-layout: 400ms;
+}
