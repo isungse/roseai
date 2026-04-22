@@ -74,18 +74,6 @@ export function HeroSection() {
         </div>
 
         <div className="mt-12 flex flex-wrap border-t border-ink lg:flex-nowrap">
-          {/* VIEW CASE STUDIES — disabled by design decision 2026-04-22.
-              Keeping JSX + i18n key "hero.cta.cases" intact so the button
-              can be re-enabled without re-translating. */}
-          {/* <button
-            type="button"
-            className="mono cap group inline-flex items-center gap-6 border-r border-hair bg-paper px-7 py-[18px] text-[13px] font-semibold tracking-[0.02em] text-ink transition-colors hover:bg-ink hover:text-paper"
-          >
-            <span>{t("cta.cases")}</span>
-            <span className="mono font-medium transition-transform group-hover:translate-x-1">
-              →
-            </span>
-          </button> */}
           <button
             type="button"
             className="mono cap group inline-flex items-center gap-6 bg-brand px-7 py-[18px] text-[13px] font-semibold tracking-[0.02em] text-paper transition-colors hover:bg-ink"
