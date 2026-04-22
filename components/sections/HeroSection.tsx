@@ -73,17 +73,6 @@ export function HeroSection() {
           </dl>
         </div>
 
-        <div className="mt-14 flex flex-wrap border-y border-ink md:mt-16 lg:flex-nowrap">
-          <button
-            type="button"
-            className="mono cap group inline-flex items-center gap-6 bg-brand px-7 py-[18px] text-[13px] font-semibold tracking-[0.02em] text-paper transition-colors hover:bg-ink"
-          >
-            <span>{t("cta.demo")}</span>
-            <span className="mono font-medium transition-transform group-hover:translate-x-1">
-              →
-            </span>
-          </button>
-        </div>
       </div>
     </section>
   );
