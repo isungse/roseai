@@ -9,8 +9,6 @@ export function Footer() {
 
   const links = [
     { href: "#modules", label: t("links.modules") },
-    { href: "#philosophy", label: t("links.philosophy") },
-    { href: "#evidence", label: t("links.evidence") },
     { href: "#contact", label: t("links.contact") },
   ];
 

@@ -8,7 +8,6 @@ export function TopBar() {
 
   const items = [
     { href: "#modules", label: t("modules") },
-    { href: "#philosophy", label: t("philosophy") },
     { href: "#contact", label: t("contact") },
   ];
 
