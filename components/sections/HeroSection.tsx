@@ -12,26 +12,25 @@ export function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative border-b border-hair pt-20 md:pt-24"
+      className="relative border-b border-hair pt-24 md:pt-32"
       aria-labelledby="hero-headline"
     >
       <SectionLabel code="01 / HERO" />
 
       <div className="mx-auto max-w-screen-xl px-6 pb-20 pt-16 md:px-8 md:pb-28 md:pt-20">
         <div className="mb-10 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-g500">
-          {[
-            HERO_EYEBROW.seoul,
-            HERO_EYEBROW.est,
-            null,
-            HERO_EYEBROW.status,
-          ].map((item, i) => (
-            <span
-              key={i}
-              className="mono flex items-center gap-6 before:text-hair before:content-['/'] first:before:content-none"
-            >
-              {item ?? <HeroTimestamp />}
-            </span>
-          ))}
+          <span className="mono flex items-center gap-6 before:text-hair before:content-['/'] first:before:content-none">
+            {HERO_EYEBROW.seoul}
+          </span>
+          <span className="mono flex items-center gap-6 before:text-hair before:content-['/']">
+            {HERO_EYEBROW.est}
+          </span>
+          <span className="mono flex items-center gap-6 before:text-hair before:content-['/']">
+            <HeroTimestamp />
+          </span>
+          <span className="mono flex items-center gap-6 before:text-hair before:content-['/']">
+            {HERO_EYEBROW.status}
+          </span>
         </div>
 
         <div className="grid grid-cols-1 gap-x-6 gap-y-4 lg:grid-cols-12">

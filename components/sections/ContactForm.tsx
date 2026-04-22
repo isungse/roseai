@@ -10,7 +10,12 @@ type FormState = Record<ContactFieldName, string>;
 type Status = "idle" | "sending" | "success" | "error";
 
 const EMPTY_FORM: FormState = { company: "", email: "", message: "" };
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// RFC 5322 is vast; this is a pragmatic production-grade check:
+// local part allows common punctuation; domain requires at least one dot
+// and a 2+ char TLD; rejects leading/trailing/consecutive dots.
+const EMAIL_RE =
+  /^[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\.)+[A-Za-z]{2,}$/;
 
 const INPUT_BASE =
   "w-full border-0 border-b border-hair bg-transparent pb-3 pt-2 text-[17px] text-ink outline-none transition-colors placeholder:text-[#bdbdbd] focus:border-brand";
@@ -78,15 +83,19 @@ export function ContactForm() {
       {CONTACT_FIELDS.map((field) => {
         const inputId = `contact-${field.name}`;
         const value = form[field.name];
-        return (
-          <div key={field.name}>
-            <label
-              htmlFor={inputId}
-              className="mono cap block text-[11px] font-medium tracking-[0.04em] text-g500"
-            >
-              {t(`labels.${field.name}`)}
-            </label>
-            {field.type === "textarea" ? (
+        const labelNode = (
+          <label
+            htmlFor={inputId}
+            className="mono cap block text-[11px] font-medium tracking-[0.04em] text-g500"
+          >
+            {t(`labels.${field.name}`)}
+          </label>
+        );
+
+        if (field.kind === "textarea") {
+          return (
+            <div key={field.name}>
+              {labelNode}
               <textarea
                 id={inputId}
                 name={field.name}
@@ -97,21 +106,24 @@ export function ContactForm() {
                 className={cn(INPUT_BASE, "resize-none")}
                 required
               />
-            ) : (
-              <input
-                id={inputId}
-                name={field.name}
-                type={field.type}
-                value={value}
-                onChange={(e) => update(field.name, e.target.value)}
-                placeholder={t(`placeholders.${field.name}`)}
-                autoComplete={
-                  field.name === "email" ? "email" : "organization"
-                }
-                className={INPUT_BASE}
-                required
-              />
-            )}
+            </div>
+          );
+        }
+
+        return (
+          <div key={field.name}>
+            {labelNode}
+            <input
+              id={inputId}
+              name={field.name}
+              type={field.type}
+              value={value}
+              onChange={(e) => update(field.name, e.target.value)}
+              placeholder={t(`placeholders.${field.name}`)}
+              autoComplete={field.name === "email" ? "email" : "organization"}
+              className={INPUT_BASE}
+              required
+            />
           </div>
         );
       })}

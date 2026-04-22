@@ -1,11 +1,11 @@
 import { useTranslations } from "next-intl";
 
+import { env } from "@/lib/env";
+
 import { Logo } from "./Logo";
 
 export function Footer() {
   const t = useTranslations("footer");
-  const contactEmail =
-    process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "contact@roseai.co.kr";
 
   const links = [
     { href: "#modules", label: t("links.modules") },
@@ -29,10 +29,10 @@ export function Footer() {
           <span aria-hidden="true">·</span>
           <span>{t("office")}</span>
           <a
-            href={`mailto:${contactEmail}`}
+            href={`mailto:${env.contactEmail}`}
             className="transition-colors hover:text-ink"
           >
-            {contactEmail}
+            {env.contactEmail}
           </a>
         </div>
         <div className="text-left md:text-right">{t("copyright")}</div>

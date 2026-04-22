@@ -1,14 +1,13 @@
-@import "../styles/tokens.css";
 @import "tailwindcss";
 @source not "../.claude";
 
 @theme {
-  --color-ink: var(--ink);
-  --color-paper: var(--paper);
-  --color-brand: var(--brand);
-  --color-g50: var(--g50);
-  --color-g500: var(--g500);
-  --color-hair: var(--hair);
+  --color-ink: #000000;
+  --color-paper: #ffffff;
+  --color-brand: #e03131;
+  --color-g50: #f4f4f4;
+  --color-g500: #737373;
+  --color-hair: #e5e5e5;
 
   --font-sans: var(--font-pretendard), var(--font-inter), system-ui, sans-serif;
   --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
@@ -20,8 +19,8 @@
 
 html,
 body {
-  background: var(--paper);
-  color: var(--ink);
+  background: var(--color-paper);
+  color: var(--color-ink);
 }
 
 body {
@@ -44,7 +43,7 @@ body {
 }
 
 :focus-visible {
-  outline: 2px solid var(--brand);
+  outline: 2px solid var(--color-brand);
   outline-offset: 2px;
 }
 
@@ -63,12 +62,12 @@ body {
   position: absolute;
   left: 0;
   top: -40px;
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--color-ink);
+  color: var(--color-paper);
   padding: 8px 16px;
   font-size: 13px;
   z-index: 100;
-  transition: top var(--dur-micro) var(--ease-out-quint);
+  transition: top 150ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .skip-link:focus {

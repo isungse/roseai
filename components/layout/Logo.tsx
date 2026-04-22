@@ -28,7 +28,7 @@ export function Logo({ size = "md" }: LogoProps) {
       <span
         className={`font-extrabold leading-none tracking-[-0.02em] pl-3 ${word}`}
       >
-        ROSE<em className="not-italic text-brand">·AI</em>
+        ROSE<span className="text-brand">·AI</span>
       </span>
     </Link>
   );

@@ -6,7 +6,8 @@
 
 **단일 신뢰 소스**: `app/globals.css` 의 `@theme` 블록.
 - `tailwind.config.ts` 는 사용하지 않는다 (v4 기본 방식).
-- 원본 HTML 의 의미 보존을 위해 raw 값은 `styles/tokens.css` 의 `:root` 에 별도 선언하고, `@theme` 에서 이를 참조한다.
+- 색상 hex 와 폰트 스택을 `@theme` 에 직접 선언한다. 별도의 `styles/tokens.css` 를 두지 않는다 (DRY).
+- 인라인 스타일에서 토큰이 필요할 때는 Tailwind v4 가 자동 노출하는 `var(--color-ink)`, `var(--color-hair)` 등을 그대로 사용한다.
 - 결과: 컴포넌트는 `bg-brand`, `text-ink`, `border-hair` 같은 Tailwind 클래스만 사용. `bg-[var(...)]` 임의 사용 금지.
 
 ## 색상
@@ -26,16 +27,15 @@
 
 ```css
 /* app/globals.css */
-@import "../styles/tokens.css";
 @import "tailwindcss";
 
 @theme {
-  --color-ink: var(--ink);
-  --color-paper: var(--paper);
-  --color-brand: var(--brand);
-  --color-g50: var(--g50);
-  --color-g500: var(--g500);
-  --color-hair: var(--hair);
+  --color-ink: #000000;
+  --color-paper: #ffffff;
+  --color-brand: #e03131;
+  --color-g50: #f4f4f4;
+  --color-g500: #737373;
+  --color-hair: #e5e5e5;
 }
 ```
 

@@ -6,6 +6,10 @@ import { ContactForm } from "./ContactForm";
 
 export function ContactSection() {
   const t = useTranslations("contact");
+  // headingEm is a KO-only visual pairing under the English brand headline
+  // (matches the reference design). EN intentionally leaves the key empty
+  // so this block renders nothing on the /en page. The locale JSONs still
+  // share the same key tree per i18n.md.
   const em = t("headingEm");
 
   return (

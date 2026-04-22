@@ -30,7 +30,7 @@ export function LangToggle() {
         return (
           <span key={code} className="flex items-center">
             {i > 0 && (
-              <span aria-hidden="true" className="mx-0 h-3.5 w-px bg-hair" />
+              <span aria-hidden="true" className="mx-1 h-3.5 w-px bg-hair" />
             )}
             <button
               type="button"

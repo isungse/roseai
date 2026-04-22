@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 
 const KST_FORMATTER = new Intl.DateTimeFormat("en-US", {
   timeZone: "Asia/Seoul",
@@ -12,7 +12,7 @@ const KST_FORMATTER = new Intl.DateTimeFormat("en-US", {
   hour12: false,
 });
 
-function formatKst(d: Date) {
+function formatKst(d: Date): string {
   const parts = KST_FORMATTER.formatToParts(d).reduce<Record<string, string>>(
     (acc, p) => {
       if (p.type !== "literal") acc[p.type] = p.value;
@@ -23,14 +23,26 @@ function formatKst(d: Date) {
   return `${parts.month}.${parts.day}.${parts.year} · ${parts.hour}:${parts.minute} KST`;
 }
 
+const PLACEHOLDER = "——.——.—— · ——:—— KST";
+
+function subscribe(notify: () => void) {
+  const id = setInterval(notify, 60_000);
+  return () => clearInterval(id);
+}
+
+function getClientSnapshot(): string {
+  return formatKst(new Date());
+}
+
+function getServerSnapshot(): string {
+  return PLACEHOLDER;
+}
+
 export function HeroTimestamp() {
-  const [ts, setTs] = useState<string | null>(null);
-
-  useEffect(() => {
-    setTs(formatKst(new Date()));
-    const interval = setInterval(() => setTs(formatKst(new Date())), 60_000);
-    return () => clearInterval(interval);
-  }, []);
-
-  return <span suppressHydrationWarning>{ts ?? "— · —"}</span>;
+  const ts = useSyncExternalStore(
+    subscribe,
+    getClientSnapshot,
+    getServerSnapshot,
+  );
+  return <span suppressHydrationWarning>{ts}</span>;
 }

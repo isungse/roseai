@@ -1,7 +1,12 @@
-export const CONTACT_FIELDS = [
-  { name: "company", type: "text" },
-  { name: "email", type: "email" },
-  { name: "message", type: "textarea" },
+export type ContactField =
+  | { name: "company"; kind: "input"; type: "text" }
+  | { name: "email"; kind: "input"; type: "email" }
+  | { name: "message"; kind: "textarea" };
+
+export const CONTACT_FIELDS: readonly ContactField[] = [
+  { name: "company", kind: "input", type: "text" },
+  { name: "email", kind: "input", type: "email" },
+  { name: "message", kind: "textarea" },
 ] as const;
 
-export type ContactFieldName = (typeof CONTACT_FIELDS)[number]["name"];
+export type ContactFieldName = ContactField["name"];

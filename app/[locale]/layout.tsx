@@ -6,11 +6,10 @@ import { notFound } from "next/navigation";
 import { Footer } from "@/components/layout/Footer";
 import { TopBar } from "@/components/layout/TopBar";
 import { routing, type Locale } from "@/i18n/routing";
+import { env } from "@/lib/env";
 import { inter, jetbrainsMono, pretendard } from "@/lib/fonts";
 
 import "../globals.css";
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://roseai.co.kr";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -25,7 +24,7 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: "meta" });
 
   return {
-    metadataBase: new URL(SITE_URL),
+    metadataBase: new URL(env.siteUrl),
     title: {
       default: t("title"),
       template: "%s | ROSE-AI",

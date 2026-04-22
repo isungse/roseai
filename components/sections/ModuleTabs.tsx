@@ -13,15 +13,16 @@ interface ModuleTabsProps {
 export function ModuleTabs({ modules }: ModuleTabsProps) {
   const t = useTranslations("modules");
   const [activeId, setActiveId] = useState(modules[0].id);
-  const buttonsRef = useRef<(HTMLButtonElement | null)[]>([]);
+  const buttonsRef = useRef<Map<string, HTMLButtonElement>>(new Map());
 
   const active = modules.find((m) => m.id === activeId) ?? modules[0];
 
   function moveFocus(nextIndex: number) {
-    const target = buttonsRef.current[nextIndex];
+    const nextId = modules[nextIndex].id;
+    const target = buttonsRef.current.get(nextId);
     if (!target) return;
     target.focus();
-    setActiveId(modules[nextIndex].id);
+    setActiveId(nextId);
   }
 
   function handleKey(e: KeyboardEvent<HTMLButtonElement>, index: number) {
@@ -58,8 +59,10 @@ export function ModuleTabs({ modules }: ModuleTabsProps) {
           return (
             <button
               key={m.id}
+              id={`module-tab-${m.id}`}
               ref={(el) => {
-                buttonsRef.current[i] = el;
+                if (el) buttonsRef.current.set(m.id, el);
+                else buttonsRef.current.delete(m.id);
               }}
               role="tab"
               type="button"
@@ -167,7 +170,7 @@ export function ModuleTabs({ modules }: ModuleTabsProps) {
           className="mono relative mt-10 hidden aspect-[16/9] w-[44%] items-end justify-between border border-hair p-2.5 text-[10px] text-g500 lg:absolute lg:bottom-10 lg:right-10 lg:mt-0 lg:flex"
           style={{
             backgroundImage:
-              "repeating-linear-gradient(-45deg, var(--g50) 0 8px, transparent 8px 16px)",
+              "repeating-linear-gradient(-45deg, var(--color-g50) 0 8px, transparent 8px 16px)",
           }}
         >
           <span className="absolute left-2.5 top-2.5 h-2 w-2 bg-brand" />
