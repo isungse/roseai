@@ -27,10 +27,3 @@ export const MODULES = [
 ] as const;
 
 export type Module = (typeof MODULES)[number];
-
-export const MODULE_STATUS = {
-  statusLabel: "STATUS",
-  statusValue: "LIVE",
-  version: "v 3.2.1",
-  previewSize: "1920 × 1080",
-} as const;

@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 
 import { Footer } from "@/components/layout/Footer";
 import { TopBar } from "@/components/layout/TopBar";
+import { ContactDialogProvider } from "@/components/sections/ContactDialog";
 import { routing, type Locale } from "@/i18n/routing";
 import { env } from "@/lib/env";
 import { inter, jetbrainsMono, pretendard } from "@/lib/fonts";
@@ -76,12 +77,14 @@ export default async function LocaleLayout({
     >
       <body className="bg-paper text-ink antialiased">
         <NextIntlClientProvider>
-          <a href="#main" className="skip-link">
-            {t("skipToContent")}
-          </a>
-          <TopBar />
-          <main id="main">{children}</main>
-          <Footer />
+          <ContactDialogProvider>
+            <a href="#main" className="skip-link">
+              {t("skipToContent")}
+            </a>
+            <TopBar />
+            <main id="main">{children}</main>
+            <Footer />
+          </ContactDialogProvider>
         </NextIntlClientProvider>
       </body>
     </html>

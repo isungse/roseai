@@ -31,28 +31,28 @@
     "liveDemo": "LIVE DEMO",
     "previewLabel": "MODULE PREVIEW",
     "workforcePlanner": {
-      "title": "Workforce Planner",
-      "em": "인력 운영 관제 — People Control Plane",
+      "title": "통합 업무지원 포털",
+      "em": "부서 간 협업의 기준 — 원활한 업무 요청 및 프로세스 통합",
       "desc": "임상·운영 스태프의 시프트 단위 가시성을 제공합니다. 인력이 부족해질 구간을 예측하고 로스터를 재배치하며, 매니저가 인지하기 전에 가장 작은 개입으로 커버리지를 복원합니다."
     },
     "groupware": {
-      "title": "Groupware",
-      "em": "협업 및 결재 — Seamless Collaboration & Approval",
+      "title": "전략적 인사평가 시스템",
+      "em": "데이터 기반의 성과 측정 — 신속하고 객관적인 인사 평가 체계",
       "desc": "결재·문서·팀 커뮤니케이션을 하나의 표면으로. 다섯 개 도구를 넘나들던 결재 체인이 단일 타임라인으로 수렴하며, 결정론적 SLA와 완전한 감사 추적을 보장합니다."
     },
     "intranet": {
-      "title": "Intranet",
-      "em": "내부 지식 관리 — Internal Knowledge Management",
+      "title": "리얼타임 인력 관제",
+      "em": "현장 중심의 가동률 최적화 — 실시간 인력 배치 및 자격 현황 모니터링",
       "desc": "조직을 위한 검색 가능·버전 관리 지식 레이어. 문서는 청크 단위로 분할·임베딩되어 상호 연결되며, 작성자가 떠나도 남는 조직의 기억을 만듭니다."
     },
     "boardArchive": {
-      "title": "Board / Archive",
-      "em": "고가독성 게시판 — Text-dense Bulletin Systems",
+      "title": "커스텀 모바일 허브",
+      "em": "비즈니스 요구에 최적화된 설계 — 현장 밀착형 맞춤 모바일 솔루션 구현",
       "desc": "텍스트 밀도가 높은 팀을 위한 고가독성 퍼블리싱. 타이포그래피 중심 레이아웃, 규제된 위계, 엄격한 칼럼, 30분 세션에 맞춰 보정된 리더 모드."
     },
     "mobileHub": {
-      "title": "Mobile Hub",
-      "em": "실시간 모니터링 — Real-time Operations on the Go",
+      "title": "지능형 QPS 성과관리",
+      "em": "의료 질 지표의 시각화 — 복잡한 병원 QPS 지표를 한눈에 파악하는 대시보드",
       "desc": "플로어 매니저와 온콜 엔지니어를 위한 목적 특화 모바일 표면. 푸시 네이티브 알림, 한 손가락 결재, 컨트롤룸 화면을 그대로 반영하는 인시던트 뷰."
     }
   },
@@ -62,6 +62,8 @@
     "headingLineTwoAccent": "system.",
     "headingEm": "당신의 시스템을 다시 설계합니다.",
     "sub": "ROSE-AI는 귀사의 비즈니스 본질을 분석하고, 가장 정밀한 AI 솔루션을 설계합니다. 먼저 대화를 시작하세요.",
+    "dialogLabel": "문의",
+    "closeLabel": "닫기",
     "form": {
       "labels": {
         "company": "회사 / COMPANY",
