@@ -131,7 +131,7 @@ export function ModuleTabs({ modules }: ModuleTabsProps) {
           </em>
         </h3>
 
-        <p className="mt-6 max-w-[56ch] text-[15px] leading-[1.6]">
+        <p className="mt-6 max-w-[56ch] whitespace-pre-line text-[15px] leading-[1.6]">
           {t(`${active.i18nKey}.desc`)}
         </p>
 

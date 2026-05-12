@@ -26,34 +26,34 @@
     "sub": "High-end AI solutions that redesign the essence of your business — engineered for the enterprises that measure time in milliseconds."
   },
   "modules": {
-    "headingMain": "Five systems.",
-    "headingEm": "One architecture.",
+    "headingMain": "IN PRODUCTION.",
+    "headingEm": "",
     "liveDemo": "LIVE DEMO",
     "previewLabel": "MODULE PREVIEW",
-    "workforcePlanner": {
+    "serviceDesk": {
       "title": "Internal Service Desk",
       "em": "Cross-team Service Desk — Unified request flow and process integration",
-      "desc": "Shift-level visibility across clinical and operational staff. Predicts short-handed windows, rebalances rosters, and surfaces the smallest possible intervention to restore coverage — typically before a manager notices."
+      "desc": "Turn every department's work requests into structured data — enabling fast decisions and processing.\nReal-time dashboards visualize the status of each request, making cross-team workflows transparent and efficient."
     },
-    "groupware": {
+    "performance": {
       "title": "Performance Management",
       "em": "Data-driven Performance — Objective and efficient evaluation framework",
-      "desc": "A single surface for approvals, documents, and team comms. Chains that used to cross five tools collapse into one timeline with deterministic SLAs and full audit trail."
+      "desc": "A 360-degree evaluation across peers, team members, leads, and executives, with a dedicated manager dashboard.\nThe full pipeline — from submission to participant and department management — is automated, and Excel data export enables insightful post-cycle analysis."
     },
-    "intranet": {
+    "workforceMonitor": {
       "title": "Real-time Workforce Monitor",
       "em": "On-site Utilization — Real-time roster and credential monitoring",
-      "desc": "A searchable, versioned knowledge layer for the organisation. Documents are chunked, embedded, and cross-linked — institutional memory that does not leave with the author."
+      "desc": "Real-time monitoring of on-site staff deployment and credential status to optimize operational efficiency.\nStructured management and sharing of organizational knowledge assets."
     },
-    "boardArchive": {
-      "title": "Custom Mobile Hub",
+    "mobileSolution": {
+      "title": "Custom Mobile Solution",
       "em": "Business-tailored Design — Field-grade custom mobile delivery",
-      "desc": "High-readability publishing for text-dense teams. Typography-first layouts with regulated hierarchy, strict columns, and a reader mode calibrated for 30-minute sessions."
+      "desc": "Combines enterprise-only community with business-specific features to build a mobile environment that drives engagement.\nModern, minimal UI/UX design transforms the user experience and maximizes work convenience."
     },
-    "mobileHub": {
-      "title": "Hospital Quality Indicators",
+    "hospitalQps": {
+      "title": "Hospital QPS Management",
       "em": "Clinical Quality Visualization — Hospital QPS at a glance",
-      "desc": "A purpose-built mobile surface for floor managers and on-call engineers. Push-native alerts, one-thumb approvals, and an incident view that mirrors the control-room screen exactly."
+      "desc": "Real-time tracking and observation of hospital accreditation indicators, with data visualization for intuitive performance management.\nDramatically reduces administrative burden on indicator owners, easing accreditation-prep workload and improving management efficiency."
     }
   },
   "contact": {

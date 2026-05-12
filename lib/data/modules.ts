@@ -1,28 +1,28 @@
 export const MODULES = [
   {
     id: "01",
-    i18nKey: "workforcePlanner",
-    stack: ["NEXT.JS 15", "POSTGRES", "REDIS", "PYTHON · PROPHET", "WEBSOCKET"],
+    i18nKey: "serviceDesk",
+    stack: ["NEXT.JS 15", "NESTJS", "POSTGRES", "REDIS", "WEBSOCKET"],
   },
   {
     id: "02",
-    i18nKey: "groupware",
-    stack: ["REACT 19", "NESTJS", "POSTGRES", "ELASTICSEARCH", "OIDC · SAML"],
+    i18nKey: "performance",
+    stack: ["NEXT.JS 15", "POSTGRES", "REDIS", "BULL · QUEUE", "EXCEL · SHEETJS"],
   },
   {
     id: "03",
-    i18nKey: "intranet",
-    stack: ["NEXT.JS 15", "PGVECTOR", "OPENSEARCH", "S3 · COMPATIBLE", "SCIM"],
+    i18nKey: "workforceMonitor",
+    stack: ["NEXT.JS 15", "WEBSOCKET", "POSTGRES", "TIMESCALE", "REDIS"],
   },
   {
     id: "04",
-    i18nKey: "boardArchive",
-    stack: ["NEXT.JS 15", "MDX · PIPELINE", "POSTGRES", "ALGOLIA", "WEBSUB"],
+    i18nKey: "mobileSolution",
+    stack: ["REACT NATIVE", "EXPO 51", "NESTJS", "POSTGRES", "APNS · FCM"],
   },
   {
     id: "05",
-    i18nKey: "mobileHub",
-    stack: ["REACT NATIVE", "EXPO 51", "WEBSOCKET", "APNS · FCM", "BIOMETRIC"],
+    i18nKey: "hospitalQps",
+    stack: ["NEXT.JS 15", "POSTGRES", "TIMESCALE", "RECHARTS", "FHIR · HL7"],
   },
 ] as const;
 

@@ -51,6 +51,14 @@ body {
   outline-offset: 2px;
 }
 
+/* Underline-style form fields carry their own focus signal via
+   `focus:border-brand` on the bottom border; the global outline ring
+   above is redundant and creates a harsh rectangle around them. */
+input:focus-visible,
+textarea:focus-visible {
+  outline: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

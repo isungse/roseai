@@ -14,7 +14,7 @@ export function ModulesSection() {
       aria-labelledby="modules-heading"
       className="relative border-b border-hair"
     >
-      <SectionLabel code="03 / MODULES" />
+      <SectionLabel code="02 / PRODUCTION" />
 
       <div className="mx-auto max-w-screen-xl px-6 pb-24 pt-24 md:px-8 md:pb-32 md:pt-32">
         <h2

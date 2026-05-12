@@ -14,7 +14,8 @@ WCAG 2.1 AA 기준. Lighthouse A11y ≥ 95. 한국어 사용자 환경도 함께
 - 모든 인터랙티브 요소는 Tab으로 접근, Enter/Space 로 활성화 가능해야 한다.
 - 포커스 순서가 시각적 순서와 일치해야 한다.
 - 포커스 링은 절대 제거하지 않는다. 재디자인은 `:focus-visible` 에 커스텀 스타일 적용.
-- 모달/드로어는 포커스 트랩 + ESC 로 닫기 + 열기 전 포커스 위치 복원.
+- **예외 — 자체 포커스 신호를 가진 underline-style 입력**: `border-b border-hair → focus:border-brand` 처럼 보더 색 변경이 명확한 포커스 인디케이터인 경우, 전역 outline 링은 시각 부조화를 일으킨다. `input:focus-visible, textarea:focus-visible { outline: none }` 로 outline 만 제거하고 보더 색 변경에 포커스 신호 역할을 위임 (WCAG 충족). 버튼·링크 등 다른 요소의 전역 outline 은 유지.
+- 모달/드로어는 포커스 트랩 + ESC 로 닫기 + 열기 전 포커스 위치 복원. (구현 패턴은 `code-style.md` 의 Modal/Dialog 패턴 참조.)
 
 ## 스크린리더
 
