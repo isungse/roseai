@@ -10,7 +10,11 @@
   --color-hair: #e5e5e5;
 
   --font-sans: var(--font-pretendard), var(--font-inter), system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+  /* JetBrains Mono lacks Korean glyphs; Pretendard fallback catches Korean
+     characters in mono labels/buttons (e.g. 전송, 취소) so they don't drop
+     to the OS default (굴림체 on Korean Windows). */
+  --font-mono: var(--font-jetbrains-mono), var(--font-pretendard),
+    ui-monospace, monospace;
   --font-display: var(--font-inter), var(--font-pretendard), sans-serif;
 
   --default-transition-duration: 250ms;
@@ -45,6 +49,14 @@ body {
 :focus-visible {
   outline: 2px solid var(--color-brand);
   outline-offset: 2px;
+}
+
+/* Underline-style form fields carry their own focus signal via
+   `focus:border-brand` on the bottom border; the global outline ring
+   above is redundant and creates a harsh rectangle around them. */
+input:focus-visible,
+textarea:focus-visible {
+  outline: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

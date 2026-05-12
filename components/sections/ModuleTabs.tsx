@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import { useRef, useState, type KeyboardEvent } from "react";
 
-import { MODULE_STATUS, type Module } from "@/lib/data/modules";
+import { type Module } from "@/lib/data/modules";
 import { cn } from "@/lib/utils";
 
 interface ModuleTabsProps {
@@ -90,8 +90,8 @@ export function ModuleTabs({ modules }: ModuleTabsProps) {
                 </span>
                 <span
                   className={cn(
-                    "mt-0.5 block truncate text-xs",
-                    isActive ? "text-paper/60" : "text-g500",
+                    "mt-1 block text-[13px] leading-[1.4] line-clamp-2",
+                    isActive ? "text-paper/75" : "text-g500",
                   )}
                 >
                   {t(`${m.i18nKey}.em`)}
@@ -117,15 +117,6 @@ export function ModuleTabs({ modules }: ModuleTabsProps) {
         aria-labelledby={`module-tab-${active.id}`}
         className="relative min-h-[440px] p-8 md:p-10"
       >
-        <div className="mono absolute right-8 top-8 text-right text-[11px] text-g500 md:right-10 md:top-10">
-          <div>FIG. 02.{active.id}</div>
-          <div className="mt-1">
-            {MODULE_STATUS.statusLabel} ·{" "}
-            <span className="text-brand">{MODULE_STATUS.statusValue}</span>
-          </div>
-          <div className="mt-1">{MODULE_STATUS.version}</div>
-        </div>
-
         <div
           aria-hidden="true"
           className="mono text-[64px] font-semibold leading-none tracking-[-0.02em] text-brand md:text-[72px]"
@@ -135,12 +126,12 @@ export function ModuleTabs({ modules }: ModuleTabsProps) {
 
         <h3 className="mt-6 font-display text-[32px] font-bold leading-[1.05] tracking-[-0.025em] md:text-[40px]">
           {t(`${active.i18nKey}.title`)}
-          <em className="mt-2 block text-[18px] font-semibold not-italic tracking-[-0.01em] text-g500 md:text-[20px]">
+          <em className="mt-3 block text-[20px] font-semibold not-italic leading-[1.4] tracking-[-0.01em] text-g500 md:text-[24px]">
             {t(`${active.i18nKey}.em`)}
           </em>
         </h3>
 
-        <p className="mt-6 max-w-[56ch] text-[15px] leading-[1.6]">
+        <p className="mt-6 max-w-[56ch] whitespace-pre-line text-[15px] leading-[1.6]">
           {t(`${active.i18nKey}.desc`)}
         </p>
 

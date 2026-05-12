@@ -74,6 +74,8 @@ public/                  # 정적 에셋
 | `GridOverlay` + `G` 키 토글 | Client — keydown 리스너 |
 | `LangToggle` | Client — `usePathname` + `useRouter` 로 로케일 스위치 |
 | `TopBar` shell | Server. 내부 `LangToggle` 만 Client leaf |
+| `ContactDialogProvider` + `DialogShell` | Client — `useState<isOpen>`, body scroll lock, native `dialog.showModal()` 호출 |
+| `ContactTrigger` | Client leaf — `useContactDialog().open` 을 `onClick` 에 바인딩 |
 
 원칙: Server Component 가 데이터와 children 을 Client Component 에 props 로 내려준다. Client 안에서 다시 Server 를 import 하는 것은 불가능하므로, Client → Server 의존이 생기면 경계 설계가 잘못된 것이다.
 
@@ -92,6 +94,25 @@ public/                  # 정적 에셋
 
 - 배열 인덱스를 key 로 쓰지 않는다. 의미 있는 식별자(`m.id`, `code` 등) 를 사용.
 - `null` 을 끼워 map 하는 sparse 패턴 대신, 요소가 고정 N개라면 sibling 으로 직접 나열한다 (예: Hero eyebrow 4-column meta). CSS pseudo (`before:content-['/'] first:before:content-none`) 로 구분자 처리.
+
+### Modal/Dialog 패턴
+
+네이티브 `<dialog>` + React Context 조합으로 구성한다. backdrop·focus trap·ESC·role 을 직접 구현하지 않는다.
+
+구조 (예: `ContactDialog.tsx`):
+- `XxxDialogProvider` — Client. `useState<isOpen>`, `open()`, `close()` 를 컨텍스트로 노출. 자식에 `<DialogShell />` 을 `isOpen` 일 때만 마운트.
+- `useXxxDialog()` 훅 — `open` 함수 반환. Provider 밖에서 호출 시 throw 해 사용 경계를 강제.
+- `XxxTrigger` — Client leaf. `useXxxDialog().open` 을 `onClick` 에 바인딩한 `<button>`. 여러 위치(TopBar / Footer / hero CTA)가 같은 다이얼로그를 열어야 하면 트리거만 여러 개 두고 Provider 는 하나로 유지.
+- `DialogShell` — `<dialog ref>` 에 `useEffect` 로 `dialog.showModal()` 호출, cleanup 에서 `document.body.style.overflow` 복원.
+
+핵심 구현 포인트:
+- **중앙 정렬**: 네이티브 `<dialog>` 의 UA 스타일(`margin: auto + inset: 0`) 을 Tailwind v4 preflight 가 `margin: 0` 으로 깨버린다. dialog className 에 **`m-auto` 명시 필수**.
+- **backdrop 클릭 닫기**: `onClick={e => { if (e.target === ref.current) onClose() }}`. event target 이 dialog 요소 자신이면 backdrop 클릭.
+- **ESC 닫기**: 네이티브가 자동. React 측은 `onClose={onClose}` 로 close 이벤트만 받아 `isOpen` 동기화.
+- **focus trap / `aria-modal` / `role=dialog`**: `showModal()` 호출 시 브라우저가 자동 부여 — 따로 안 붙인다.
+- **닫기 버튼 aria-label**: 다이얼로그 안 `×` 버튼은 i18n 키(예: `closeLabel`) 로 KO "닫기" / EN "Close".
+
+참고 구현: `components/sections/ContactDialog.tsx` + `ContactTrigger.tsx`.
 
 ## 스타일
 

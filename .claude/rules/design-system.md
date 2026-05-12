@@ -10,6 +10,17 @@
 - 인라인 스타일에서 토큰이 필요할 때는 Tailwind v4 가 자동 노출하는 `var(--color-ink)`, `var(--color-hair)` 등을 그대로 사용한다.
 - 결과: 컴포넌트는 `bg-brand`, `text-ink`, `border-hair` 같은 Tailwind 클래스만 사용. `bg-[var(...)]` 임의 사용 금지.
 
+### `globals.css` 변경 시 캐시·서버 재기동
+
+`app/globals.css` 의 **어떤 변경**도 Turbopack HMR 로 즉시 반영되지 않는다 — `@theme` 토큰뿐 아니라 **신규 CSS 룰 추가**도 동일. 변경 후:
+
+1. dev 서버 재기동.
+2. 그래도 새 룰이 브라우저 stylesheet 에 없으면 (`document.styleSheets` 로 확인) `.next/` 디렉토리 삭제 후 재기동.
+
+이유: Tailwind v4 의 `@import "tailwindcss"` 가 빌드 시점에 CSS 를 한 번 컴파일하고, Turbopack 의 컴포넌트 HMR 은 `className` 변경만 반영. `globals.css` 룰 추가는 빌드 출력에 포함되어 재컴파일이 필요하며 캐시가 옛 컴파일을 잡고 있을 수 있다.
+
+증상 진단: 새 selector 가 적용되지 않을 때 — DOM 의 `getComputedStyle` 로는 적용 안 됨이 확인되지만, 파일은 정확히 저장된 상태. 이때 위 절차로 해결.
+
 ## 색상
 
 원본 ROSE-AI 랜딩의 Swiss minimalist 팔레트를 그대로 이관. 다크모드는 차기 마일스톤.
