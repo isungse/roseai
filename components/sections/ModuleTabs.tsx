@@ -66,7 +66,7 @@ export function ModuleTabs({ modules }: ModuleTabsProps) {
               }}
               role="tab"
               type="button"
-              aria-selected={isActive}
+              aria-selected={isActive ? "true" : "false"}
               aria-controls="module-panel"
               tabIndex={isActive ? 0 : -1}
               onClick={() => setActiveId(m.id)}

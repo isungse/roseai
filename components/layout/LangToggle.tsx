@@ -36,7 +36,7 @@ export function LangToggle() {
               type="button"
               disabled={isPending}
               onClick={() => switchTo(code)}
-              aria-pressed={on}
+              aria-pressed={on ? "true" : "false"}
               className={`px-2.5 py-1.5 font-medium transition-colors ${
                 on ? "text-ink" : "text-g500 hover:text-ink"
               }`}
