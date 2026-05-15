@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useId, useState, type FormEvent } from "react";
 
 import { CONTACT_FIELDS, type ContactFieldName } from "@/lib/data/contact";
@@ -22,6 +22,7 @@ const INPUT_BASE =
 
 export function ContactForm() {
   const t = useTranslations("contact.form");
+  const locale = useLocale();
   const [form, setForm] = useState<FormState>(EMPTY_FORM);
   const [status, setStatus] = useState<Status>("idle");
   const [feedback, setFeedback] = useState<string>("");
@@ -63,7 +64,17 @@ export function ContactForm() {
     try {
       setStatus("sending");
       setFeedback("");
-      await new Promise((r) => setTimeout(r, 500));
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          company: form.company.trim(),
+          email: form.email.trim(),
+          message: form.message.trim(),
+          locale,
+        }),
+      });
+      if (!res.ok) throw new Error("submit_failed");
       setStatus("success");
       setFeedback(t("success"));
       setForm(EMPTY_FORM);
