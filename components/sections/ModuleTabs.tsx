@@ -146,12 +146,16 @@ export function ModuleTabs({ modules }: ModuleTabsProps) {
           ))}
         </div>
 
-        <a
-          href="#"
-          className="mono cap mt-9 inline-flex items-center gap-3 border-b border-ink pb-1.5 text-xs font-semibold tracking-[0.04em] transition-colors hover:border-brand hover:text-brand"
-        >
-          {t("liveDemo")} <span aria-hidden="true">→</span>
-        </a>
+        {"demoHref" in active && active.demoHref ? (
+          <a
+            href={active.demoHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mono cap mt-9 inline-flex items-center gap-3 border-b border-ink pb-1.5 text-xs font-semibold tracking-[0.04em] transition-colors hover:border-brand hover:text-brand"
+          >
+            {t("liveDemo")} <span aria-hidden="true">→</span>
+          </a>
+        ) : null}
 
         {/* Module preview placeholder — hidden until the demo HTML files
             are linked in per module. When restoring, decide whether this

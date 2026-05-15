@@ -3,6 +3,7 @@ export const MODULES = [
     id: "01",
     i18nKey: "serviceDesk",
     stack: ["NEXT.JS 15", "NESTJS", "POSTGRES", "REDIS", "WEBSOCKET"],
+    demoHref: "/demos/service-desk/index.html",
   },
   {
     id: "02",
