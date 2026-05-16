@@ -3,20 +3,8 @@
     "skipToContent": "본문 바로가기",
     "siteName": "ROSE·AI"
   },
-  "nav": {
-    "modules": "MODULES",
-    "philosophy": "PHILOSOPHY",
-    "contact": "CONTACT"
-  },
   "footer": {
-    "copyright": "© 2026 ROSE-AI · ALL SYSTEMS NOMINAL",
-    "office": "SEOUL · KR",
-    "links": {
-      "modules": "MODULES",
-      "philosophy": "PHILOSOPHY",
-      "evidence": "EVIDENCE",
-      "contact": "CONTACT"
-    }
+    "copyright": "© 2026 ROSE-AI · ALL SYSTEMS NOMINAL"
   },
   "meta": {
     "title": "ROSE-AI — Architecture of Intelligence",
@@ -61,7 +49,8 @@
     "headingLineTwoIntro": "your",
     "headingLineTwoAccent": "system.",
     "headingEm": "당신의 시스템을 다시 설계합니다.",
-    "sub": "ROSE-AI는 귀사의 비즈니스 본질을 분석하고, 가장 정밀한 AI 솔루션을 설계합니다. 먼저 대화를 시작하세요.",
+    "sub": "막대한 구축 비용 대신, 귀사만을 위한 합리적인 맞춤형 솔루션을 만나보세요.",
+    "subDetail": "ROSE-AI가 비즈니스를 정밀 분석하여 최적의 시스템을 설계합니다. 지금 대화를 시작하세요.",
     "dialogLabel": "문의",
     "closeLabel": "닫기",
     "form": {

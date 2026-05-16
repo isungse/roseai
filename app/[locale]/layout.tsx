@@ -75,15 +75,33 @@ export default async function LocaleLayout({
       lang={locale}
       className={`${pretendard.variable} ${inter.variable} ${jetbrainsMono.variable}`}
     >
-      <body className="bg-paper text-ink antialiased">
+      <body className="text-ink antialiased">
         <NextIntlClientProvider>
           <ContactDialogProvider>
             <a href="#main" className="skip-link">
               {t("skipToContent")}
             </a>
-            <TopBar />
-            <main id="main">{children}</main>
-            <Footer />
+            {/* Page shell — Naver-style fixed-width column floating on the g50
+                backdrop. `my-10 md:my-16` (40 / 64px) lifts the shell off the
+                viewport top and bottom for a "hotel rulebook" — generous
+                breathing room above and below a contained card; `border` (all
+                four sides) closes the box.
+
+                The sticky TopBar uses `top-0` (NOT the shell margin). The
+                floating-card look is visible only at scroll=0; once the user
+                scrolls, the bar pins to viewport top and section content scrolls
+                fully underneath. Using `top-10 md:top-16` (matching shell margin)
+                creates a 40-64px gap above the bar through which section
+                content leaks visibly — the bar appears to float mid-page with
+                content above AND below it. `top-0` eliminates that gap.
+
+                Inner sections no longer set their own max-w-screen-xl — the
+                shell is the single source of width. */}
+            <div className="mx-auto my-10 max-w-[1200px] border border-hair bg-paper md:my-16">
+              <TopBar />
+              <main id="main">{children}</main>
+              <Footer />
+            </div>
           </ContactDialogProvider>
         </NextIntlClientProvider>
       </body>

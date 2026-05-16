@@ -16,10 +16,10 @@ export function ModulesSection() {
     >
       <SectionLabel code="02 / PRODUCTION" />
 
-      <div className="mx-auto max-w-screen-xl px-6 pb-24 pt-24 md:px-8 md:pb-32 md:pt-32">
+      <div className="px-7 pb-16 pt-16 md:px-10 md:pb-20 md:pt-20">
         <h2
           id="modules-heading"
-          className="mb-12 font-display text-[clamp(32px,4.2vw,56px)] font-bold leading-[1.05] tracking-[-0.02em]"
+          className="mb-10 font-display text-[clamp(28px,3.6vw,48px)] font-bold leading-[1.05] tracking-[-0.02em]"
         >
           {t("headingMain")}{" "}
           <em className="font-bold not-italic text-g500">{t("headingEm")}</em>

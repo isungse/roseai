@@ -3,20 +3,8 @@
     "skipToContent": "Skip to content",
     "siteName": "ROSE·AI"
   },
-  "nav": {
-    "modules": "MODULES",
-    "philosophy": "PHILOSOPHY",
-    "contact": "CONTACT"
-  },
   "footer": {
-    "copyright": "© 2026 ROSE-AI · ALL SYSTEMS NOMINAL",
-    "office": "SEOUL · KR",
-    "links": {
-      "modules": "MODULES",
-      "philosophy": "PHILOSOPHY",
-      "evidence": "EVIDENCE",
-      "contact": "CONTACT"
-    }
+    "copyright": "© 2026 ROSE-AI · ALL SYSTEMS NOMINAL"
   },
   "meta": {
     "title": "ROSE-AI — Architecture of Intelligence",
@@ -61,7 +49,8 @@
     "headingLineTwoIntro": "your",
     "headingLineTwoAccent": "system.",
     "headingEm": "",
-    "sub": "ROSE-AI analyzes the essence of your business and designs the most precise AI solution. Start the conversation.",
+    "sub": "Skip the massive build cost — meet a custom solution tailored to your business.",
+    "subDetail": "ROSE-AI analyzes your operations in depth and designs the optimal system. Start the conversation.",
     "dialogLabel": "Inquiry",
     "closeLabel": "Close",
     "form": {

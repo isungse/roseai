@@ -72,7 +72,7 @@ export function ModuleTabs({ modules }: ModuleTabsProps) {
               onClick={() => setActiveId(m.id)}
               onKeyDown={(e) => handleKey(e, i)}
               className={cn(
-                "grid grid-cols-[48px_1fr_auto] items-center gap-3 border-b border-hair px-5 py-5 text-left transition-colors last:border-b-0",
+                "grid grid-cols-[40px_1fr_auto] items-center gap-3 border-b border-hair px-4 py-4 text-left transition-colors last:border-b-0",
                 isActive ? "bg-ink text-paper" : "bg-paper hover:bg-g50",
               )}
             >
@@ -115,27 +115,27 @@ export function ModuleTabs({ modules }: ModuleTabsProps) {
         id="module-panel"
         role="tabpanel"
         aria-labelledby={`module-tab-${active.id}`}
-        className="relative min-h-[440px] p-8 md:p-10"
+        className="relative min-h-[400px] p-7 md:p-9"
       >
         <div
           aria-hidden="true"
-          className="mono text-[64px] font-semibold leading-none tracking-[-0.02em] text-brand md:text-[72px]"
+          className="mono text-[56px] font-semibold leading-none tracking-[-0.02em] text-brand md:text-[64px]"
         >
           {active.id}
         </div>
 
-        <h3 className="mt-6 font-display text-[32px] font-bold leading-[1.05] tracking-[-0.025em] md:text-[40px]">
+        <h3 className="mt-5 font-display text-[28px] font-bold leading-[1.05] tracking-[-0.025em] md:text-[36px]">
           {t(`${active.i18nKey}.title`)}
-          <em className="mt-3 block text-[20px] font-semibold not-italic leading-[1.4] tracking-[-0.01em] text-g500 md:text-[24px]">
+          <em className="mt-2.5 block text-[18px] font-semibold not-italic leading-[1.4] tracking-[-0.01em] text-g500 md:text-[22px]">
             {t(`${active.i18nKey}.em`)}
           </em>
         </h3>
 
-        <p className="mt-6 max-w-[56ch] whitespace-pre-line text-[15px] leading-[1.6]">
+        <p className="mt-5 max-w-[56ch] whitespace-pre-line text-[15px] leading-[1.6]">
           {t(`${active.i18nKey}.desc`)}
         </p>
 
-        <div className="mt-7 flex flex-wrap">
+        <div className="mt-6 flex flex-wrap">
           {active.stack.map((s) => (
             <span
               key={s}
@@ -151,7 +151,7 @@ export function ModuleTabs({ modules }: ModuleTabsProps) {
             href={active.demoHref}
             target="_blank"
             rel="noopener noreferrer"
-            className="mono cap mt-9 inline-flex items-center gap-3 border-b border-ink pb-1.5 text-xs font-semibold tracking-[0.04em] transition-colors hover:border-brand hover:text-brand"
+            className="mono cap mt-8 inline-flex items-center gap-3 border-b border-ink pb-1.5 text-xs font-semibold tracking-[0.04em] transition-colors hover:border-brand hover:text-brand"
           >
             {t("liveDemo")} <span aria-hidden="true">→</span>
           </a>

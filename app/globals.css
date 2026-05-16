@@ -23,7 +23,10 @@
 
 html,
 body {
-  background: var(--color-paper);
+  /* Outer canvas behind the centered shell — Naver-style fixed-width layout
+     puts a paper (#FFF) shell on top of an off-white (g50) backdrop so the
+     shell's hairline border-x reads as a visible page edge. */
+  background: var(--color-g50);
   color: var(--color-ink);
 }
 
