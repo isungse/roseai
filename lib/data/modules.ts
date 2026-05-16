@@ -9,11 +9,13 @@ export const MODULES = [
     id: "02",
     i18nKey: "performance",
     stack: ["NEXT.JS 15", "POSTGRES", "REDIS", "BULL · QUEUE", "EXCEL · SHEETJS"],
+    demoHref: "/demos/performance/index.html",
   },
   {
     id: "03",
     i18nKey: "workforceMonitor",
     stack: ["NEXT.JS 15", "WEBSOCKET", "POSTGRES", "TIMESCALE", "REDIS"],
+    demoHref: "/demos/workforce-monitor/index.html",
   },
   {
     id: "04",
