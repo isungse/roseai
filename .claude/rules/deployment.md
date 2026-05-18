@@ -19,9 +19,7 @@ Vercel Pro 배포. 도메인 `roseai.co.kr` (+ `www.roseai.co.kr` → apex 리�
 | 키                                     | 범위         | 용도                                                                                                 |
 | -------------------------------------- | ------------ | ---------------------------------------------------------------------------------------------------- |
 | `NEXT_PUBLIC_SITE_URL`                 | All          | 절대 URL 생성, OG, sitemap (`https://roseai.co.kr`)                                                  |
-| `NEXT_PUBLIC_CONTACT_EMAIL`            | All          | Contact·Footer 공개 이메일 (`contact@roseai.co.kr`). mailto 링크. 하드코딩 금지                      |
 | `NEXT_PUBLIC_SUPABASE_URL`             | All          | Supabase 프로젝트 REST 엔드포인트. `https://<ref>.supabase.co`                                       |
-| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | All          | 신규 포맷 publishable(=anon) 키 (`sb_publishable_…`). 브라우저 노출 안전                             |
 | `SUPABASE_SECRET_KEY`                  | All (서버)   | service*role 키 (`sb_secret*…`). `/api/contact`가 RLS 우회 insert 에 사용. 비밀 —`NEXT*PUBLIC*` 금지 |
 | `NEXT_PUBLIC_GA_ID`                    | Prod         | Google Analytics (선택)                                                                              |
 | `NEXT_PUBLIC_PLAUSIBLE_DOMAIN`         | Prod         | Plausible (선택)                                                                                     |
@@ -33,16 +31,16 @@ Vercel Pro 배포. 도메인 `roseai.co.kr` (+ `www.roseai.co.kr` → apex 리�
 
 - `NEXT_PUBLIC_` 접두는 **브라우저 노출됨**. 비밀값에는 절대 붙이지 않는다 (`RESEND_API_KEY` 등).
 - 새 변수 추가 시: (1) `.env.local.example` 에 빈 값 또는 플레이스홀더로 추가 (2) Vercel 에 Preview·Prod 양쪽 등록 (3) 이 표 갱신.
-- Contact 이메일: 원본 HTML 의 Cloudflare `__cf_email__` 난독화는 사용하지 않는다. 일반 `mailto:` 링크로 노출.
 
 ### 필수 변수 접근은 `lib/env.ts` 경유
 
-필수 환경변수(`NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_CONTACT_EMAIL`)는 **`lib/env.ts` 를 통해서만** 읽는다. `process.env.*` 를 컴포넌트/유틸에서 직접 참조하지 않는다.
+필수 환경변수(현재 `NEXT_PUBLIC_SITE_URL` 1개)는 **`lib/env.ts` 를 통해서만** 읽는다. `process.env.*` 를 컴포넌트/유틸에서 직접 참조하지 않는다.
 
 - `required(name)` 헬퍼가 누락/빈 값이면 모듈 로드 시점에 `throw` — 빌드가 즉시 실패해 프로덕션에 `undefined` 가 새는 것을 차단한다.
-- 컴포넌트는 `import { env } from "@/lib/env"` 후 `env.contactEmail`, `env.siteUrl` 사용. fallback 상수(`"contact@roseai.co.kr"` 등) 를 둬서 빈 값을 가리지 않는다.
-- **함의**: Vercel Preview·Prod 환경에 이 두 변수가 등록되어 있지 않으면 빌드가 실패한다. 새 환경 프로비저닝 시 가장 먼저 확인.
+- 컴포넌트는 `import { env } from "@/lib/env"` 후 `env.siteUrl` 사용.
+- **함의**: Vercel Preview·Prod 환경에 이 변수가 등록되어 있지 않으면 빌드가 실패한다. 새 환경 프로비저닝 시 가장 먼저 확인.
 - 선택(optional) 변수는 이 패턴을 쓰지 않는다 — 기본값이 있거나 런타임에 분기 처리.
+- **사용처 없는 키는 `required` 로 두지 않는다** — 실제 컴포넌트/유틸에서 import 되지 않는 env 는 추가하지 말고, 추가했다가 더는 안 쓰면 정리한다. "보험용 required" 는 빌드 실패만 만들고 보호 효과 없음.
 
 ### 서버 전용 비밀값은 `lib/env.server.ts` 경유
 

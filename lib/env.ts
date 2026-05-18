@@ -10,6 +10,5 @@ function required(name: string): string {
 }
 
 export const env = {
-  contactEmail: required("NEXT_PUBLIC_CONTACT_EMAIL"),
   siteUrl: required("NEXT_PUBLIC_SITE_URL"),
 } as const;
