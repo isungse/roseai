@@ -1,7 +1,8 @@
-import { createHash } from "node:crypto";
+import { createHmac } from "node:crypto";
 
 import { NextResponse } from "next/server";
 
+import { serverEnv } from "@/lib/env.server";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 
 export const runtime = "nodejs";
@@ -19,8 +20,21 @@ function err(code: string, status = 400) {
   return NextResponse.json({ error: code }, { status });
 }
 
-function hashIp(ip: string): string {
-  return createHash("sha256").update(ip).digest("hex");
+let warnedMissingIpHashSecret = false;
+
+function hashIp(ip: string): string | null {
+  const secret = serverEnv.ipHashSecret;
+  if (!secret) {
+    if (!warnedMissingIpHashSecret) {
+      console.warn(
+        "[/api/contact] IP_HASH_SECRET not set — ip_hash will be null. " +
+          "Spam-pattern queries (ip_hash group-by) lose visibility until set.",
+      );
+      warnedMissingIpHashSecret = true;
+    }
+    return null;
+  }
+  return createHmac("sha256", secret).update(ip).digest("hex");
 }
 
 export async function POST(request: Request) {

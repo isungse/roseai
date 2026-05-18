@@ -21,6 +21,7 @@ Vercel Pro 배포. 도메인 `roseai.co.kr` (+ `www.roseai.co.kr` → apex 리�
 | `NEXT_PUBLIC_SITE_URL`                 | All          | 절대 URL 생성, OG, sitemap (`https://roseai.co.kr`)                                                  |
 | `NEXT_PUBLIC_SUPABASE_URL`             | All          | Supabase 프로젝트 REST 엔드포인트. `https://<ref>.supabase.co`                                       |
 | `SUPABASE_SECRET_KEY`                  | All (서버)   | service*role 키 (`sb_secret*…`). `/api/contact`가 RLS 우회 insert 에 사용. 비밀 —`NEXT*PUBLIC*` 금지 |
+| `IP_HASH_SECRET`                       | All (서버)   | `/api/contact` 의 HMAC-SHA256 키 (`openssl rand -hex 32`). 미설정 시 `ip_hash = NULL`. 비밀          |
 | `NEXT_PUBLIC_GA_ID`                    | Prod         | Google Analytics (선택)                                                                              |
 | `NEXT_PUBLIC_PLAUSIBLE_DOMAIN`         | Prod         | Plausible (선택)                                                                                     |
 | `REVALIDATE_TOKEN`                     | All (서버)   | On-demand ISR secret                                                                                 |
