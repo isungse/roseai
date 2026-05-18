@@ -1,9 +1,9 @@
 # Meta
 
-When updating .claude/rules/ documentation, follow these principles:
+`.claude/rules/` 문서를 업데이트할 때는 아래 원칙을 따를 것:
 
-1. Route content to the correct file based on its nature (design decisions → design-system.md, code patterns → code-style.md, etc.)
-2. No duplication — if content belongs in one file, other files reference it instead of repeating it
-3. Write at the abstraction level that remains valid over time; omit one-off events or session-specific details
-4. If an update would significantly expand a file, propose splitting it into a new file before writing
-5. CLAUDE.md is a top-level index only — keep it as references/links, never add detail there directly
+1. 내용의 성격에 맞는 파일에 분류해서 기록 (디자인 결정 → design-system.md, 코드 패턴 → code-style.md 등)
+2. 중복 금지 — 내용이 한 파일에 속한다면, 다른 파일에서는 반복하지 말고 참조만 할 것
+3. 시간이 지나도 의미가 유지되는 수준으로 추상화해서 작성, 일회성 이벤트나 세션별 작업 내용은 생략
+4. 업데이트로 인해 파일이 크게 늘어날 것 같으면, 작성 전에 먼저 별도 파일 분리 여부를 제안할 것
+5. CLAUDE.md는 최상위 인덱스 역할만 함 — 세부 내용은 넣지 말고 참조/링크만 유지
