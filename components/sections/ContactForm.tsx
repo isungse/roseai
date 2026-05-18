@@ -24,6 +24,9 @@ export function ContactForm() {
   const t = useTranslations("contact.form");
   const locale = useLocale();
   const [form, setForm] = useState<FormState>(EMPTY_FORM);
+  // Honeypot — kept outside FormState because it must never participate in
+  // visible form logic (validation, reset feedback, status display).
+  const [honeypot, setHoneypot] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [feedback, setFeedback] = useState<string>("");
   const feedbackId = useId();
@@ -72,6 +75,7 @@ export function ContactForm() {
           email: form.email.trim(),
           message: form.message.trim(),
           locale,
+          website: honeypot,
         }),
       });
       if (!res.ok) throw new Error("submit_failed");
@@ -91,6 +95,27 @@ export function ContactForm() {
       aria-describedby={feedback ? feedbackId : undefined}
       className="flex flex-col gap-7"
     >
+      {/* Honeypot — bots fill every input including hidden ones. Real users
+          never see, focus, or autofill this; if it arrives non-empty the
+          server silently drops the submission with a 200 so bots can't tell
+          the trap from a real success. Keep position:absolute off-screen
+          (display:none is sometimes skipped by bots). */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-[9999px] top-auto h-px w-px overflow-hidden"
+      >
+        <label>
+          Website
+          <input
+            type="text"
+            name="website"
+            value={honeypot}
+            onChange={(e) => setHoneypot(e.target.value)}
+            tabIndex={-1}
+            autoComplete="off"
+          />
+        </label>
+      </div>
       {CONTACT_FIELDS.map((field) => {
         const inputId = `contact-${field.name}`;
         const value = form[field.name];

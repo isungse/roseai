@@ -49,7 +49,21 @@ export async function POST(request: Request) {
     return err("invalid_payload");
   }
 
-  const { company, email, message, locale } = body as Record<string, unknown>;
+  const { company, email, message, locale, website } = body as Record<
+    string,
+    unknown
+  >;
+
+  // Honeypot — real users never fill the hidden `website` field. If it
+  // arrives non-empty, drop the submission with a 200 so bots can't
+  // distinguish the trap from real success (returning 4xx would let them
+  // probe for the trigger).
+  if (website !== undefined && website !== null && String(website) !== "") {
+    console.warn("[/api/contact] honeypot tripped — dropping submission", {
+      websiteLen: String(website).length,
+    });
+    return NextResponse.json({ ok: true }, { status: 200 });
+  }
 
   if (
     typeof company !== "string" ||
