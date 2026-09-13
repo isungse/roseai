@@ -24,7 +24,8 @@ export interface ShowcaseSlide {
 
 interface ShowcaseCarouselProps {
   slides: ShowcaseSlide[];
-  labels: { region: string; prev: string; next: string };
+  /** `goTo[i]` is the accessible label of the i-th indicator dot. */
+  labels: { region: string; prev: string; next: string; goTo: string[] };
   cta: ReactNode;
 }
 
@@ -35,11 +36,12 @@ type Position = "active" | "left" | "right" | "hidden";
 const POSITION_CLASS: Record<Position, string> = {
   active:
     "z-30 opacity-100 [transform:translate3d(0,0,0)_scale(1)_rotateY(0)]",
-  // 10% keeps the peeking card inside the section padding (px-7/10) even
-  // with the rotateY edge projecting outward; 14% crossed the shell border.
-  left: "z-20 opacity-100 [transform:translate3d(-10%,-9%,0)_scale(0.85)_rotateY(15deg)]",
+  // The peek must read as "there is another card": ~18% offset with a mild
+  // scale. The stack wrapper's inner padding gives it room so the rotated
+  // edge never crosses the shell border.
+  left: "z-20 opacity-100 [transform:translate3d(-18%,-13%,0)_scale(0.88)_rotateY(15deg)]",
   right:
-    "z-20 opacity-100 [transform:translate3d(10%,-9%,0)_scale(0.85)_rotateY(-15deg)]",
+    "z-20 opacity-100 [transform:translate3d(18%,-13%,0)_scale(0.88)_rotateY(-15deg)]",
   hidden: "pointer-events-none z-10 opacity-0",
 };
 
@@ -113,8 +115,10 @@ export function ShowcaseCarousel({
       onBlur={() => setPaused(false)}
       className="grid grid-cols-1 items-center gap-12 md:grid-cols-2 md:gap-16 lg:gap-20"
     >
-      <div className="relative mx-auto aspect-square w-full max-w-[520px] [perspective:1000px]">
-        {slides.map((s, i) => (
+      {/* Outer padding reserves room for the peeking card's overhang. */}
+      <div className="px-6 md:px-10">
+        <div className="relative mx-auto aspect-square w-full max-w-[520px] [perspective:1000px]">
+          {slides.map((s, i) => (
           <Image
             key={s.id}
             src={s.src}
@@ -124,7 +128,8 @@ export function ShowcaseCarousel({
             sizes="(min-width: 768px) 50vw, 100vw"
             className={`rounded-2xl object-cover shadow-lg transition-[transform,opacity] duration-[400ms] ${POSITION_CLASS[positionOf(i, active, length)]}`}
           />
-        ))}
+          ))}
+        </div>
       </div>
 
       <div>
@@ -168,6 +173,20 @@ export function ShowcaseCarousel({
               >
                 <ArrowRight size={20} strokeWidth={1.75} />
               </button>
+              <div className="flex items-center gap-2 px-2">
+                {slides.map((s, i) => (
+                  <button
+                    key={s.id}
+                    type="button"
+                    onClick={() => setActive(i)}
+                    aria-label={labels.goTo[i]}
+                    aria-current={i === active ? "true" : undefined}
+                    className={`h-2.5 rounded-full transition-[width,background-color] ${
+                      i === active ? "w-7 bg-brand" : "w-2.5 bg-hair hover:bg-g500"
+                    }`}
+                  />
+                ))}
+              </div>
             </>
           )}
           {cta}

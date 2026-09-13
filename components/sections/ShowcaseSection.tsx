@@ -31,6 +31,7 @@ export function ShowcaseSection() {
             region: t("regionLabel"),
             prev: t("prev"),
             next: t("next"),
+            goTo: slides.map((_, i) => t("goTo", { index: i + 1 })),
           }}
           cta={
             <ContactTrigger className="mono cap inline-flex items-center gap-6 bg-brand px-5 py-3.5 text-sm font-semibold tracking-[0.04em] text-paper transition-colors hover:bg-ink">

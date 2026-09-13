@@ -14,6 +14,7 @@
     "regionLabel": "ROSE-AI 소개",
     "prev": "이전 슬라이드",
     "next": "다음 슬라이드",
+    "goTo": "{index}번 슬라이드로 이동",
     "slides": {
       "coffee": {
         "heading": "커피 한잔의 여유를 돌려 드립니다.",

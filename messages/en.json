@@ -14,6 +14,7 @@
     "regionLabel": "About ROSE-AI",
     "prev": "Previous slide",
     "next": "Next slide",
+    "goTo": "Go to slide {index}",
     "slides": {
       "coffee": {
         "heading": "We give you back the time for a cup of coffee.",

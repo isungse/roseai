@@ -91,7 +91,7 @@ Tailwind 기본 스케일 (4px grid) 만 사용. 섹션 세로 리듬은 다음 
 
 - 섹션 수직 패딩: `py-16 md:py-20 lg:py-28` (Contact·대문 섹션은 1단계 위인 `py-20 md:py-24 lg:py-28`)
 - 컨테이너 가로 패딩: `px-7 md:px-10`
-- 최대 너비: **`max-w-[1200px]` 페이지 셸** (아래 "Page Shell" 절). 좁은 독해 영역은 `max-w-prose`.
+- 최대 너비: **`max-w-[1360px]` 페이지 셸** (아래 "Page Shell" 절). 좁은 독해 영역은 `max-w-prose`.
 
 ### Page Shell (Naver-style 고정 너비)
 
@@ -100,7 +100,7 @@ Tailwind 기본 스케일 (4px grid) 만 사용. 섹션 세로 리듬은 다음 
 ```tsx
 // app/[locale]/layout.tsx
 <body className="text-ink antialiased">  {/* body bg 는 globals.css 에서 g50 */}
-  <div className="mx-auto my-10 max-w-[1200px] border border-hair bg-paper md:my-16">
+  <div className="mx-auto my-10 max-w-[1360px] border border-hair bg-paper md:my-16">
     <TopBar />     {/* sticky top-0 — 셸 마진과 동기하지 않는다 (아래 설명) */}
     <main>{children}</main>
     <Footer />
@@ -111,7 +111,7 @@ Tailwind 기본 스케일 (4px grid) 만 사용. 섹션 세로 리듬은 다음 
 핵심 디테일:
 
 - **외곽 캔버스**: `globals.css` 의 `html, body { background: var(--color-g50) }`. 셸의 paper bg 가 그 위에 floating 카드처럼 떠 보이고, `border border-hair` (사방) 가 카드 윤곽을 닫는다.
-- **셸 너비**: `1200px` 고정 (Tailwind 의 `max-w-screen-xl` = 1280px 가 아닌 임의값). 1200 은 Naver·국내 포털의 표준에 더 가깝다.
+- **셸 너비**: `1360px` 고정 (Tailwind 의 `max-w-screen-xl` = 1280px 가 아닌 임의값). 처음엔 Naver 표준에 가까운 1200 이었으나, 2-컬럼 쇼케이스(이미지 카드 스택 + 본문)가 1200 에서는 답답하고 뒤에 겹친 카드가 드러날 여유가 없어 1360 으로 넓혔다. 1440 뷰포트에서 좌우 40px 여백이 남아 floating-card 시각은 유지된다.
 - **셸 상하 여백**: `my-10 md:my-16` (40 / 64px). viewport 가장자리에 붙이지 않는다 — 답답한 풀-블리드 느낌을 차단하고 카드 floating 효과를 만든다. **`min-h-screen` 은 두지 않는다** — 외곽 g50 이 자연스럽게 채운다.
 - **Sticky 오프셋은 `top-0` (셸 마진과 동기 금지)**: TopBar 가 `sticky top-10 md:top-16` 처럼 셸 마진과 같은 값을 쓰면, 바 위쪽에 40-64px 의 빈 공간이 viewport 안에 남고 그 영역으로 **스크롤 중인 섹션 콘텐츠가 비쳐 흘러간다** — 바가 페이지 중간에 떠 있는 것처럼 보이고 위·아래로 동시에 콘텐츠가 지나가는 시각 부조화 발생. `top-0` 으로 두면 floating-card 시각은 scroll=0 에서만 보이고, 스크롤이 시작되면 바가 자연스럽게 viewport 최상단으로 올라가 콘텐츠를 완전히 덮는다 — 이게 정상.
 - **섹션 측 책임**: 각 섹션은 `border-b border-hair` + `relative` 만 두고, **자체 내부 div** 가 `px-7 md:px-10` 좌우 패딩 + `py-{n}` 세로 패딩만 책임진다. 너비 클램프 없음.
