@@ -73,3 +73,15 @@ WCAG 2.1 AA 기준. Lighthouse A11y ≥ 95. 한국어 사용자 환경도 함께
 - [ ] 대비 4.5:1 이상
 - [ ] `prefers-reduced-motion` 대응
 - [ ] Lighthouse A11y ≥ 95
+
+## 캐러셀 (Showcase)
+
+구현 패턴은 `code-style.md` 의 "Carousel / Autoplay 패턴" 참조. 접근성 요구사항만 여기 둔다.
+
+- 루트: `role="region"` + `aria-roledescription="carousel"` + `aria-label`(i18n).
+- 텍스트 블록: `aria-live="polite"` + `aria-atomic` — 슬라이드 전환 시 새 문구를 읽는다.
+- 자동 재생: hover / focus-within 에서 정지, `prefers-reduced-motion: reduce` 면 시작하지 않는다 (WCAG 2.2.2). 슬라이드가 1개면 컨트롤 자체를 렌더하지 않는다.
+- 키보드: 좌우 방향키는 캐러셀 루트의 `onKeyDown` — 포커스가 안에 있을 때만. `window` 리스너로 페이지 전체의 방향키를 가로채지 않는다.
+- 컨트롤: 화살표는 `aria-label`(이전/다음), 인디케이터 점은 `aria-label="{n}번 슬라이드로 이동"` + 활성 점에 `aria-current="true"`.
+- h1 하나 규칙: 활성 슬라이드에 제목이 없어도 슬라이드 01 제목을 `sr-only` h1 으로 DOM 에 유지한다.
+- 강조색: 브랜드 레드 텍스트는 흰 배경 대비 4.6:1 — 큰 텍스트(24px 이상) 기준은 여유, 본문 크기(4.5:1)에서는 경계값이라 강조 구절은 스테이트먼트 크기에서만 쓴다.

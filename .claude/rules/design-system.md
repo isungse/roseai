@@ -89,7 +89,7 @@
 
 Tailwind 기본 스케일 (4px grid) 만 사용. 섹션 세로 리듬은 다음 값으로 통일:
 
-- 섹션 수직 패딩: `py-16 md:py-20 lg:py-28` (Contact·대문 섹션은 1단계 위인 `py-20 md:py-24 lg:py-28`)
+- 섹션 수직 패딩: `py-16 md:py-20 lg:py-28`. **예외** — 셸 높이를 채우는 단일 섹션(Showcase)은 flex 중앙 정렬이 여백을 공급하므로 `py-12 md:py-16` 으로 낮춰, 900px 높이 노트북에서도 스크롤 없이 카드 전체가 한 화면에 들어오게 한다.
 - 컨테이너 가로 패딩: `px-7 md:px-10`
 - 최대 너비: **`max-w-[1360px]` 페이지 셸** (아래 "Page Shell" 절). 좁은 독해 영역은 `max-w-prose`.
 
@@ -118,7 +118,7 @@ Tailwind 기본 스케일 (4px grid) 만 사용. 섹션 세로 리듬은 다음 
 
 ### Sticky TopBar 클리어런스
 
-TopBar 높이는 `h-16` (64px), sticky 오프셋 `top-0`. `SectionLabel` 은 섹션 상단에 `top-5` 로 absolute. Sticky 와 첫 페인트에서 겹치지 않게 섹션 상단 패딩은 **`pt-16 md:pt-20`** 이상 (Contact 등 메인 섹션은 1단계 위인 `pt-20 md:pt-24`).
+TopBar 높이는 `h-16` (64px), sticky 오프셋 `top-0`. 섹션 상단 패딩은 sticky 바와 첫 페인트에서 겹치지 않을 만큼(`pt-12` 이상) 둔다. 구 `SectionLabel` 절대 배치 규칙은 컴포넌트 제거와 함께 폐기.
 
 ## Radius / Shadow
 
@@ -148,3 +148,23 @@ Lucide 단일 세트. 크기는 `16/20/24` 3단계만. `stroke-width={1.75}` 기
 ## 다크모드
 
 `class` 전략. `<html class="dark">` 토글. 시스템 prefers-color-scheme 으로 초기값 결정하고 사용자 선택은 localStorage에 저장.
+
+## Showcase 타이포 스케일
+
+랜딩의 유일한 섹션이라 위 토큰 표와 별도로 `clamp` 로 직접 지정한다 (단일 사용처 — 토큰화하지 않음):
+
+| 역할 | 값 | 비고 |
+|---|---|---|
+| 슬라이드 제목 (h1 / h2) | `clamp(24px, 2.8vw, 36px)` · 1.25 · -0.02em | 2줄 고정은 JSON 값의 `\n` |
+| 본문 (제목 있는 슬라이드) | `clamp(16px, 1.25vw, 19px)` · 1.8 | 한 문장 = 한 줄. 600px 컬럼에서 4줄 |
+| 스테이트먼트 본문 (제목 없는 슬라이드) | `clamp(22px, 2vw, 26px)` · 1.6 · medium | 첫 줄이 제목 역할 |
+| 카운터 `01 / 04` | mono `text-xs` g500 `tabular-nums` | |
+
+- 원형 요소는 캐러셀 컨트롤에만 허용 (Radius 표의 예외): 화살표 `h-12 w-12 rounded-full bg-ink hover:bg-brand`, 인디케이터 점 `h-2.5 rounded-full` (활성 `w-7 bg-brand`).
+- 카드 스택: 이미지 `max-w-[460px] rounded-2xl shadow-lg`, 뒤 카드는 ±18% / -13% / scale .88 / rotateY 15°. 카드 폭·컬럼 간격(`lg:gap-24`)·정렬(md 이상 좌측)은 **뒤 카드 모서리에서 본문까지 100px 이상** 확보하도록 맞춘 값 — 카드를 가운데 정렬하면 줄인 폭의 절반이 왼쪽으로 가서 효과가 반감된다.
+
+## 이미지 에셋 파이프라인
+
+- 원본은 생성 도구에서 받은 1254² 또는 2508² PNG (사용자 Downloads 폴더). 저장소에는 **1600² JPEG q86** 만 커밋 (`public/images/showcase-0N.jpg`, 300–460KB). `next/image` 가 AVIF/WebP 로 재인코딩하므로 원본 PNG(2–5MB) 는 커밋하지 않는다.
+- 변환은 PowerShell + `System.Drawing` (ImageMagick 불필요): 정사각 중앙 크롭 → HighQualityBicubic 리사이즈 → JPEG 인코더 품질 86.
+- 슬라이드 번호와 파일 번호를 항상 일치시킨다. 순서를 바꿀 때 데이터의 `src` 만 바꾸지 말고 `git mv` 로 파일도 함께 교체.

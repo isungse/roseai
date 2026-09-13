@@ -101,7 +101,7 @@ public/                  # 정적 에셋
 ### 리스트 렌더의 key
 
 - 배열 인덱스를 key 로 쓰지 않는다. 의미 있는 식별자(`m.id`, `code` 등) 를 사용.
-- `null` 을 끼워 map 하는 sparse 패턴 대신, 요소가 고정 N개라면 sibling 으로 직접 나열한다 (예: Hero eyebrow 4-column meta). CSS pseudo (`before:content-['/'] first:before:content-none`) 로 구분자 처리.
+- `null` 을 끼워 map 하는 sparse 패턴 대신, 요소가 고정 N개라면 sibling 으로 직접 나열한다 (예: 고정 개수의 메타 라벨). CSS pseudo (`before:content-['/'] first:before:content-none`) 로 구분자 처리.
 
 ### Modal/Dialog 패턴
 
