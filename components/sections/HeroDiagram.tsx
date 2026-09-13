@@ -1,5 +1,3 @@
-import { HERO_DIAGRAM_TAG } from "@/lib/data/hero";
-
 const NODES = [
   { top: "25%", left: "25%", red: false },
   { top: "25%", left: "50%", red: false },
@@ -30,9 +28,6 @@ export function HeroDiagram() {
           style={{ top: node.top, left: node.left }}
         />
       ))}
-      <span className="mono absolute bottom-2 left-2 text-[10px] text-g500">
-        {HERO_DIAGRAM_TAG}
-      </span>
     </div>
   );
 }

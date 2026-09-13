@@ -44,7 +44,7 @@ export function ContactSection() {
           </h2>
 
           {/* 우측: 주석 처리된 원본 Hero 의 도형 재사용 — 4×4 그리드 위
-              6개 노드(1개 brand-red) + "FIG. 01 / SYSTEM TOPOLOGY" 캡션.
+              6개 노드(1개 brand-red). 캡션은 1장 랜딩 재설계 과정에서 제거.
               wrapper 에 `hidden lg:block` 을 둬 모바일에서는 grid row 자체를
               빼서 h2→p→CTA 간 gap-y 가 중복 적용되지 않도록 한다. */}
           <div className="hidden lg:col-span-3 lg:col-start-10 lg:block">
