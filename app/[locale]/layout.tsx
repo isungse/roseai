@@ -97,9 +97,9 @@ export default async function LocaleLayout({
 
                 Inner sections no longer set their own max-w-screen-xl — the
                 shell is the single source of width. */}
-            <div className="mx-auto my-10 max-w-[1360px] border border-hair bg-paper md:my-16">
+            <div className="mx-auto my-10 flex min-h-[calc(100svh-5rem)] max-w-[1360px] flex-col border border-hair bg-paper md:my-16 md:min-h-[calc(100svh-8rem)]">
               <TopBar />
-              <main id="main">{children}</main>
+              <main id="main" className="flex flex-1 flex-col">{children}</main>
               <Footer />
             </div>
           </ContactDialogProvider>

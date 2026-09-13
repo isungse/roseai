@@ -100,9 +100,9 @@ Tailwind 기본 스케일 (4px grid) 만 사용. 섹션 세로 리듬은 다음 
 ```tsx
 // app/[locale]/layout.tsx
 <body className="text-ink antialiased">  {/* body bg 는 globals.css 에서 g50 */}
-  <div className="mx-auto my-10 max-w-[1360px] border border-hair bg-paper md:my-16">
+  <div className="mx-auto my-10 flex min-h-[calc(100svh-5rem)] max-w-[1360px] flex-col border border-hair bg-paper md:my-16 md:min-h-[calc(100svh-8rem)]">
     <TopBar />     {/* sticky top-0 — 셸 마진과 동기하지 않는다 (아래 설명) */}
-    <main>{children}</main>
+    <main className="flex flex-1 flex-col">{children}</main>
     <Footer />
   </div>
 </body>
@@ -112,7 +112,7 @@ Tailwind 기본 스케일 (4px grid) 만 사용. 섹션 세로 리듬은 다음 
 
 - **외곽 캔버스**: `globals.css` 의 `html, body { background: var(--color-g50) }`. 셸의 paper bg 가 그 위에 floating 카드처럼 떠 보이고, `border border-hair` (사방) 가 카드 윤곽을 닫는다.
 - **셸 너비**: `1360px` 고정 (Tailwind 의 `max-w-screen-xl` = 1280px 가 아닌 임의값). 처음엔 Naver 표준에 가까운 1200 이었으나, 2-컬럼 쇼케이스(이미지 카드 스택 + 본문)가 1200 에서는 답답하고 뒤에 겹친 카드가 드러날 여유가 없어 1360 으로 넓혔다. 1440 뷰포트에서 좌우 40px 여백이 남아 floating-card 시각은 유지된다.
-- **셸 상하 여백**: `my-10 md:my-16` (40 / 64px). viewport 가장자리에 붙이지 않는다 — 답답한 풀-블리드 느낌을 차단하고 카드 floating 효과를 만든다. **`min-h-screen` 은 두지 않는다** — 외곽 g50 이 자연스럽게 채운다.
+- **셸 상하 여백**: `my-10 md:my-16` (40 / 64px). viewport 가장자리에 붙이지 않는다 — 답답한 풀-블리드 느낌을 차단하고 카드 floating 효과를 만든다. **셸은 `flex flex-col` + `min-h-[calc(100svh-5rem)] md:min-h-[calc(100svh-8rem)]`** (100svh − 상하 마진 합) 로 첫 화면을 채운다. 섹션이 하나뿐인 랜딩에서 셸이 콘텐츠 높이만큼만 서면 카드 아래 g50 캔버스가 크게 남아 페이지가 잘린 것처럼 보인다. `<main>` 은 `flex flex-1 flex-col`, 유일한 섹션은 `flex flex-1 items-center` 로 남는 높이를 차지하며 콘텐츠를 수직 중앙에 둔다. 콘텐츠가 더 길면 min-height 는 무시되고 평소처럼 스크롤된다.
 - **Sticky 오프셋은 `top-0` (셸 마진과 동기 금지)**: TopBar 가 `sticky top-10 md:top-16` 처럼 셸 마진과 같은 값을 쓰면, 바 위쪽에 40-64px 의 빈 공간이 viewport 안에 남고 그 영역으로 **스크롤 중인 섹션 콘텐츠가 비쳐 흘러간다** — 바가 페이지 중간에 떠 있는 것처럼 보이고 위·아래로 동시에 콘텐츠가 지나가는 시각 부조화 발생. `top-0` 으로 두면 floating-card 시각은 scroll=0 에서만 보이고, 스크롤이 시작되면 바가 자연스럽게 viewport 최상단으로 올라가 콘텐츠를 완전히 덮는다 — 이게 정상.
 - **섹션 측 책임**: 각 섹션은 `border-b border-hair` + `relative` 만 두고, **자체 내부 div** 가 `px-7 md:px-10` 좌우 패딩 + `py-{n}` 세로 패딩만 책임진다. 너비 클램프 없음.
 

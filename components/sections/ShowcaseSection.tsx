@@ -26,8 +26,16 @@ export function ShowcaseSection() {
   }));
 
   return (
-    <section id="showcase" className="relative border-b border-hair">
-      <div className="px-7 py-16 md:px-10 md:py-20 lg:py-28">
+    // flex-1 + items-center: the only section takes the shell's remaining
+    // height (see design-system.md "Page Shell") and centers vertically.
+    <section
+      id="showcase"
+      className="relative flex flex-1 items-center border-b border-hair"
+    >
+      {/* Vertical padding is deliberately modest: on tall viewports flex
+          centering supplies the breathing room, and on 768–900px laptops the
+          smaller padding keeps the whole card (footer included) on screen. */}
+      <div className="w-full px-7 py-12 md:px-10 md:py-16">
         <ShowcaseCarousel
           slides={slides}
           labels={{
