@@ -20,6 +20,8 @@ export interface ShowcaseSlide {
   /** Optional. Heading-less slides render the body at statement size. */
   heading?: string;
   body: string;
+  /** Optional substring of `body` rendered in brand red. */
+  accent?: string;
 }
 
 interface ShowcaseCarouselProps {
@@ -150,7 +152,11 @@ export function ShowcaseCarousel({
             </h2>
           )}
           <p className={slide.heading ? BODY_CLASS : STATEMENT_CLASS}>
-            <RevealText text={slide.body} startIndex={headingWords} />
+            <RevealText
+              text={slide.body}
+              startIndex={headingWords}
+              accent={slide.accent}
+            />
           </p>
         </div>
 

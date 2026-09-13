@@ -20,6 +20,9 @@ export function ShowcaseSection() {
       ? t(`slides.${s.i18nKey}.heading`)
       : undefined,
     body: t(`slides.${s.i18nKey}.body`),
+    accent: t.has(`slides.${s.i18nKey}.accent`)
+      ? t(`slides.${s.i18nKey}.accent`)
+      : undefined,
   }));
 
   return (

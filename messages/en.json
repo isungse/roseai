@@ -25,8 +25,13 @@
         "body": "What's left is time.\nThe checking and tidying people used to do now belongs to the system,\nand the time that frees up goes back to you, not to more work.",
         "alt": "A smiling woman with a red lanyard leaving an office building at sunset"
       },
-      "night": {
+      "camp": {
         "body": "Even while you're in the woods, the system keeps working.\nIf something goes wrong, the system tells you first.\nNo alert means everything is running fine.",
+        "alt": "A smiling woman in a camp chair by a fire, looking up at a star-filled night sky"
+      },
+      "night": {
+        "body": "Beyond AI agents, to AI-native.\nWork doesn't stop when people leave the office.\nData gets gathered, sorted, and problems get flagged.\nROSE-AI designs that structure.",
+        "accent": "AI-native",
         "alt": "An empty office at night with a Seoul skyline view and a monitor showing logs with green check marks"
       }
     }
