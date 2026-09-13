@@ -49,7 +49,7 @@ const ARROW_CLASS =
   "inline-flex h-12 w-12 items-center justify-center rounded-full bg-ink text-paper transition-colors hover:bg-brand";
 
 const HEADING_CLASS =
-  "text-balance text-[clamp(26px,3.4vw,42px)] font-bold leading-[1.25] tracking-[-0.02em]";
+  "whitespace-pre-line text-[clamp(24px,2.8vw,36px)] font-bold leading-[1.25] tracking-[-0.02em]";
 const BODY_CLASS =
   "mt-6 whitespace-pre-line text-[clamp(16px,1.25vw,19px)] leading-[1.8] text-ink";
 // Heading-less slides: the first line does the heading's job, so the whole
@@ -154,9 +154,11 @@ export function ShowcaseCarousel({
           </p>
         </div>
 
+        {/* Arrows + dots sit left; the CTA is pushed to the text column's
+            right edge so it doesn't crowd the navigation. */}
         <div className="mt-10 flex flex-wrap items-center gap-4">
           {multi && (
-            <>
+            <div className="flex items-center gap-4">
               <button
                 type="button"
                 onClick={prev}
@@ -187,9 +189,9 @@ export function ShowcaseCarousel({
                   />
                 ))}
               </div>
-            </>
+            </div>
           )}
-          {cta}
+          <div className="ml-auto">{cta}</div>
         </div>
       </div>
     </div>

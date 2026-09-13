@@ -17,7 +17,7 @@
     "goTo": "Go to slide {index}",
     "slides": {
       "coffee": {
-        "heading": "We give you back the time for a cup of coffee.",
+        "heading": "We give you back\nthe time for a cup of coffee.",
         "body": "Leave repetitive work to AI. Focus on what only people can do.\nROSE-AI studies your work and designs only the automation you need.\nNot a grand system, but tools you can use from tomorrow morning.\nSmall steps, stacked together, become bigger possibilities.",
         "alt": "A cup of coffee on a sunlit desk, two monitors showing automation workflow code, and a notebook with today's to-do list"
       },
