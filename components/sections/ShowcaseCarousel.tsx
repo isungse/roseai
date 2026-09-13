@@ -115,11 +115,13 @@ export function ShowcaseCarousel({
       onMouseLeave={() => setPaused(false)}
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
-      className="grid grid-cols-1 items-center gap-12 md:grid-cols-2 md:gap-16 lg:gap-20"
+      className="grid grid-cols-1 items-center gap-12 md:grid-cols-2 md:gap-16 lg:gap-24"
     >
-      {/* Outer padding reserves room for the peeking card's overhang. */}
+      {/* Outer padding reserves room for the peeking card's overhang. The
+          stack is left-aligned (mx-auto only on mobile) so the width it gives
+          up all becomes breathing room before the text column. */}
       <div className="px-6 md:px-10">
-        <div className="relative mx-auto aspect-square w-full max-w-[520px] [perspective:1000px]">
+        <div className="relative mx-auto aspect-square w-full max-w-[460px] [perspective:1000px] md:mx-0">
           {slides.map((s, i) => (
           <Image
             key={s.id}
