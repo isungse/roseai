@@ -64,14 +64,10 @@ public/                  # 정적 에셋
 
 | 요소 | 경계 |
 |---|---|
-| `Hero` 섹션 전체 | Server — 텍스트·KPI·다이어그램 정적 |
-| `HeroTimestamp` | Client — `new Date()` 는 마운트 후에만 렌더 (hydration mismatch 방지, `suppressHydrationWarning` 동반) |
-| `Modules` 섹션 shell | Server — 레이아웃, 데이터 주입 |
-| `ModuleTabs` | Client — 탭 선택 상태 (useState), 키보드 핸들링 |
-| `Philosophy`, `Evidence` | Server 전체 |
+| `ShowcaseSection` shell | Server — `useTranslations` 로 문자열을 해석해 plain string props 로 주입 |
+| `ShowcaseCarousel` | Client — activeIndex/paused 상태, autoplay interval, 키보드 핸들링 |
+| `RevealText` | Server-safe 순수 컴포넌트 — 단어를 `--i` 인덱스 span 으로 분해만 하고 애니메이션은 CSS (`.word-in`) 가 담당 |
 | `ContactForm` | Client — FormData 관리, 유효성, fetch |
-| `IndexRail` | Client — IntersectionObserver |
-| `GridOverlay` + `G` 키 토글 | Client — keydown 리스너 |
 | `LangToggle` | Client — `usePathname` + `useRouter` 로 로케일 스위치 |
 | `TopBar` shell | Server. 내부 `LangToggle` 만 Client leaf |
 | `ContactDialogProvider` + `DialogShell` | Client — `useState<isOpen>`, body scroll lock, native `dialog.showModal()` 호출 |
@@ -88,7 +84,17 @@ public/                  # 정적 에셋
 - `useState + useEffect` 로 초기값을 업데이트하는 구식 패턴은 금지 (hydration flash, setState-in-effect 린트 경고).
 - 래핑 요소에는 `suppressHydrationWarning` 을 붙여 의도된 불일치임을 명시.
 
-참고 구현: `components/sections/HeroTimestamp.tsx`.
+참고 구현: git 이력의 `components/sections/HeroTimestamp.tsx` (쇼케이스 리디자인에서 제거됨 — 패턴은 유지).
+
+### Carousel / Autoplay 패턴
+
+21st.dev 류 캐러셀을 이식할 때 원본을 그대로 쓰지 않고 아래로 치환한다 (`components/sections/ShowcaseCarousel.tsx`):
+
+- `<style jsx>` → Tailwind 클래스. 위치별 transform 은 `Record<Position, string>` 상수 맵으로 두고 `%` 단위 translate 를 써서 컨테이너 폭 측정용 resize 리스너를 없앤다.
+- `framer-motion` 단어 리빌 → `globals.css` 의 `@keyframes word-in` + `animation-delay: calc(var(--i) * 25ms)`. 슬라이드 전환 시 텍스트 블록에 `key={slide.id}` 를 줘 애니메이션을 재생.
+- `window` keydown 리스너 → 캐러셀 루트 div 의 `onKeyDown`. 포커스가 안에 있을 때만 방향키가 동작.
+- autoplay 는 hover / focus-within 에서 일시정지, `prefers-reduced-motion` 이면 아예 시작하지 않는다 (WCAG 2.2.2). 슬라이드가 1개면 화살표·카운터를 렌더하지 않는다.
+- 하드코딩 hex / `<img>` / react-icons → 토큰 · `next/image` · Lucide.
 
 ### 리스트 렌더의 key
 

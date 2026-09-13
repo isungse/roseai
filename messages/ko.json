@@ -8,18 +8,21 @@
   },
   "meta": {
     "title": "ROSE-AI — Architecture of Intelligence",
-    "description": "비즈니스의 본질을 설계하는 하이엔드 AI 솔루션. 인력 운영, 그룹웨어, 지식 관리, 게시판, 모바일 모니터링을 단일 아키텍처로 제공합니다."
+    "description": "커피 한잔의 여유를 돌려 드립니다. ROSE-AI는 귀사의 업무를 있는 그대로 들여다보고, 꼭 필요한 자동화만 설계합니다. 거창한 시스템이 아니라 내일 아침부터 쓸 수 있는 도구를 만듭니다."
   },
-  "hero": {
-    "sub": "비즈니스의 본질을 설계하는 하이엔드 AI 솔루션. 밀리초 단위로 시간을 측정하는 기업을 위해 만들어집니다."
+  "showcase": {
+    "regionLabel": "ROSE-AI 소개",
+    "prev": "이전 슬라이드",
+    "next": "다음 슬라이드",
+    "slides": {
+      "coffee": {
+        "heading": "커피 한잔의 여유를 돌려 드립니다.",
+        "body": "반복되는 일은 AI에게 맡기고, 사람은 사람만이 할 수 있는 일에 집중하세요.\nROSE-AI는 귀사의 업무를 있는 그대로 들여다보고, 꼭 필요한 자동화만 설계합니다.\n거창한 시스템이 아니라 내일 아침부터 쓸 수 있는 도구를 만듭니다.\n작은 변화가 쌓여, 더 큰 가능성이 됩니다.",
+        "alt": "아침 햇살이 드는 책상 위의 커피 한 잔, 자동화 워크플로 코드가 띄워진 두 대의 모니터, 그리고 오늘의 할 일이 적힌 노트"
+      }
+    }
   },
   "contact": {
-    "headingLineOne": "Let's redesign",
-    "headingLineTwoIntro": "your",
-    "headingLineTwoAccent": "system.",
-    "headingEm": "당신의 시스템을 다시 설계합니다.",
-    "sub": "막대한 구축 비용 대신, 귀사만을 위한 합리적인 맞춤형 솔루션을 만나보세요.",
-    "subDetail": "ROSE-AI가 비즈니스를 정밀 분석하여 최적의 시스템을 설계합니다. 지금 대화를 시작하세요.",
     "dialogLabel": "문의",
     "closeLabel": "닫기",
     "form": {

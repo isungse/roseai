@@ -8,18 +8,21 @@
   },
   "meta": {
     "title": "ROSE-AI — Architecture of Intelligence",
-    "description": "High-end AI solutions that redesign the essence of your business — engineered for the enterprises that measure time in milliseconds."
+    "description": "We give you back the time for a cup of coffee. ROSE-AI looks at how your business actually runs and designs only the automation you truly need — not a grand system, but tools you can use from tomorrow morning."
   },
-  "hero": {
-    "sub": "High-end AI solutions that redesign the essence of your business — engineered for the enterprises that measure time in milliseconds."
+  "showcase": {
+    "regionLabel": "About ROSE-AI",
+    "prev": "Previous slide",
+    "next": "Next slide",
+    "slides": {
+      "coffee": {
+        "heading": "We give you back the time for a cup of coffee.",
+        "body": "Hand the repetitive work to AI, and let people focus on what only people can do.\nROSE-AI looks at how your business actually runs and designs only the automation you truly need.\nNot a grand system, but tools you can use from tomorrow morning.\nSmall steps, stacked together, become bigger possibilities.",
+        "alt": "A cup of coffee on a sunlit desk, two monitors showing automation workflow code, and a notebook with today's to-do list"
+      }
+    }
   },
   "contact": {
-    "headingLineOne": "Let's redesign",
-    "headingLineTwoIntro": "your",
-    "headingLineTwoAccent": "system.",
-    "headingEm": "",
-    "sub": "Skip the massive build cost — meet a custom solution tailored to your business.",
-    "subDetail": "ROSE-AI analyzes your operations in depth and designs the optimal system. Start the conversation.",
     "dialogLabel": "Inquiry",
     "closeLabel": "Close",
     "form": {

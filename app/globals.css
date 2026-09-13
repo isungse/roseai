@@ -68,6 +68,7 @@ textarea:focus-visible {
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
@@ -87,4 +88,27 @@ textarea:focus-visible {
 
 .skip-link:focus {
   top: 0;
+}
+
+/* Word-by-word blur-in (components/ui/RevealText). `--i` is the word index;
+   the stagger is 25ms per word. Reduced-motion collapses duration + delay
+   via the block above. */
+@layer utilities {
+  @keyframes word-in {
+    from {
+      opacity: 0;
+      filter: blur(8px);
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      filter: blur(0);
+      transform: none;
+    }
+  }
+  .word-in {
+    display: inline-block;
+    animation: word-in 220ms var(--default-transition-timing-function) both;
+    animation-delay: calc(var(--i) * 25ms);
+  }
 }
