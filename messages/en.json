@@ -19,6 +19,10 @@
         "heading": "We give you back the time for a cup of coffee.",
         "body": "Hand the repetitive work to AI, and let people focus on what only people can do.\nROSE-AI looks at how your business actually runs and designs only the automation you truly need.\nNot a grand system, but tools you can use from tomorrow morning.\nSmall steps, stacked together, become bigger possibilities.",
         "alt": "A cup of coffee on a sunlit desk, two monitors showing automation workflow code, and a notebook with today's to-do list"
+      },
+      "evening": {
+        "body": "What's left is time.\nThe checking and tidying people used to do now belongs to the system,\nand the time that frees up goes back to you, not to more work.",
+        "alt": "A smiling woman with a red lanyard leaving an office building at sunset"
       }
     }
   },

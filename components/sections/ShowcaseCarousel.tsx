@@ -17,7 +17,8 @@ export interface ShowcaseSlide {
   id: string;
   src: string;
   alt: string;
-  heading: string;
+  /** Optional. Heading-less slides render the body at statement size. */
+  heading?: string;
   body: string;
 }
 
@@ -34,14 +35,25 @@ type Position = "active" | "left" | "right" | "hidden";
 const POSITION_CLASS: Record<Position, string> = {
   active:
     "z-30 opacity-100 [transform:translate3d(0,0,0)_scale(1)_rotateY(0)]",
-  left: "z-20 opacity-100 [transform:translate3d(-14%,-11%,0)_scale(0.85)_rotateY(15deg)]",
+  // 10% keeps the peeking card inside the section padding (px-7/10) even
+  // with the rotateY edge projecting outward; 14% crossed the shell border.
+  left: "z-20 opacity-100 [transform:translate3d(-10%,-9%,0)_scale(0.85)_rotateY(15deg)]",
   right:
-    "z-20 opacity-100 [transform:translate3d(14%,-11%,0)_scale(0.85)_rotateY(-15deg)]",
+    "z-20 opacity-100 [transform:translate3d(10%,-9%,0)_scale(0.85)_rotateY(-15deg)]",
   hidden: "pointer-events-none z-10 opacity-0",
 };
 
 const ARROW_CLASS =
   "inline-flex h-12 w-12 items-center justify-center rounded-full bg-ink text-paper transition-colors hover:bg-brand";
+
+const HEADING_CLASS =
+  "text-balance text-[clamp(28px,3.4vw,44px)] font-bold leading-[1.25] tracking-[-0.02em]";
+const BODY_CLASS =
+  "mt-6 whitespace-pre-line text-[clamp(16px,1.25vw,19px)] leading-[1.8] text-ink";
+// Heading-less slides: the first line does the heading's job, so the whole
+// body is set at statement size to keep a 1:1 weight with the image.
+const STATEMENT_CLASS =
+  "whitespace-pre-line text-[clamp(22px,2vw,26px)] font-medium leading-[1.6] tracking-[-0.01em] text-ink";
 
 function positionOf(index: number, active: number, length: number): Position {
   if (index === active) return "active";
@@ -84,7 +96,10 @@ export function ShowcaseCarousel({
   };
 
   const slide = slides[active];
-  const headingWords = countWords(slide.heading);
+  const headingWords = slide.heading ? countWords(slide.heading) : 0;
+  // The page's single h1 is slide 01's heading. It stays in the DOM (sr-only)
+  // while other slides are active so the outline never loses its h1.
+  const pageTitle = slides[0].heading ?? labels.region;
 
   return (
     <div
@@ -121,10 +136,15 @@ export function ShowcaseCarousel({
 
         {/* Keyed on the slide so the word stagger replays on change. */}
         <div key={slide.id} aria-live="polite" aria-atomic="true">
-          <h1 className="text-balance text-[clamp(28px,3.4vw,44px)] font-bold leading-[1.25] tracking-[-0.02em]">
-            <RevealText text={slide.heading} />
+          <h1 className={active === 0 ? HEADING_CLASS : "sr-only"}>
+            {active === 0 ? <RevealText text={pageTitle} /> : pageTitle}
           </h1>
-          <p className="mt-6 whitespace-pre-line text-[clamp(16px,1.25vw,19px)] leading-[1.8] text-ink">
+          {active !== 0 && slide.heading && (
+            <h2 className={HEADING_CLASS}>
+              <RevealText text={slide.heading} />
+            </h2>
+          )}
+          <p className={slide.heading ? BODY_CLASS : STATEMENT_CLASS}>
             <RevealText text={slide.body} startIndex={headingWords} />
           </p>
         </div>

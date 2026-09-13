@@ -95,6 +95,7 @@ public/                  # 정적 에셋
 - `window` keydown 리스너 → 캐러셀 루트 div 의 `onKeyDown`. 포커스가 안에 있을 때만 방향키가 동작.
 - autoplay 는 hover / focus-within 에서 일시정지, `prefers-reduced-motion` 이면 아예 시작하지 않는다 (WCAG 2.2.2). 슬라이드가 1개면 화살표·카운터를 렌더하지 않는다.
 - 하드코딩 hex / `<img>` / react-icons → 토큰 · `next/image` · Lucide.
+- 슬라이드 `heading` 은 선택. 양쪽 로케일 JSON 에서 키를 빼면 (`t.has()` 로 감지) 본문을 스테이트먼트 크기로 렌더한다 — 첫 줄이 제목 역할. 페이지 h1 은 슬라이드 01 제목으로 고정하고 다른 슬라이드가 활성일 때는 `sr-only` 로 DOM 에 남긴다 (h1 하나 규칙 유지). 이후 슬라이드의 제목은 h2.
 
 ### 리스트 렌더의 key
 

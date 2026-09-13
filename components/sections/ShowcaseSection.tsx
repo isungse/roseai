@@ -10,11 +10,15 @@ import { ShowcaseCarousel } from "./ShowcaseCarousel";
 export function ShowcaseSection() {
   const t = useTranslations("showcase");
 
+  // `heading` is optional per slide: omit the key in BOTH locale files and
+  // the carousel renders the body at statement size instead.
   const slides = SHOWCASE_SLIDES.map((s) => ({
     id: s.id,
     src: s.src,
     alt: t(`slides.${s.i18nKey}.alt`),
-    heading: t(`slides.${s.i18nKey}.heading`),
+    heading: t.has(`slides.${s.i18nKey}.heading`)
+      ? t(`slides.${s.i18nKey}.heading`)
+      : undefined,
     body: t(`slides.${s.i18nKey}.body`),
   }));
 
