@@ -49,7 +49,7 @@ const ARROW_CLASS =
   "inline-flex h-12 w-12 items-center justify-center rounded-full bg-ink text-paper transition-colors hover:bg-brand";
 
 const HEADING_CLASS =
-  "text-balance text-[clamp(28px,3.4vw,44px)] font-bold leading-[1.25] tracking-[-0.02em]";
+  "text-balance text-[clamp(26px,3.4vw,42px)] font-bold leading-[1.25] tracking-[-0.02em]";
 const BODY_CLASS =
   "mt-6 whitespace-pre-line text-[clamp(16px,1.25vw,19px)] leading-[1.8] text-ink";
 // Heading-less slides: the first line does the heading's job, so the whole
