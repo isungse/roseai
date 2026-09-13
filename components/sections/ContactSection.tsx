@@ -1,7 +1,5 @@
 import { useTranslations } from "next-intl";
 
-import { SectionLabel } from "@/components/ui/SectionLabel";
-
 import { ContactTrigger } from "./ContactTrigger";
 import { HeroDiagram } from "./HeroDiagram";
 
@@ -18,8 +16,6 @@ export function ContactSection() {
       aria-labelledby="contact-heading"
       className="relative border-b border-hair bg-paper text-ink"
     >
-      <SectionLabel code="01 / PHILOSOPHY" />
-
       {/* 홈페이지의 대문(hero gate) — 원본 Hero 가 주석 처리된 상태에서
           이 섹션이 페이지의 메인 메시지를 부담한다. 타이포 스케일·웨이트는
           원본 Hero 와 동일 ceiling(`clamp(52,9vw,128) / extrabold / 0.95 / -0.035em`)
