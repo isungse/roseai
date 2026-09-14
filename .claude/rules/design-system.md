@@ -156,8 +156,8 @@ Lucide 단일 세트. 크기는 `16/20/24` 3단계만. `stroke-width={1.75}` 기
 | 역할 | 값 | 비고 |
 |---|---|---|
 | 슬라이드 제목 (h1 / h2) | `clamp(24px, 2.8vw, 36px)` · 1.25 · -0.02em | 2줄 고정은 JSON 값의 `\n` |
-| 본문 (제목 있는 슬라이드) | `clamp(16px, 1.25vw, 19px)` · 1.8 | 한 문장 = 한 줄. 600px 컬럼에서 4줄 |
-| 스테이트먼트 본문 (제목 없는 슬라이드) | `clamp(22px, 2vw, 26px)` · 1.6 · medium | 첫 줄이 제목 역할 |
+| 본문 (제목 있는 슬라이드) | `clamp(16px, 1.25vw, 19px)` · 1.8 | 591px 컬럼에서 **4줄 이내** 유지 (1440 기준 한 줄 ≈ 한글 32자; 넘치면 wrap 되어 줄 수가 는다) |
+| 스테이트먼트 본문 (제목 없는 슬라이드) | `clamp(22px, 2vw, 26px)` · 1.6 · medium | 첫 줄이 제목 역할. 현재 4장 모두 제목이 있어 미사용 — 기능은 유지 |
 | 카운터 `01 / 04` | mono `text-xs` g500 `tabular-nums` | |
 
 - 원형 요소는 캐러셀 컨트롤에만 허용 (Radius 표의 예외): 화살표 `h-12 w-12 rounded-full bg-ink hover:bg-brand`, 인디케이터 점 `h-2.5 rounded-full` (활성 `w-7 bg-brand`).
@@ -168,3 +168,4 @@ Lucide 단일 세트. 크기는 `16/20/24` 3단계만. `stroke-width={1.75}` 기
 - 원본은 생성 도구에서 받은 1254² 또는 2508² PNG (사용자 Downloads 폴더). 저장소에는 **1600² JPEG q86** 만 커밋 (`public/images/showcase-0N.jpg`, 300–460KB). `next/image` 가 AVIF/WebP 로 재인코딩하므로 원본 PNG(2–5MB) 는 커밋하지 않는다.
 - 변환은 PowerShell + `System.Drawing` (ImageMagick 불필요): 정사각 중앙 크롭 → HighQualityBicubic 리사이즈 → JPEG 인코더 품질 86.
 - 슬라이드 번호와 파일 번호를 항상 일치시킨다. 순서를 바꿀 때 데이터의 `src` 만 바꾸지 말고 `git mv` 로 파일도 함께 교체.
+- **같은 파일명으로 이미지를 교체하면 브라우저가 옛 `/_next/image` 결과를 계속 보여줄 수 있다.** dev 의 최적화 응답은 `max-age=0, must-revalidate` 지만 Browser pane 은 재검증 없이 캐시를 재사용한 사례가 있음 (서버 캐시 `.next/cache/images` 는 비어 있었다 — 서버 문제가 아니다). 교체 후 확인은 hard reload 또는 `fetch(img.currentSrc, {cache:'reload'})` 후 새로고침. 프로덕션은 파일 ETag 가 바뀌어 새 이미지가 서빙됨 — 의심되면 `/_next/image?url=…&w=640` 을 `Accept: image/jpeg` 로 받아 로컬 파일과 픽셀 비교로 확정.
