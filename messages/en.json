@@ -8,7 +8,7 @@
   },
   "meta": {
     "title": "ROSE-AI — Architecture of Intelligence",
-    "description": "We give you back the time for a cup of coffee. ROSE-AI looks at how your business actually runs and designs only the automation you truly need — not a grand system, but tools you can use from tomorrow morning."
+    "description": "We give you back the time for a cup of coffee. ROSE-AI studies how your work gets done and designs the AI automation you actually need, giving you practical tools that leave more time for important work."
   },
   "showcase": {
     "regionLabel": "About ROSE-AI",
@@ -18,20 +18,23 @@
     "slides": {
       "coffee": {
         "heading": "We give you back\nthe time for a cup of coffee.",
-        "body": "Leave repetitive work to AI. Focus on what only people can do.\nROSE-AI studies your work and designs only the automation you need.\nNot a grand system, but tools you can use from tomorrow morning.\nSmall steps, stacked together, become bigger possibilities.",
+        "body": "Leave the work you repeat every day to us.\nROSE-AI studies how your work gets done and designs only the AI automation you need.\nWe reduce unnecessary steps and deliver practical tools you can put to work.\nUse the time once spent on repetition for the work that matters more.",
         "alt": "A cup of coffee on a sunlit desk, two monitors showing automation workflow code, and a notebook with today's to-do list"
       },
       "evening": {
-        "body": "What's left is time.\nThe checking and tidying people used to do now belongs to the system,\nand the time that frees up goes back to you, not to more work.",
+        "heading": "Make the end of your day\na little lighter.",
+        "body": "Leave the repetitive work that still depends on manual effort to us.\nWe organize scattered information and recurring processes into tools that make work faster and easier.\nSpend less time processing and more time reviewing and deciding.",
         "alt": "A smiling woman with a red lanyard leaving an office building at sunset"
       },
       "camp": {
-        "body": "Even while you're in the woods, the system keeps working.\nIf something goes wrong, the system tells you first.\nNo alert means everything is running fine.",
+        "heading": "Step away without losing sight\nof what is happening.",
+        "body": "Leave the constant checking of automation runs to us as well.\nWe design features that record results and notify you of detected errors or items that need attention.\nCheck in when it matters, and enjoy the rest of your time.",
         "alt": "A smiling woman in a camp chair by a fire, looking up at a star-filled night sky"
       },
       "night": {
-        "body": "Beyond AI agents, to AI-native.\nWork doesn't stop when people leave the office.\nData gets gathered, sorted, and problems get flagged.\nROSE-AI designs that structure.",
-        "accent": "AI-native",
+        "heading": "Connect separate tasks\ninto one continuous flow.",
+        "body": "Leave work that moves through several steps and tools to us.\nWe connect AI and automation to the way you already work, creating a flow that moves naturally from one step to the next.\nThe system handles repetition while people remain responsible for important decisions.",
+        "accent": "AI and automation",
         "alt": "An empty office at night with a Seoul skyline view and a monitor showing logs with green check marks"
       }
     }
