@@ -39,9 +39,19 @@ ROSE-AI의 공식 홍보 웹사이트. `roseai.co.kr` 도메인으로 배포.
 세션 종료 시 변경 사항은 해당 rule 파일에 업데이트.
 200줄이 넘으면 분할.
 
+## Work Log
+
+`work-log/YYYY-MM-DD/README.md` — 세션(날짜) 단위 작업 기록. 룰 파일과 역할이 다르다:
+
+- **rule 파일** — 시간이 지나도 유효한 원칙과 그 이유(Why). 세션·날짜 언급 없음.
+- **work-log** — 그날 무엇을 어떻게 바꿨는지(What/When). 작업 목적, 반영된 문구·에셋, 변경 파일, 검증 결과, 배포 커밋, 보류 사항.
+
+같은 날 여러 세션이 작업하면 하나의 README 에 절을 추가한다. 배포된 사용자 노출 문구는 work-log 에 전문을 남겨 되돌릴 기준점으로 삼는다.
+
 ## Session End Checklist
 
 - [ ] 변경 의도를 rule 파일에 기록 (What이 아닌 Why)
+- [ ] `work-log/<오늘 날짜>/README.md` 에 작업 기록 추가 (What/When)
 - [ ] 새 컴포넌트는 Props 인터페이스 명시
 - [ ] 텍스트는 하드코딩 금지, i18n JSON에 추가
 - [ ] `npm run build` 통과 확인
