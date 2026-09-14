@@ -32,6 +32,7 @@ ROSE-AI의 공식 홍보 웹사이트. `roseai.co.kr` 도메인으로 배포.
 - `code-style.md` — 코드 컨벤션, 네이밍, 폴더 구조
 - `design-system.md` — 색상/폰트/스페이싱 토큰
 - `i18n.md` — 한국어/영어 번역 관리
+- `content.md` — 슬라이드 소개글 톤·형식·작성 절차
 - `seo.md` — 메타태그, sitemap, OG 이미지
 - `accessibility.md` — a11y 체크리스트
 - `deployment.md` — Vercel 배포 & 환경변수

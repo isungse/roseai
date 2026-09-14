@@ -165,6 +165,7 @@ Lucide 단일 세트. 크기는 `16/20/24` 3단계만. `stroke-width={1.75}` 기
 
 ## 이미지 에셋 파이프라인
 
+- **생성**: Higgsfield MCP 로 직접 생성 가능. 계정이 무료 플랜이면 GPT Image 2.5 · Recraft 는 "Requires basic plan or higher" 로 거부되고 **Google Nano Banana Pro** (`nano_banana_pro`, 1:1, 2k, 2048² 출력, 후보 2장 ≈ 소액 크레딧) 가 동작한다. 후보는 스크래치패드에 내려받아 사용자에게 보내고, 사용자가 외부(ChatGPT 등)에서 편집한 뒤 Downloads 에 저장한 파일을 최종본으로 쓴다 — 편집본은 1254² 로 줄어 돌아오는 경우가 많다.
 - 원본은 생성 도구에서 받은 1254² 또는 2508² PNG (사용자 Downloads 폴더). 저장소에는 **1600² JPEG q86** 만 커밋 (`public/images/showcase-0N.jpg`, 300–460KB). `next/image` 가 AVIF/WebP 로 재인코딩하므로 원본 PNG(2–5MB) 는 커밋하지 않는다.
 - 변환은 PowerShell + `System.Drawing` (ImageMagick 불필요): 정사각 중앙 크롭 → HighQualityBicubic 리사이즈 → JPEG 인코더 품질 86.
 - 슬라이드 번호와 파일 번호를 항상 일치시킨다. 순서를 바꿀 때 데이터의 `src` 만 바꾸지 말고 `git mv` 로 파일도 함께 교체.
