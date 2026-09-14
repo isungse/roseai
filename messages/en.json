@@ -31,11 +31,11 @@
         "body": "Leave the constant checking of automation runs to us as well.\nWe design features that record results and notify you of detected errors or items that need attention.\nCheck in when it matters, and enjoy the rest of your time.",
         "alt": "A smiling woman in a camp chair by a fire, looking up at a star-filled night sky"
       },
-      "night": {
+      "office": {
         "heading": "Connect separate tasks\ninto one continuous flow.",
         "body": "Leave work that moves through several steps and tools to us.\nWe connect AI and automation to the way you already work, creating a flow that moves naturally from one step to the next.\nThe system handles repetition while people remain responsible for important decisions.",
         "accent": "AI and automation",
-        "alt": "An empty office at night with a Seoul skyline view and a monitor showing logs with green check marks"
+        "alt": "A sunlit office by day: three colleagues in a glass meeting room, while the monitors on the empty desks show AI agents running tasks with completed check marks"
       }
     }
   },

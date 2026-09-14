@@ -99,3 +99,34 @@ ROSE-AI는 현재의 업무 방식을 살펴보고, 꼭 필요한 AI 자동화�
 
 - 문의 폼 → `manager@roseai.co.kr` 메일 링크 교체 안건은 계속 보류 (사용자 결정 대기).
 - 리빌드 후 프로덕션 Lighthouse 미측정.
+
+---
+
+## 세션 3 — 슬라이드 02 를 낮 사무실로 교체, 순서 재배열 (Claude Code)
+
+### 작업 목적
+
+밤 사무실 사진을 빼고 "아침 → 낮 사무실 → 퇴근 → 캠핑" 하루 흐름으로 재배열. 낮 사무실은 "회의 중에도 빈 책상의 PC 는 AI 에이전트가 움직인다" 연출.
+
+### 이미지 생성
+
+- Higgsfield MCP 사용. GPT Image 2.5 · Recraft V4.1 은 무료 플랜에서 "Requires basic plan or higher" 로 거부 → Google Nano Banana Pro 로 2048² 후보 2장 생성 (1:1, 2k).
+- 사용자가 후보 A 를 편집(서 있는 인물을 빨간 사원증의 여성으로)해 `Downloads\office-day-수정.png` (1254²) 로 저장 → 1600² JPEG q86 변환 → `public/images/showcase-02.jpg`.
+
+### 변경 파일
+
+- `public/images/`: 밤 사무실(구 03) 삭제, 퇴근(구 02) → 03 으로 `git mv`, 낮 사무실 → 02 신규
+- `lib/data/showcase.ts`: 순서 `coffee / office / evening / camp`
+- `messages/ko.json`, `en.json`: `night` → `office` 키 리네임, alt 를 낮 회의 장면으로 교체. 제목·본문·강조("AI와 자동화") 는 그대로 유지
+- `.claude/rules/design-system.md`: dev 옵티마이저 캐시 경로(`.next/dev/cache/images`)와 서버/브라우저 판정법 정정
+
+### 검증 결과
+
+- `tsc` · `npm run lint` · `npm run build` 통과
+- dev 서버의 `/_next/image` 응답을 직접 받아 로컬 파일과 픽셀 비교: 02 = 낮 사무실, 03 = 퇴근, 04 = 캠핑 일치
+- Browser pane 은 같은 파일명 교체 후 옛 이미지를 계속 표시(브라우저 캐시). 서버 응답이 정상이므로 배포에는 영향 없음
+
+### 보류 사항
+
+- 낮 사무실 슬라이드 소개글은 이전 사무실 문구 유지. 장면(회의 + AI 작동)에 맞춘 문구 조정은 사용자 결정 대기
+- 문의 폼 메일 링크 안건, Lighthouse 측정: 계속 보류
