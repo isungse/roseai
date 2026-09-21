@@ -166,7 +166,9 @@ Lucide 단일 세트. 크기는 `16/20/24` 3단계만. `stroke-width={1.75}` 기
 ## 이미지 에셋 파이프라인
 
 - **생성**: Higgsfield MCP 로 직접 생성 가능. 계정이 무료 플랜이면 GPT Image 2.5 · Recraft 는 "Requires basic plan or higher" 로 거부되고 **Google Nano Banana Pro** (`nano_banana_pro`, 1:1, 2k, 2048² 출력, 후보 2장 ≈ 소액 크레딧) 가 동작한다. 후보는 스크래치패드에 내려받아 사용자에게 보내고, 사용자가 외부(ChatGPT 등)에서 편집한 뒤 Downloads 에 저장한 파일을 최종본으로 쓴다 — 편집본은 1254² 로 줄어 돌아오는 경우가 많다.
-- 원본은 생성 도구에서 받은 1254² 또는 2508² PNG (사용자 Downloads 폴더). 저장소에는 **1600² JPEG q86** 만 커밋 (`public/images/showcase-0N.jpg`, 300–460KB). `next/image` 가 AVIF/WebP 로 재인코딩하므로 원본 PNG(2–5MB) 는 커밋하지 않는다.
-- 변환은 PowerShell + `System.Drawing` (ImageMagick 불필요): 정사각 중앙 크롭 → HighQualityBicubic 리사이즈 → JPEG 인코더 품질 86.
-- 슬라이드 번호와 파일 번호를 항상 일치시킨다. 순서를 바꿀 때 데이터의 `src` 만 바꾸지 말고 `git mv` 로 파일도 함께 교체.
+- 원본은 생성 도구에서 받은 PNG (사용자 Downloads 폴더). 저장소에는 **정사각 JPEG q86** 만 커밋한다. `next/image` 가 AVIF/WebP 로 재인코딩하므로 원본 PNG(2–5MB) 는 커밋하지 않는다.
+- 파일명은 `public/images/showcase-<슬라이드번호>-<i18nKey>.jpg` (예: `showcase-03-evening.jpg`). 번호는 슬라이드 순서, 접미사는 `SHOWCASE_SLIDES` 의 `i18nKey` 와 동일 — 파일명만 봐도 어느 슬라이드인지 알 수 있어 순서 교체·이미지 교체 시 번호만 있는 이름보다 실수가 적다. 순서를 바꿀 때 데이터의 `src` 만 바꾸지 말고 `git mv` 로 파일도 함께 교체.
+- 해상도: 원본 짧은 변이 1600 이상이면 1600² 로 리사이즈, 그보다 작으면 (예: 16:9 1672×941 원본 → 941²) **업스케일하지 않고 짧은 변 크기 그대로** 둔다. 카드 최대 렌더 폭이 460px(2x DPR 920px) 이라 900px 대 소스로 충분하고, 업스케일은 픽셀 정보 없이 파일만 키운다.
+- 크롭: 정사각 원본은 그대로, 16:9 원본은 기계적 중앙 크롭 대신 **인물이 왼쪽 1/3, 시선 방향으로 배경(스카이라인·호수) 이 열리도록** 가로 오프셋(0.5 = 중앙, 보통 0.55–0.6) 을 정한다. 후보 오프셋 3–4개를 콘택트 시트 한 장으로 비교한 뒤 확정.
+- 변환은 Python Pillow: `Image.open().convert("RGB")` (생성 도구 메타데이터 제거) → `crop` → `save(quality=86, optimize=True, progressive=True)`. PowerShell `System.Drawing` 도 되지만 WebP 원본은 읽지 못한다.
 - **같은 파일명으로 이미지를 교체하면 브라우저가 옛 `/_next/image` 결과를 계속 보여줄 수 있다.** dev 의 최적화 응답은 `max-age=0, must-revalidate` 지만 Browser pane 은 재검증 없이 캐시를 재사용한 사례가 있음. 서버 측 옵티마이저 캐시는 Next 16 dev 에서 **`.next/dev/cache/images`** 에 있고 (`.next/cache/images` 아님) 파일 교체를 정상 감지한다 — 서버 문제가 아니다. **판정법**: `Invoke-WebRequest "http://localhost:3000/_next/image?url=…&w=640&q=75" -Headers @{Accept='image/jpeg'}` 로 서버 응답을 직접 받아 로컬 파일과 32×32 썸네일 픽셀 차이로 비교 (일치 ≈ 1, 불일치 ≈ 200+). 브라우저 쪽 잔상은 `fetch(url, {cache:'reload'})` 를 **srcset 의 모든 폭**에 대해 실행한 뒤 새로고침. 프로덕션은 파일 ETag 가 바뀌어 새 이미지가 서빙되며 같은 판정법으로 확정 가능.
