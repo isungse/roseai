@@ -1,7 +1,8 @@
 {
   "common": {
     "skipToContent": "Skip to content",
-    "siteName": "ROSE·AI"
+    "siteName": "ROSE·AI",
+    "productNav": "Products"
   },
   "footer": {
     "copyright": "© 2026 ROSE-AI · ALL SYSTEMS NOMINAL"
@@ -21,6 +22,18 @@
         "body": "Leave the work you repeat every day to us.\nROSE-AI studies how your work gets done and designs only the AI automation you need.\nWe reduce unnecessary steps and deliver practical tools you can put to work.\nUse the time once spent on repetition for the work that matters more.",
         "alt": "A cup of coffee on a sunlit desk, two monitors showing automation workflow code, and a notebook with today's to-do list"
       },
+      "works": {
+        "heading": "The groupware a hospital runs on,\nROSE-AI WORKS",
+        "body": "Approvals, messenger, attendance, boards and support requests in one flow.\nThe very product in daily use at Pyeongtaek St. Mary's Hospital.\nBrowse the real screens and the full menu (Korean).",
+        "accent": "in daily use",
+        "alt": "Product composition of the ROSE-AI WORKS dashboard layered with the mobile check-in screen"
+      },
+      "office": {
+        "heading": "Connect separate tasks\ninto one continuous flow.",
+        "body": "Leave work that moves through several steps and tools to us.\nWe connect AI and automation to the way you already work, creating a flow that moves naturally from one step to the next.\nThe system handles repetition while people remain responsible for important decisions.",
+        "accent": "AI and automation",
+        "alt": "A sunlit office by day: three colleagues in a glass meeting room, while the monitors on the empty desks show AI agents running tasks with completed check marks"
+      },
       "evening": {
         "heading": "Make the end of your day\na little lighter.",
         "body": "Leave the repetitive work that still depends on manual effort to us.\nWe organize scattered information and recurring processes into tools that make work faster and easier.\nSpend less time processing and more time reviewing and deciding.",
@@ -30,35 +43,7 @@
         "heading": "Even while you rest,\nthe work goes on.",
         "body": "Even now, as the sun sets over the lake, your AI agents are still at their desks.\nThey tidy up the results and speak up quietly only when something needs your eye.\nSo for now, this time is yours to enjoy.",
         "alt": "A woman in a camp chair by a lake at sunset, holding a steel mug and gazing at the glowing horizon, with lanterns and a campfire nearby"
-      },
-      "office": {
-        "heading": "Connect separate tasks\ninto one continuous flow.",
-        "body": "Leave work that moves through several steps and tools to us.\nWe connect AI and automation to the way you already work, creating a flow that moves naturally from one step to the next.\nThe system handles repetition while people remain responsible for important decisions.",
-        "accent": "AI and automation",
-        "alt": "A sunlit office by day: three colleagues in a glass meeting room, while the monitors on the empty desks show AI agents running tasks with completed check marks"
       }
-    }
-  },
-  "contact": {
-    "dialogLabel": "Inquiry",
-    "closeLabel": "Close",
-    "form": {
-      "labels": {
-        "company": "COMPANY",
-        "email": "EMAIL",
-        "message": "MESSAGE"
-      },
-      "placeholders": {
-        "company": "Enter your company name",
-        "email": "Enter your email address",
-        "message": "Enter your message"
-      },
-      "send": "SEND",
-      "cancel": "Cancel",
-      "required": "Please fill in all required fields.",
-      "invalidEmail": "Please enter a valid email address.",
-      "success": "Thank you — we'll reach out within 24 hours.",
-      "error": "Something went wrong. Please try again shortly."
     }
   }
 }

@@ -9,8 +9,15 @@ export default getRequestConfig(async ({ requestLocale }) => {
     ? requested
     : routing.defaultLocale;
 
+  const base = (await import(`../messages/${locale}.json`)).default;
+  // The `works` product section is Korean-only (i18n.md "ko 전용
+  // 네임스페이스"): its messages live in a separate file merged for `ko`
+  // alone, so ko.json and en.json keep identical key trees.
+  const works =
+    locale === "ko" ? (await import("../messages/works.ko.json")).default : {};
+
   return {
     locale,
-    messages: (await import(`../messages/${locale}.json`)).default,
+    messages: { ...base, ...works },
   };
 });

@@ -2,7 +2,6 @@ import { useTranslations } from "next-intl";
 
 import { SHOWCASE_SLIDES } from "@/lib/data/showcase";
 
-import { ContactTrigger } from "./ContactTrigger";
 import { ShowcaseCarousel } from "./ShowcaseCarousel";
 
 // Server shell: resolves translations and hands plain strings to the client
@@ -23,6 +22,9 @@ export function ShowcaseSection() {
     accent: t.has(`slides.${s.i18nKey}.accent`)
       ? t(`slides.${s.i18nKey}.accent`)
       : undefined,
+    // The CTA label is a locale-invariant design element (like the logo and
+    // the TopBar `WORKS` link), so it is not translated.
+    cta: s.href ? { label: "WORKS", href: s.href } : undefined,
   }));
 
   return (
@@ -44,12 +46,6 @@ export function ShowcaseSection() {
             next: t("next"),
             goTo: slides.map((_, i) => t("goTo", { index: i + 1 })),
           }}
-          cta={
-            <ContactTrigger className="mono cap inline-flex items-center gap-6 bg-brand px-5 py-3.5 text-sm font-semibold tracking-[0.04em] text-paper transition-colors hover:bg-ink">
-              <span>CONTACT</span>
-              <span aria-hidden="true">→</span>
-            </ContactTrigger>
-          }
         />
       </div>
     </section>

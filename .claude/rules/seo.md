@@ -12,7 +12,7 @@
 ## Open Graph / Twitter
 
 - OG 이미지: `1200x630`, `<2MB`, 로케일별 분리 (`/og/ko.png`, `/og/en.png`).
-- 동적 OG 가 필요하면 `app/og/route.tsx` + `next/og` ImageResponse.
+- 동적 OG 가 필요하면 `next/og` ImageResponse. 세그먼트 단위로는 파일 컨벤션 `opengraph-image.tsx` 가 하위 라우트까지 상속된다 (`app/[locale]/works/opengraph-image.tsx` 가 works 7 페이지를 덮는다). Satori 는 woff2 를 읽지 못하므로 한글 폰트는 `node_modules/pretendard/dist/public/static/*.otf` 를 `fs` 로 읽어 넘긴다.
 - `twitter.card: 'summary_large_image'`.
 
 ## hreflang / canonical
@@ -32,17 +32,18 @@ alternates: {
 
 - canonical 은 쿼리·trailing slash 정규화된 값으로.
 - 동일 콘텐츠의 ko/en 은 서로 hreflang 으로 연결한다.
+- **ko 전용 페이지**(`/works/**`, i18n.md "ko 전용 네임스페이스") 는 `languages` 에 `ko` 와 `x-default` 만 둔다 — 존재하지 않는 en 을 hreflang 으로 가리키지 않는다. 공통 헬퍼 `lib/works/metadata.ts`.
 
 ## Sitemap / Robots
 
-- `app/sitemap.ts` 에서 모든 정적·동적 라우트를 ko/en 양쪽으로 배출.
+- `app/sitemap.ts` 에서 모든 정적·동적 라우트를 ko/en 양쪽으로 배출 (ko 전용 라우트는 ko URL 만).
 - `changeFrequency`, `lastModified` 는 실제 업데이트 기준으로 채운다 (거짓 값 금지).
 - `app/robots.ts` 에서 `sitemap: 'https://roseai.co.kr/sitemap.xml'` 명시.
 - 프리뷰/스테이징 도메인은 `robots` 에서 `disallow: '/'` 강제.
 
 ## 구조화 데이터 (JSON-LD)
 
-루트 layout 에 `Organization` + `WebSite` (SearchAction 포함). 기사/케이스 페이지에는 `Article`. `<Script type="application/ld+json">` 로 삽입.
+루트 layout 에 `Organization` + `WebSite` (SearchAction 포함). 기사/케이스 페이지에는 `Article`. 제품 섹션 layout(`app/[locale]/works/layout.tsx`) 에는 `SoftwareApplication` (offers 없음 — 요금을 쓰지 않는다). `<script type="application/ld+json">` 로 삽입.
 
 ## 성능·Core Web Vitals
 

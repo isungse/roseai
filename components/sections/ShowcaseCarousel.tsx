@@ -1,17 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import {
-  useCallback,
-  useEffect,
-  useState,
-  type KeyboardEvent,
-  type ReactNode,
-} from "react";
+import { useCallback, useEffect, useState, type KeyboardEvent } from "react";
 
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
 import { RevealText, countWords } from "@/components/ui/RevealText";
+import { Link } from "@/i18n/navigation";
 
 export interface ShowcaseSlide {
   id: string;
@@ -22,13 +17,14 @@ export interface ShowcaseSlide {
   body: string;
   /** Optional substring of `body` rendered in brand red. */
   accent?: string;
+  /** Optional per-slide call to action (the product slide links to /works). */
+  cta?: { label: string; href: string };
 }
 
 interface ShowcaseCarouselProps {
   slides: ShowcaseSlide[];
   /** `goTo[i]` is the accessible label of the i-th indicator dot. */
   labels: { region: string; prev: string; next: string; goTo: string[] };
-  cta: ReactNode;
 }
 
 const AUTOPLAY_MS = 5000;
@@ -50,6 +46,9 @@ const POSITION_CLASS: Record<Position, string> = {
 const ARROW_CLASS =
   "inline-flex h-12 w-12 items-center justify-center rounded-full bg-ink text-paper transition-colors hover:bg-brand";
 
+const CTA_CLASS =
+  "mono cap inline-flex items-center gap-6 bg-brand px-5 py-3.5 text-sm font-semibold tracking-[0.04em] text-paper transition-colors hover:bg-ink";
+
 const HEADING_CLASS =
   "whitespace-pre-line text-[clamp(24px,2.8vw,36px)] font-bold leading-[1.25] tracking-[-0.02em]";
 const BODY_CLASS =
@@ -66,11 +65,7 @@ function positionOf(index: number, active: number, length: number): Position {
   return "hidden";
 }
 
-export function ShowcaseCarousel({
-  slides,
-  labels,
-  cta,
-}: ShowcaseCarouselProps) {
+export function ShowcaseCarousel({ slides, labels }: ShowcaseCarouselProps) {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const length = slides.length;
@@ -123,15 +118,19 @@ export function ShowcaseCarousel({
       <div className="px-6 md:px-10">
         <div className="relative mx-auto aspect-square w-full max-w-[460px] [perspective:1000px] md:mx-0">
           {slides.map((s, i) => (
-          <Image
-            key={s.id}
-            src={s.src}
-            alt={s.alt}
-            fill
-            priority={i === 0}
-            sizes="(min-width: 768px) 50vw, 100vw"
-            className={`rounded-2xl object-cover shadow-lg transition-[transform,opacity] duration-[400ms] ${POSITION_CLASS[positionOf(i, active, length)]}`}
-          />
+            <Image
+              key={s.id}
+              src={s.src}
+              alt={s.alt}
+              fill
+              priority={i === 0}
+              // The image optimizer does not rasterize SVG; the product
+              // slide's placeholder artwork is an SVG until the JPEG
+              // composition replaces it.
+              unoptimized={s.src.endsWith(".svg")}
+              sizes="(min-width: 768px) 50vw, 100vw"
+              className={`rounded-2xl object-cover shadow-lg transition-[transform,opacity] duration-[400ms] ${POSITION_CLASS[positionOf(i, active, length)]}`}
+            />
           ))}
         </div>
       </div>
@@ -162,8 +161,8 @@ export function ShowcaseCarousel({
           </p>
         </div>
 
-        {/* Arrows + dots sit left; the CTA is pushed to the text column's
-            right edge so it doesn't crowd the navigation. */}
+        {/* Arrows + dots sit left; a slide's own CTA (only the product slide
+            has one) is pushed to the text column's right edge. */}
         <div className="mt-10 flex flex-wrap items-center gap-4">
           {multi && (
             <div className="flex items-center gap-4">
@@ -199,7 +198,16 @@ export function ShowcaseCarousel({
               </div>
             </div>
           )}
-          <div className="ml-auto">{cta}</div>
+          {slide.cta && (
+            <div className="ml-auto">
+              {/* The product section is Korean-only, so the link always
+                  targets the ko locale (i18n.md). */}
+              <Link href={slide.cta.href} locale="ko" className={CTA_CLASS}>
+                <span>{slide.cta.label}</span>
+                <span aria-hidden="true">→</span>
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </div>

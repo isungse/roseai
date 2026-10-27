@@ -19,14 +19,13 @@ Vercel Pro 배포. 도메인 `roseai.co.kr` (+ `www.roseai.co.kr` → apex 리�
 | 키                                     | 범위         | 용도                                                                                                 |
 | -------------------------------------- | ------------ | ---------------------------------------------------------------------------------------------------- |
 | `NEXT_PUBLIC_SITE_URL`                 | All          | 절대 URL 생성, OG, sitemap (`https://roseai.co.kr`)                                                  |
-| `NEXT_PUBLIC_SUPABASE_URL`             | All          | Supabase 프로젝트 REST 엔드포인트. `https://<ref>.supabase.co`                                       |
-| `SUPABASE_SECRET_KEY`                  | All (서버)   | service*role 키 (`sb_secret*…`). `/api/contact`가 RLS 우회 insert 에 사용. 비밀 —`NEXT*PUBLIC*` 금지 |
-| `IP_HASH_SECRET`                       | All (서버)   | `/api/contact` 의 HMAC-SHA256 키 (`openssl rand -hex 32`). 미설정 시 `ip_hash = NULL`. 비밀          |
 | `NEXT_PUBLIC_GA_ID`                    | Prod         | Google Analytics (선택)                                                                              |
 | `NEXT_PUBLIC_PLAUSIBLE_DOMAIN`         | Prod         | Plausible (선택)                                                                                     |
 | `REVALIDATE_TOKEN`                     | All (서버)   | On-demand ISR secret                                                                                 |
-| `RESEND_API_KEY`                       | Prod/Preview | 문의 폼 이메일 전송 (차기 단계)                                                                      |
-| `CONTACT_FORM_TO`                      | Prod/Preview | 문의 폼 수신 주소                                                                                    |
+| `VERCEL_ENV`                           | Vercel 자동  | `app/robots.ts` 가 `production` 일 때만 크롤링을 허용한다. 직접 등록하지 않는다                      |
+
+문의 폼(`/api/contact`, Supabase `contact_inquiries`)은 제거되었다 — 사이트에는 더 이상 서버 비밀값이 없다. Vercel 에 남아 있는
+`NEXT_PUBLIC_SUPABASE_URL` · `SUPABASE_SECRET_KEY` · `IP_HASH_SECRET` 은 사용처가 없으므로 지워도 된다.
 
 규칙:
 
@@ -43,13 +42,14 @@ Vercel Pro 배포. 도메인 `roseai.co.kr` (+ `www.roseai.co.kr` → apex 리�
 - 선택(optional) 변수는 이 패턴을 쓰지 않는다 — 기본값이 있거나 런타임에 분기 처리.
 - **사용처 없는 키는 `required` 로 두지 않는다** — 실제 컴포넌트/유틸에서 import 되지 않는 env 는 추가하지 말고, 추가했다가 더는 안 쓰면 정리한다. "보험용 required" 는 빌드 실패만 만들고 보호 효과 없음.
 
-### 서버 전용 비밀값은 `lib/env.server.ts` 경유
+### 서버 전용 비밀값은 `lib/env.server.ts` 경유 (현재 사용처 없음)
 
-`SUPABASE_SECRET_KEY` 같은 **서버에서만 읽혀야 하는 비밀값**은 `lib/env.ts` 와 분리된 `lib/env.server.ts` 에 둔다. 두 가지 안전장치:
+**서버에서만 읽혀야 하는 비밀값**이 다시 생기면 `lib/env.ts` 와 분리된 `lib/env.server.ts` 에 둔다 (문의 폼 제거 전의 구현은 git 이력에 있다). 두 가지 안전장치:
 
 - 파일 상단에 `import "server-only"` — 클라이언트 번들이 이 모듈을 import 하면 빌드가 즉시 실패. 비밀이 브라우저로 새는 것을 컴파일 타임에 차단.
-- `serverEnv.supabaseSecretKey` 는 **getter** 로 정의해 lazy 평가. 모듈 import 만으로는 `throw` 하지 않고, 실제 접근 시점에 검증. 이로써 빈 값이어도 비관련 페이지 빌드는 통과 — secret 가 등록되지 않은 환경에서 unrelated 페이지가 무관한 이유로 깨지지 않음.
-- 사용처는 server-only 모듈에서만 (`app/api/**/route.ts`, `lib/supabase/admin.ts` 등). Server Component 에서도 import 가능하지만 비밀을 직접 렌더하지 않을 것.
+- 비밀값은 **getter** 로 정의해 lazy 평가. 모듈 import 만으로는 `throw` 하지 않고, 실제 접근 시점에 검증. 이로써 빈 값이어도 비관련 페이지 빌드는 통과 — secret 가 등록되지 않은 환경에서 unrelated 페이지가 무관한 이유로 깨지지 않음.
+- 사용처는 server-only 모듈에서만 (`app/api/**/route.ts` 등). Server Component 에서도 import 가능하지만 비밀을 직접 렌더하지 않을 것.
+- 같은 `server-only` 가드는 빌드 시 파일시스템을 읽는 `lib/works/images.ts` 에도 쓴다 — 비밀은 아니지만 클라이언트 번들에 `node:fs` 가 들어오는 것을 막는다.
 
 ### Vercel scope 분리 — Production / Preview / Development
 

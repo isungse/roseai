@@ -5,7 +5,6 @@ import { notFound } from "next/navigation";
 
 import { Footer } from "@/components/layout/Footer";
 import { TopBar } from "@/components/layout/TopBar";
-import { ContactDialogProvider } from "@/components/sections/ContactDialog";
 import { routing, type Locale } from "@/i18n/routing";
 import { env } from "@/lib/env";
 import { inter, jetbrainsMono, pretendard } from "@/lib/fonts";
@@ -77,32 +76,30 @@ export default async function LocaleLayout({
     >
       <body className="text-ink antialiased">
         <NextIntlClientProvider>
-          <ContactDialogProvider>
-            <a href="#main" className="skip-link">
-              {t("skipToContent")}
-            </a>
-            {/* Page shell — Naver-style fixed-width column floating on the g50
-                backdrop. `my-10 md:my-16` (40 / 64px) lifts the shell off the
-                viewport top and bottom for a "hotel rulebook" — generous
-                breathing room above and below a contained card; `border` (all
-                four sides) closes the box.
+          <a href="#main" className="skip-link">
+            {t("skipToContent")}
+          </a>
+          {/* Page shell — Naver-style fixed-width column floating on the g50
+              backdrop. `my-10 md:my-16` (40 / 64px) lifts the shell off the
+              viewport top and bottom for a "hotel rulebook" — generous
+              breathing room above and below a contained card; `border` (all
+              four sides) closes the box.
 
-                The sticky TopBar uses `top-0` (NOT the shell margin). The
-                floating-card look is visible only at scroll=0; once the user
-                scrolls, the bar pins to viewport top and section content scrolls
-                fully underneath. Using `top-10 md:top-16` (matching shell margin)
-                creates a 40-64px gap above the bar through which section
-                content leaks visibly — the bar appears to float mid-page with
-                content above AND below it. `top-0` eliminates that gap.
+              The sticky TopBar uses `top-0` (NOT the shell margin). The
+              floating-card look is visible only at scroll=0; once the user
+              scrolls, the bar pins to viewport top and section content scrolls
+              fully underneath. Using `top-10 md:top-16` (matching shell margin)
+              creates a 40-64px gap above the bar through which section
+              content leaks visibly — the bar appears to float mid-page with
+              content above AND below it. `top-0` eliminates that gap.
 
-                Inner sections no longer set their own max-w-screen-xl — the
-                shell is the single source of width. */}
-            <div className="mx-auto my-10 flex min-h-[calc(100svh-5rem)] max-w-[1360px] flex-col border border-hair bg-paper md:my-16 md:min-h-[calc(100svh-8rem)]">
-              <TopBar />
-              <main id="main" className="flex flex-1 flex-col">{children}</main>
-              <Footer />
-            </div>
-          </ContactDialogProvider>
+              Inner sections no longer set their own max-w-screen-xl — the
+              shell is the single source of width. */}
+          <div className="mx-auto my-10 flex min-h-[calc(100svh-5rem)] max-w-[1360px] flex-col border border-hair bg-paper md:my-16 md:min-h-[calc(100svh-8rem)]">
+            <TopBar />
+            <main id="main" className="flex flex-1 flex-col">{children}</main>
+            <Footer />
+          </div>
         </NextIntlClientProvider>
       </body>
     </html>
