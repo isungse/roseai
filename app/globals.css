@@ -17,6 +17,21 @@
     ui-monospace, monospace;
   --font-display: var(--font-inter), var(--font-pretendard), sans-serif;
 
+  /* Type scale from design-system.md "타이포그래피". Declared here so pages
+     use `text-h1` … `text-body-lg` instead of ad-hoc clamp() values. */
+  --text-display: 56px;
+  --text-display--line-height: 1.05;
+  --text-h1: 40px;
+  --text-h1--line-height: 1.15;
+  --text-h2: 32px;
+  --text-h2--line-height: 1.2;
+  --text-h3: 24px;
+  --text-h3--line-height: 1.3;
+  --text-body-lg: 18px;
+  --text-body-lg--line-height: 1.6;
+  --text-body: 16px;
+  --text-body--line-height: 1.6;
+
   --default-transition-duration: 250ms;
   --default-transition-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
 }

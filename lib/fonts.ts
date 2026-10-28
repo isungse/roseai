@@ -1,21 +1,39 @@
 import { Inter, JetBrains_Mono } from "next/font/google";
 import localFont from "next/font/local";
 
+import { SUBSET_CHARS } from "@/app/fonts/subset-chars";
+import messages from "@/messages/ko.json";
+
+// Inter (the 404 headline, otherwise behind Pretendard, which already covers Latin) and JetBrains Mono
+// (small `.mono` labels) load when text uses them; preloading them on every page held back the LCP image.
 export const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
+  preload: false,
 });
 
 export const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains-mono",
   display: "swap",
+  preload: false,
 });
 
+// Pretendard Variable cut down to the characters the site uses (app/fonts/subset.mjs): 100 KB instead
+// of 2 MB, every weight kept.
 export const pretendard = localFont({
-  src: "../node_modules/pretendard/dist/web/variable/woff2/PretendardVariable.woff2",
+  src: "../app/fonts/PretendardVariable.subset.woff2",
   variable: "--font-pretendard",
   display: "swap",
   weight: "45 920",
 });
+
+// Copy with a character outside the subset would quietly render in a system font, so stop the build
+// instead and regenerate with `npm run font:subset`.
+const missing = [...new Set(JSON.stringify(messages))].filter(
+  (ch) => ch.codePointAt(0)! > 0x7e && !SUBSET_CHARS.includes(ch),
+);
+if (missing.length > 0) {
+  throw new Error(`Pretendard subset lacks ${missing.join("")} — run \`npm run font:subset\`.`);
+}

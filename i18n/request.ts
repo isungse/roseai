@@ -1,16 +1,10 @@
-import { hasLocale } from "next-intl";
 import { getRequestConfig } from "next-intl/server";
 
-import { routing } from "./routing";
-
-export default getRequestConfig(async ({ requestLocale }) => {
-  const requested = await requestLocale;
-  const locale = hasLocale(routing.locales, requested)
-    ? requested
-    : routing.defaultLocale;
-
-  return {
-    locale,
-    messages: (await import(`../messages/${locale}.json`)).default,
-  };
-});
+// The site is Korean-only (i18n.md): there is no locale routing and no
+// locale segment, so the request config pins `ko` and serves the one message
+// file. Extension point: adding a language means restoring next-intl routing
+// (routing.ts + navigation.ts + the proxy) — see i18n.md.
+export default getRequestConfig(async () => ({
+  locale: "ko",
+  messages: (await import("../messages/ko.json")).default,
+}));

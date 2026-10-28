@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="generator" content="works-snapshots 20261027 2026-10-27T09:30:00+09:00" />
+  <title>출퇴근 · UI 미리보기 | ROSE-AI WORKS</title>
+  <style>
+
+    html, body { margin: 0; height: 100%; }
+    body { display: flex; flex-direction: column; background: #fff; }
+    .works-banner { height: 36px; flex: 0 0 36px; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+                    padding: 0 16px; background: #000; color: #fff; letter-spacing: .04em;
+                    font: 600 12px/1 -apple-system, BlinkMacSystemFont, "Pretendard", "Segoe UI", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; }
+    .works-banner__dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #E03131; margin-right: 8px; vertical-align: middle; }
+    .works-banner__back { color: #fff; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.4); padding-bottom: 1px; }
+    .works-banner__back:hover { border-color: #fff; }
+    #root { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+    #root > .app-shell-root { height: 100% !important; flex: 1 1 auto; }
+    /* 상호작용 차단(spec §6.6) — 링크는 href가 없고, 폼은 action이 없다 */
+    #root a { cursor: default; }
+    #root button, #root input, #root select, #root textarea, #root [role="button"], #root [role="tab"], #root [role="menuitem"] { pointer-events: none; }
+    @font-face { font-family: "Pretendard Variable"; font-weight: 100 900; font-display: swap; font-style: normal; src: url("../../fonts/PretendardVariable.woff2") format("woff2-variations"); }
+    @font-face { font-family: "Pretendard"; font-weight: 100 900; font-display: swap; font-style: normal; src: url("../../fonts/PretendardVariable.woff2") format("woff2-variations"); }
+
+    /* ─── 제품 CSS(정제본) ─── */
+:root { --icon-badge-size: 30px; --icon-action-target: 44px; --color-bg: #f8fafc; --color-bg-card: #ffffff; --color-bg-hover: #f1f5f9; --color-bg-active: #e8f0fe; --color-bg-disabled: #f1f5f9; --color-border: #e2e8f0; --color-border-light: #f1f5f9; --color-border-focus: #4a90d9; --color-border-strong: #cbd5e1; --color-border-grid: #dbe3ec; --color-border-gridline: #b1b8be; --color-border-form: #58616a; --color-border-form-strong: #58616a; --color-bg-label: #e6e8ea; --color-text: #1e293b; --color-text-secondary: #64748b; --color-text-muted: #94a3b8; --color-text-disabled: #cbd5e1; --color-text-inverse: #ffffff; --color-primary: #3b76d6; --color-primary-hover: #2d63b8; --color-primary-light: #e8f0fe; --color-danger: #d93025; --color-danger-hover: #b52a1f; --color-danger-bg: #fef2f0; --color-danger-border: #f5c6c0; --color-success: #1a8a3f; --color-success-hover: #267337; --color-success-bg: #eef7f0; --color-success-border: #b7dfc2; --color-warning: #e8a317; --color-warning-bg: #fef9eb; --color-warning-border: #f5dfa0; --icon-bg-approval: #e6f1fb; --icon-fg-approval: #185fa5; --icon-bg-board: #e1f5ee; --icon-fg-board: #0f6e56; --icon-bg-calendar: #faeeda; --icon-fg-calendar: #854f0b; --icon-bg-messenger: #eeedfe; --icon-fg-messenger: #534ab7; --icon-bg-statistics: #e0f0f2; --icon-fg-statistics: #0e6e7a; --icon-bg-admin: #f1efe8; --icon-fg-admin: #5f5e5a; --icon-bg-certificate: #fdeaef; --icon-fg-certificate: #a8325c; --icon-bg-receipt: #e8edfc; --icon-fg-receipt: #3f51b5; --icon-bg-contact: #fdeee4; --icon-fg-contact: #a84e14; --icon-bg-dispatch: #eff3de; --icon-fg-dispatch: #5b6e14; --icon-bg-mail: #fdeee4; --icon-fg-mail: #a84e14; --icon-bg-todo: #f4eaf9; --icon-fg-todo: #7b3fa0; --icon-bg-portal: #e2f1f6; --icon-fg-portal: #0d6f86; --icon-bg-support: #f2ebe4; --icon-fg-support: #6e4a2c; --icon-bg-poll: #e8eef7; --icon-fg-poll: #3a5683; --icon-bg-attendance: #e3ebf1; --icon-fg-attendance: #35546b; --file-badge-bg-pdf: #fdeaea; --file-badge-fg-pdf: #b3261e; --file-badge-bg-hwp: #e6f1fb; --file-badge-fg-hwp: #185fa5; --file-badge-bg-xls: #e1f5ee; --file-badge-fg-xls: #0f6e56; --file-badge-bg-doc: #e8edfc; --file-badge-fg-doc: #3f51b5; --file-badge-bg-ppt: #fdeee4; --file-badge-fg-ppt: #a84e14; --file-badge-bg-img: #f4eaf9; --file-badge-fg-img: #7b3fa0; --file-badge-bg-zip: #f1efe8; --file-badge-fg-zip: #5f5e5a; --file-badge-bg-etc: #eef0f2; --file-badge-fg-etc: #4a5560; --tag-bg-0: #e6f1fb; --tag-fg-0: #185fa5; --tag-bg-1: #e0f0f2; --tag-fg-1: #0e6e7a; --tag-bg-2: #e1f5ee; --tag-fg-2: #0f6e56; --tag-bg-3: #eff3de; --tag-fg-3: #5b6e14; --tag-bg-4: #faeeda; --tag-fg-4: #854f0b; --tag-bg-5: #fdeaef; --tag-fg-5: #a8325c; --tag-bg-6: #f4eaf9; --tag-fg-6: #7b3fa0; --tag-bg-7: #e8edfc; --tag-fg-7: #3f51b5; --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 20px; --space-6: 24px; --space-7: 32px; --space-8: 40px; --space-9: 48px; --space-05: 2px; --space-15: 6px; --space-10: 64px; --font-document: 'Malgun Gothic', '맑은 고딕', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; --text-xs: 12px; --text-sm: 13px; --text-base: 14px; --text-md: 15px; --text-lg: 17px; --text-xl: 19px; --text-2xl: 24px; --text-body: 16px; --leading-body: 1.6; --weight-normal: 400; --weight-medium: 500; --weight-semibold: 600; --leading-tight: 1.3; --leading-normal: 1.5; --leading-relaxed: 1.65; --radius-sm: 4px; --radius-md: 6px; --radius-lg: 8px; --radius-full: 50%; --radius-pill: 999px; --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06); --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.08); --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.12); --sidebar-width: 240px; --sidebar-bg: var(--color-bg-card); --sidebar-border: var(--color-border); --sidebar-text: var(--color-text); --sidebar-icon: var(--color-text-secondary); --sidebar-icon-hover: var(--color-text); --sidebar-hover-bg: var(--color-bg); --sidebar-active-bg: var(--color-danger-bg); --sidebar-active-fg: var(--color-danger); --sidebar-indicator: var(--color-danger); --sidebar-indicator-width: 3px; --sidebar-focus: var(--color-border-focus); --sidebar-radius: 0; --editor-tool-fg: #464c53; --editor-tool-muted: #8a949e; --editor-tool-divider: #e6e8ea; --editor-tool-font: 'Nanum Gothic', '나눔고딕', NanumGothic, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', sans-serif; --sidebar-row-height: 44px; --sidebar-subrow-height: 40px; --sidebar-indent: var(--space-7); --sidebar-icon-size: 20px; --sidebar-chevron-size: 16px; --sidebar-badge-size: 22px; --shortcut-badge-size: var(--sidebar-badge-size); --header-height: 48px; --content-max-width: none; --document-max-width: 1200px; --reading-max-width: 1440px; --form-max-width: 640px; --admin-form-max-width: 1040px; --document-margin-inline: 0 auto; --search-input-max-width: 720px; --screen-margin: var(--space-6); --gutter: var(--space-4); --grid-cols: 4; --gap-title-body: var(--space-4); --gap-section: var(--space-4); --gap-field: var(--space-4); --gap-label-control: var(--space-1); --gap-control-help: var(--space-1); --gap-card-padding: var(--space-4); --transition-fast: 120ms ease; --transition-base: 200ms ease; }
+@media (max-width: 768px) {
+  :root { --screen-margin: var(--space-4); }
+}
+@media (min-width: 768px) {
+  :root { --grid-cols: 8; }
+}
+@media (min-width: 1024px) {
+  :root { --gutter: var(--space-6); --grid-cols: 12; }
+}
+@media print {
+  :root { --text-xs: 11px; --text-sm: 12px; --text-base: 13px; --text-md: 14px; --text-body: 14px; --text-lg: 16px; --text-xl: 18px; --text-2xl: 22px; --leading-body: 1.5; --gap-title-body: var(--space-3); }
+}
+*, ::before, ::after { box-sizing: border-box; margin: 0px; padding: 0px; }
+html { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-size: var(--text-md); line-height: var(--leading-normal); letter-spacing: 0.02em; color: var(--color-text); background: var(--color-bg); -webkit-font-smoothing: antialiased; }
+body { min-height: 100vh; }
+a { color: var(--color-primary); text-decoration: none; }
+a:hover { color: var(--color-primary-hover); }
+button { font-family: inherit; }
+input, select, textarea { font-family: inherit; font-size: inherit; }
+:focus-visible { outline: 2px solid var(--color-border-focus); outline-offset: 2px; }
+button:focus-visible, a:focus-visible { outline: 2px solid var(--color-border-focus); outline-offset: 2px; border-radius: var(--radius-sm); }
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
+.cell-edit:focus-within { outline: 2px solid var(--color-border-focus); outline-offset: -2px; background: var(--color-bg-active); }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-text-disabled); border-radius: 3px; }
+.gw-grid { display: grid; gap: var(--gutter); grid-template-columns: repeat(var(--grid-cols, 12), minmax(0, 1fr)); }
+.gw-col-2 { grid-column: span 2; }
+.gw-col-3 { grid-column: span 3; }
+.gw-col-4 { grid-column: span 4; }
+.gw-col-6 { grid-column: span 6; }
+.gw-col-8 { grid-column: span 8; }
+.gw-col-12 { grid-column: span 12; }
+.gw-date.gw-date--empty::-webkit-datetime-edit { color: transparent; }
+.gw-date::-webkit-calendar-picker-indicator { cursor: pointer; opacity: 1; filter: invert(31%) sepia(86%) saturate(2493%) hue-rotate(216deg) brightness(94%) contrast(92%); }
+.ck-app { --ck-max-width: 480px; --ck-target: var(--icon-action-target); --ck-main-btn-h: 56px; --ck-card-radius: 12px; --ck-clock-size: 44px; --ck-rec-day-width: 40px; --ck-menu-width: 240px; --ck-overlay: rgba(0, 0, 0, 0.4); --ck-z-menu: 50; --ck-z-dialog: 105; display: flex; flex-direction: column; gap: var(--space-4); min-height: 100dvh; max-width: var(--ck-max-width); margin-inline: auto; padding: calc(var(--space-4) + env(safe-area-inset-top)) calc(var(--space-4) + env(safe-area-inset-right))
+    calc(var(--space-6) + env(safe-area-inset-bottom)) calc(var(--space-4) + env(safe-area-inset-left)); color: var(--color-text); word-break: keep-all; overflow-wrap: break-word; }
+.ck-app--center { align-items: center; justify-content: center; }
+.ck-splash { font-size: var(--text-lg); font-weight: var(--weight-semibold); color: var(--color-text-muted); }
+.ck-main { display: flex; flex-direction: column; gap: var(--space-4); }
+.ck-sr-only { position: absolute; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; border: 0px; }
+.ck-strong { font-weight: var(--weight-semibold); color: var(--color-text); }
+.ck-sub { font-size: var(--text-sm); line-height: var(--leading-normal); color: var(--color-text-secondary); }
+.ck-sub svg { vertical-align: text-bottom; }
+.ck-spin { animation: 1s linear 0s infinite normal none running ck-spin; }
+@keyframes ck-spin { 
+  100% { transform: rotate(360deg); }
+}
+.ck-header { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); min-height: var(--ck-target); }
+.ck-header__title { display: inline-flex; align-items: center; gap: var(--space-2); font-size: var(--text-xl); font-weight: var(--weight-semibold); line-height: var(--leading-tight); }
+.ck-pilot { padding: var(--space-05) var(--space-2); border-radius: var(--radius-pill); background: var(--tag-bg-4); color: var(--tag-fg-4); font-size: var(--text-xs); font-weight: var(--weight-semibold); }
+.ck-icon-btn { display: inline-flex; flex: 0 0 auto; align-items: center; justify-content: center; width: var(--ck-target); height: var(--ck-target); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: var(--radius-md); background: transparent; color: var(--color-text); cursor: pointer; }
+.ck-icon-btn:hover:not(:disabled) { background: var(--color-bg-hover); }
+.ck-icon-btn:disabled { color: var(--color-text-disabled); cursor: not-allowed; }
+.ck-menu-wrap { position: relative; }
+.ck-menu { position: absolute; top: calc(100% + var(--space-1)); right: 0px; z-index: var(--ck-z-menu); display: flex; flex-direction: column; width: var(--ck-menu-width); padding: var(--space-2); border: 1px solid var(--color-border); border-radius: var(--radius-lg); background: var(--color-bg-card); box-shadow: var(--shadow-md); }
+.ck-menu__who { display: flex; flex-direction: column; gap: var(--space-05); padding: var(--space-2) var(--space-3) var(--space-3); margin-bottom: var(--space-1); border-bottom: 1px solid var(--color-border-light); }
+.ck-menu__name { font-size: var(--text-md); font-weight: var(--weight-semibold); }
+.ck-menu__meta, .ck-menu__build { font-size: var(--text-sm); color: var(--color-text-secondary); }
+.ck-menu__build { padding: var(--space-2) var(--space-3) var(--space-1); color: var(--color-text-muted); }
+.ck-menu__item { display: flex; align-items: center; gap: var(--space-3); width: 100%; min-height: var(--ck-target); padding: 0 var(--space-3); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: var(--radius-md); background: transparent; color: var(--color-text); font-size: var(--text-md); text-align: left; cursor: pointer; }
+.ck-menu__item:hover { background: var(--color-bg-hover); }
+.ck-card { display: flex; flex-direction: column; gap: var(--space-4); padding: var(--space-4); border: 1px solid var(--color-border); border-radius: var(--ck-card-radius); background: var(--color-bg-card); box-shadow: var(--shadow-sm); }
+.ck-card__head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2); }
+.ck-card--center { align-items: center; padding-block: var(--space-8); text-align: center; }
+.ck-card__title { display: inline-flex; align-items: center; gap: var(--space-2); font-size: var(--text-lg); font-weight: var(--weight-semibold); line-height: var(--leading-tight); }
+.ck-muted-icon { color: var(--color-text-muted); }
+.ck-today { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2); padding-bottom: var(--space-3); border-bottom: 1px solid var(--color-border); }
+.ck-today__who { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-2); min-width: 0px; }
+.ck-today__name { font-size: var(--text-lg); font-weight: var(--weight-semibold); line-height: var(--leading-tight); }
+.ck-punch { display: flex; flex-direction: column; align-items: center; gap: var(--space-3); text-align: center; }
+.ck-status { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); }
+.ck-state { display: inline-flex; align-items: center; padding: var(--space-05) var(--space-3); border-radius: var(--radius-pill); background: var(--color-bg-hover); color: var(--color-text-secondary); font-size: var(--text-sm); font-weight: var(--weight-semibold); line-height: var(--leading-body); }
+.ck-state--working { background: var(--color-primary-light); color: var(--color-primary); }
+.ck-state--done { background: var(--color-success-bg); color: var(--color-success); }
+.ck-state--missing { background: var(--color-danger-bg); color: var(--color-danger); }
+.ck-badge { display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-15) var(--space-3); border: 1px solid var(--color-border); border-radius: var(--radius-pill); background: var(--color-bg); font-size: var(--text-md); font-weight: var(--weight-semibold); }
+.ck-badge--ok { border-color: var(--color-success-border); background: var(--color-success-bg); color: var(--color-success); }
+.ck-badge--blocked { border-color: var(--color-danger-border); background: var(--color-danger-bg); color: var(--color-danger); }
+.ck-clock { display: flex; flex-direction: column; align-items: center; gap: var(--space-1); font-variant-numeric: tabular-nums; }
+.ck-clock__date { font-size: var(--text-md); color: var(--color-text-secondary); }
+.ck-clock__time { font-size: var(--ck-clock-size); font-weight: var(--weight-semibold); line-height: var(--leading-tight); }
+.ck-clock__sec { font-size: var(--text-2xl); font-weight: var(--weight-medium); color: var(--color-text-secondary); }
+.ck-today-record { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); }
+.ck-times { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2); width: 100%; }
+.ck-times__cell { display: flex; flex-direction: column; align-items: center; gap: var(--space-05); padding: var(--space-2) var(--space-3); border: 1px solid var(--color-border); border-radius: var(--radius-lg); background: var(--color-bg); }
+.ck-times__cell dt { font-size: var(--text-sm); color: var(--color-text-secondary); }
+.ck-times__cell dd { font-size: var(--text-xl); font-weight: var(--weight-semibold); line-height: var(--leading-tight); font-variant-numeric: tabular-nums; }
+.ck-chip { display: inline-flex; align-items: center; padding: var(--space-05) var(--space-2); border: 1px solid var(--color-border); border-radius: var(--radius-sm); background: var(--color-bg); font-size: var(--text-sm); font-weight: var(--weight-medium); }
+.ck-tag { display: inline-flex; align-items: center; padding: 0 var(--space-2); border-radius: var(--radius-pill); background: var(--color-bg-hover); color: var(--color-text-secondary); font-size: var(--text-xs); font-weight: var(--weight-semibold); line-height: var(--leading-body); }
+.ck-tag--open { background: var(--color-primary-light); color: var(--color-primary); }
+.ck-tag--closed { background: var(--color-success-bg); color: var(--color-success); }
+.ck-tag--missing { background: var(--color-danger-bg); color: var(--color-danger); }
+.ck-tag--corrected { background: var(--tag-bg-6); color: var(--tag-fg-6); }
+.ck-notice { display: flex; align-items: flex-start; gap: var(--space-2); padding: var(--space-3); border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-bg); font-size: var(--text-md); line-height: var(--leading-normal); }
+.ck-notice > svg { flex: 0 0 auto; margin-top: var(--space-05); }
+.ck-notice--danger { border-color: var(--color-danger-border); background: var(--color-danger-bg); color: var(--color-danger); }
+.ck-notice--success { border-color: var(--color-success-border); background: var(--color-success-bg); color: var(--color-success); }
+.ck-notice--warning { border-color: var(--color-warning-border); background: var(--color-warning-bg); color: var(--color-text); }
+.ck-notice--warning > svg { color: var(--color-warning); }
+.ck-notice__body { display: flex; flex: 1 1 0%; flex-direction: column; align-items: flex-start; gap: var(--space-2); min-width: 0px; }
+.ck-inline-actions { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.ck-main-btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); width: 100%; min-height: var(--ck-main-btn-h); padding: var(--space-3) var(--space-4); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: var(--ck-card-radius); background: var(--color-primary); color: var(--color-text-inverse); font-size: var(--text-lg); font-weight: var(--weight-semibold); cursor: pointer; transition: background var(--transition-fast); }
+.ck-main-btn:hover:not(:disabled) { background: var(--color-primary-hover); }
+.ck-main-btn:disabled { background: var(--color-bg-disabled); color: var(--color-text-muted); cursor: not-allowed; }
+.ck-btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); min-height: var(--ck-target); padding: var(--space-2) var(--space-4); border: 1px solid var(--color-border-strong); border-radius: var(--radius-md); background: var(--color-bg-card); color: var(--color-text); font-size: var(--text-md); font-weight: var(--weight-medium); line-height: var(--leading-tight); text-align: center; text-decoration: none; cursor: pointer; transition: background var(--transition-fast); }
+.ck-btn:hover:not(:disabled) { background: var(--color-bg-hover); color: var(--color-text); }
+.ck-btn:disabled { background: var(--color-bg-disabled); color: var(--color-text-muted); cursor: not-allowed; }
+.ck-btn--primary { border-color: var(--color-primary); background: var(--color-primary); color: var(--color-text-inverse); }
+.ck-btn--primary:hover:not(:disabled) { border-color: var(--color-primary-hover); background: var(--color-primary-hover); color: var(--color-text-inverse); }
+.ck-btn--block { width: 100%; }
+.ck-link { display: inline-flex; align-items: center; align-self: flex-start; min-height: var(--ck-target); padding: 0px; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; background: none; color: var(--color-primary); font-size: var(--text-md); font-weight: var(--weight-medium); text-decoration: underline; text-underline-offset: var(--space-05); cursor: pointer; }
+.ck-link:disabled { color: var(--color-text-muted); text-decoration: none; cursor: not-allowed; }
+.ck-clock-action { display: flex; flex-direction: column; gap: var(--space-3); }
+.ck-actions-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2); }
+.ck-actions-row .ck-btn { padding-inline: var(--space-2); }
+.ck-device { display: flex; flex-direction: column; gap: var(--space-3); padding: var(--space-4); border: 1px solid var(--color-primary); border-radius: var(--radius-lg); background: var(--color-primary-light); font-size: var(--text-body); line-height: var(--leading-body); }
+.ck-device__title { display: inline-flex; align-items: center; gap: var(--space-2); font-size: var(--text-lg); font-weight: var(--weight-semibold); line-height: var(--leading-tight); }
+.ck-admin { display: flex; flex-direction: column; gap: var(--space-3); padding: var(--space-3); border: 1px dashed var(--color-border-strong); border-radius: var(--radius-md); background: var(--color-bg); }
+.ck-admin__title { display: inline-flex; align-items: center; gap: var(--space-2); font-size: var(--text-md); font-weight: var(--weight-semibold); }
+.ck-form { gap: var(--space-4); }
+.ck-field { display: flex; flex-direction: column; gap: var(--gap-label-control); }
+.ck-label { font-size: var(--text-sm); font-weight: var(--weight-medium); color: var(--color-text-secondary); }
+.ck-input, .ck-select { width: 100%; min-height: var(--ck-target); padding: var(--space-2) var(--space-3); border: 1px solid var(--color-border-strong); border-radius: var(--radius-md); background: var(--color-bg-card); color: var(--color-text); font-size: var(--text-body); }
+.ck-input:focus, .ck-select:focus { border-color: var(--color-border-focus); }
+.ck-check { display: inline-flex; align-items: center; align-self: flex-start; gap: var(--space-2); min-height: var(--ck-target); font-size: var(--text-md); color: var(--color-text-secondary); cursor: pointer; user-select: none; }
+.ck-check input { width: var(--space-5); height: var(--space-5); }
+.ck-login { flex: 1 1 0%; justify-content: center; }
+.ck-login__brand { display: flex; flex-direction: column; gap: var(--space-1); text-align: center; }
+.ck-login__title { font-size: var(--text-2xl); font-weight: var(--weight-semibold); line-height: var(--leading-tight); }
+.ck-login__subtitle { font-size: var(--text-md); color: var(--color-text-secondary); }
+.ck-footer { font-size: var(--text-sm); color: var(--color-text-muted); text-align: center; }
+.ck-dialog-overlay { position: fixed; inset: 0px; z-index: var(--ck-z-dialog); display: flex; align-items: center; justify-content: center; padding: var(--space-4); background: var(--ck-overlay); }
+.ck-dialog { display: flex; flex-direction: column; gap: var(--space-4); width: 100%; max-width: calc(var(--ck-max-width) - 2 * var(--space-4)); max-height: calc(100dvh - 2 * var(--space-4)); overflow: auto; padding: var(--space-5); border-radius: var(--ck-card-radius); background: var(--color-bg-card); box-shadow: var(--shadow-lg); }
+.ck-dialog__title { font-size: var(--text-lg); font-weight: var(--weight-semibold); line-height: var(--leading-tight); }
+.ck-dialog__body { display: flex; flex-direction: column; gap: var(--space-3); font-size: var(--text-body); line-height: var(--leading-body); }
+.ck-dialog__actions { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2); }
+.ck-kv { display: grid; grid-template-columns: max-content 1fr; gap: var(--space-2) var(--space-4); font-variant-numeric: tabular-nums; }
+.ck-kv dt { color: var(--color-text-secondary); }
+.ck-kv dd { overflow-wrap: anywhere; }
+.ck-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-2); }
+.ck-stat { display: flex; flex-direction: column; gap: var(--space-1); padding: var(--space-3); border: 1px solid var(--color-border); border-radius: var(--radius-lg); background: var(--color-bg); }
+.ck-stat dt { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-1); font-size: var(--text-sm); color: var(--color-text-secondary); }
+.ck-stat dd { font-size: var(--text-xl); font-weight: var(--weight-semibold); line-height: var(--leading-tight); font-variant-numeric: tabular-nums; }
+.ck-stat__unit { margin-left: var(--space-05); font-size: var(--text-sm); font-weight: var(--weight-medium); color: var(--color-text-secondary); }
+.ck-stat--alert dt, .ck-stat--alert dd { color: var(--color-danger); }
+.ck-records { gap: var(--space-2); scroll-margin-top: var(--space-4); }
+.ck-month { display: inline-flex; align-items: center; }
+.ck-month__label { font-size: var(--text-md); font-weight: var(--weight-medium); font-variant-numeric: tabular-nums; }
+.ck-rec-list { display: flex; flex-direction: column; list-style: none; }
+.ck-rec { display: grid; grid-template-columns: var(--ck-rec-day-width) minmax(0, 1fr) auto; align-items: start; gap: var(--space-3); padding: var(--space-3) 0; border-top: 1px solid var(--color-border); }
+.ck-rec:first-child { border-top-width: medium; border-top-style: none; border-top-color: currentcolor; }
+.ck-rec__day { display: flex; flex-direction: column; align-items: center; line-height: var(--leading-tight); }
+.ck-rec__dnum { font-size: var(--text-xl); font-weight: var(--weight-semibold); font-variant-numeric: tabular-nums; }
+.ck-rec__dow { font-size: var(--text-sm); color: var(--color-text-secondary); }
+.ck-rec__body { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-1); min-width: 0px; }
+.ck-rec__meta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); font-size: var(--text-sm); color: var(--color-text-secondary); }
+.ck-rec__times { font-size: var(--text-body); font-weight: var(--weight-medium); line-height: var(--leading-tight); font-variant-numeric: tabular-nums; }
+.ck-rec__state { display: flex; flex-direction: column; align-items: flex-end; gap: var(--space-1); }
+.ck-rec__state .ck-tag { padding: var(--space-05) var(--space-2); font-size: var(--text-sm); }
+.ck-steps { display: flex; flex-direction: column; gap: var(--space-3); list-style: none; }
+.ck-step { display: flex; align-items: flex-start; gap: var(--space-3); }
+.ck-step__num { display: inline-flex; flex: 0 0 auto; align-items: center; justify-content: center; width: var(--space-7); height: var(--space-7); border-radius: var(--radius-full); background: var(--color-primary-light); color: var(--color-primary); font-size: var(--text-md); font-weight: var(--weight-semibold); }
+.ck-step__text { font-size: var(--text-body); line-height: var(--leading-body); }
+.ck-step__icon { vertical-align: text-bottom; }
+  </style>
+</head>
+<body data-snapshot="checkin-home" data-profile="member" data-anchor="2026-10-27">
+  <div class="works-banner" role="region" aria-label="미리보기 안내">
+    <span><span class="works-banner__dot" aria-hidden="true"></span>UI 미리보기 · 가상 데이터</span>
+    <a class="works-banner__back" href="/tour">← 돌아가기</a>
+  </div>
+
+    <div id="root"><div class="ck-app"><header class="ck-header"><h1 class="ck-header__title">PTSM 출퇴근</h1><div class="ck-menu-wrap"><button type="button" class="ck-icon-btn" aria-label="계정 메뉴" aria-expanded="false" aria-controls="_r_3_"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu" aria-hidden="true"><path d="M4 5h16"></path><path d="M4 12h16"></path><path d="M4 19h16"></path></svg></button></div></header><main class="ck-main"><div aria-live="polite"></div><section class="ck-card" aria-label="출퇴근"><div class="ck-today"><p class="ck-today__who"><span class="ck-today__name">한혜원</span><span class="ck-sub">원무팀</span></p><span class="ck-chip">근무표 D (Day)</span></div><div class="ck-punch"><div class="ck-clock"><span class="ck-clock__date">10월 27일 (화)</span><time class="ck-clock__time" datetime="2026-10-27T00:30:00.000Z">09:30<span class="ck-clock__sec">:00</span></time></div><span class="ck-state ck-state--working">근무 중</span><div class="ck-status" role="status" aria-live="polite"><span class="ck-badge ck-badge--ok"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wifi" aria-hidden="true"><path d="M12 20h.01"></path><path d="M2 8.82a15 15 0 0 1 20 0"></path><path d="M5 12.859a10 10 0 0 1 14 0"></path><path d="M8.5 16.429a5 5 0 0 1 7 0"></path></svg>행정동 3층 Wi-Fi 연결됨</span><p class="ck-sub">접속 IP 192.0.2.31 · Safari / iOS</p></div></div><div class="ck-today-record"><dl class="ck-times"><div class="ck-times__cell"><dt>출근</dt><dd>08:52</dd></div><div class="ck-times__cell"><dt>퇴근</dt><dd>—</dd></div></dl></div><div class="ck-clock-action"><button type="button" class="ck-main-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out" aria-hidden="true"><path d="m16 17 5-5-5-5"></path><path d="M21 12H9"></path><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path></svg>퇴근하기</button><div aria-live="polite"></div></div><div class="ck-actions-row"><a class="ck-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-text" aria-hidden="true"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>소명·수정 신청<span class="ck-sr-only">(새 창)</span></a><button type="button" class="ck-btn" aria-expanded="false" aria-controls="_r_1_"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list-checks" aria-hidden="true"><path d="M13 5h8"></path><path d="M13 12h8"></path><path d="M13 19h8"></path><path d="m3 17 2 2 4-4"></path><path d="m3 7 2 2 4-4"></path></svg>내 기록</button></div></section><section class="ck-card" aria-labelledby="_r_4_"><div class="ck-card__head"><h2 id="_r_4_" class="ck-card__title">이번 달 기록</h2><span class="ck-sub">10월 1일 ~ 27일</span></div><dl class="ck-stats"><div class="ck-stat"><dt><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-check" aria-hidden="true"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path><path d="m9 16 2 2 4-4"></path></svg>근무</dt><dd>18<span class="ck-stat__unit">일</span></dd></div><div class="ck-stat"><dt><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock-alert" aria-hidden="true"><path d="M12 6v6l4 2"></path><path d="M20 12v5"></path><path d="M20 21h.01"></path><path d="M21.25 8.2A10 10 0 1 0 16 21.16"></path></svg>퇴근 누락</dt><dd>0<span class="ck-stat__unit">건</span></dd></div><div class="ck-stat"><dt><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil-line" aria-hidden="true"><path d="M13 21h8"></path><path d="m15 5 4 4"></path><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"></path></svg>정정 반영</dt><dd>1<span class="ck-stat__unit">건</span></dd></div></dl></section></main></div></div>
+    
+  
+
+
+</body>
+</html>

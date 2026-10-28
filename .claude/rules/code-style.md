@@ -5,23 +5,24 @@ ROSE-AI 홈페이지의 코드 컨벤션, 네이밍 규칙, 폴더 구조를 정
 ## 폴더 구조
 
 ```
-app/
-  [locale]/              # next-intl 로케일 라우팅
-    (marketing)/         # 공개 페이지 그룹
-    layout.tsx
-    page.tsx
-  api/                   # Route Handlers
+app/                     # 한국어 고정 — 로케일 세그먼트 없음 (i18n.md)
+  layout.tsx             # 루트 레이아웃: 셸 · TopBar · Footer · JSON-LD
+  page.tsx               # 홈 = 제품 허브
+  [feature]/page.tsx     # 기능 상세 (generateStaticParams + dynamicParams = false)
+  tour/page.tsx          # 전체 메뉴 투어
+  _components/           # 홈·상세·투어가 함께 쓰는 페이지 컴포넌트
+  fonts/                 # Pretendard 서브셋(생성물) + 생성 스크립트 subset.mjs (design-system.md)
+  not-found.tsx · opengraph-image.tsx · sitemap.ts · robots.ts
 components/
-  ui/                    # 원자 단위 (Button, Input, Card…)
-  sections/              # 페이지 섹션 (Hero, Features…)
-  layout/                # Header, Footer, Nav
-lib/                     # 순수 유틸, 서버 전용 유틸
-  utils.ts
-  seo.ts
-hooks/                   # React 훅
-messages/                # i18n JSON (ko.json, en.json)
-types/                   # 공용 타입 선언
-public/                  # 정적 에셋
+  ui/                    # 원자 단위 (ButtonLink, RevealText…)
+  layout/                # TopBar, TopBarNav, Logo, Footer
+lib/
+  data/                  # 번역 불변 데이터 상수와 경로 헬퍼 (works.ts)
+  works/                 # 서버 전용 헬퍼 (images.ts, metadata.ts)
+  env.ts · fonts.ts · utils.ts
+i18n/request.ts          # next-intl 요청 설정 (locale 고정)
+messages/ko.json         # 메시지 파일 하나
+public/                  # 정적 에셋 (images/works, demos/works)
 ```
 
 원칙:
@@ -46,7 +47,7 @@ public/                  # 정적 에셋
 - `interface`는 공개 객체 모양, `type`은 union/유틸리티.
 - Props는 컴포넌트 파일 상단에 `interface ComponentNameProps` 로 명시.
 - `import type` 을 사용해 런타임/타입 import 분리.
-- 필드 종류마다 렌더가 갈리는 데이터는 **discriminated union** 으로 모델링한다. 예: `CONTACT_FIELDS` 는 `kind: "input" | "textarea"` 로 분기되고, 폼 컴포넌트는 `switch (field.kind)` 로 narrow 한 뒤 각 브랜치에서 해당 필드만 접근한다. optional 필드 + 런타임 체크 조합을 쓰지 않는다 (`lib/data/contact.ts`, `components/sections/ContactForm.tsx` 참조).
+- 필드 종류마다 렌더가 갈리는 데이터는 **discriminated union** 으로 모델링한다. 예: 옛 문의 폼의 `CONTACT_FIELDS` 는 `kind: "input" | "textarea"` 로 분기되고, 폼 컴포넌트는 `switch (field.kind)` 로 narrow 한 뒤 각 브랜치에서 해당 필드만 접근했다. optional 필드 + 런타임 체크 조합을 쓰지 않는다 (참고 구현: git 이력의 `lib/data/contact.ts`, `components/sections/ContactForm.tsx` — 문의 폼 제거 때 삭제, 패턴은 유지).
 
 ## React / Next.js
 
@@ -54,24 +55,22 @@ public/                  # 정적 에셋
 - `"use client"` 경계는 leaf에 가깝게. 트리 상단에 붙이면 번들이 전염된다.
 - 데이터 fetching은 Server Component + `fetch` (Next 캐시 활용). 클라이언트 fetch는 SWR 대신 필요 시에만.
 - `next/image`, `next/link`, `next/font` 는 반드시 사용.
-- Next 16: 동적 세그먼트의 `params` 는 `Promise`. `const { locale } = await params` 패턴으로 받는다.
+- Next 16: 동적 세그먼트의 `params` 는 `Promise`. `const { feature } = await params` 패턴으로 받는다.
 
 ### "use client" 경계 전략
 
 섹션을 통째로 클라이언트화하지 말 것. 상호작용하는 **조각만** 분리한다.
 
-예 (ROSE-AI 랜딩 기준):
+예 (현재 사이트 기준):
 
 | 요소 | 경계 |
 |---|---|
-| `ShowcaseSection` shell | Server — `useTranslations` 로 문자열을 해석해 plain string props 로 주입 |
-| `ShowcaseCarousel` | Client — activeIndex/paused 상태, autoplay interval, 키보드 핸들링 |
+| `TopBar` shell | Server — 메시지로 링크 라벨을 풀어 plain props 로 `TopBarNav` 에 넘긴다 |
+| `TopBarNav` | Client leaf — `usePathname` 으로 현재 페이지 표시(`aria-current`)만 |
+| `FeatureTabs` | Client — 활성 탭 상태, 방향키. 첫 탭은 SSR |
+| `TourExplorer` | Client — 선택 메뉴·역할 토글·`?menu=` 딥링크(`useSearchParams` — 페이지에서 `Suspense` 로 감싼다) |
+| 그 밖의 섹션 (`WorksHero`, `FeatureGrid` …) | Server — `useTranslations` 로 문자열을 해석해 렌더 |
 | `RevealText` | Server-safe 순수 컴포넌트 — 단어를 `--i` 인덱스 span 으로 분해만 하고 애니메이션은 CSS (`.word-in`) 가 담당 |
-| `ContactForm` | Client — FormData 관리, 유효성, fetch |
-| `LangToggle` | Client — `usePathname` + `useRouter` 로 로케일 스위치 |
-| `TopBar` shell | Server. 내부 `LangToggle` 만 Client leaf |
-| `ContactDialogProvider` + `DialogShell` | Client — `useState<isOpen>`, body scroll lock, native `dialog.showModal()` 호출 |
-| `ContactTrigger` | Client leaf — `useContactDialog().open` 을 `onClick` 에 바인딩 |
 
 원칙: Server Component 가 데이터와 children 을 Client Component 에 props 로 내려준다. Client 안에서 다시 Server 를 import 하는 것은 불가능하므로, Client → Server 의존이 생기면 경계 설계가 잘못된 것이다.
 
@@ -88,7 +87,7 @@ public/                  # 정적 에셋
 
 ### Carousel / Autoplay 패턴
 
-21st.dev 류 캐러셀을 이식할 때 원본을 그대로 쓰지 않고 아래로 치환한다 (`components/sections/ShowcaseCarousel.tsx`):
+현재 사이트에는 캐러셀이 없다 (2026-10-28 개편으로 쇼케이스 캐러셀 삭제). 다시 넣을 때 21st.dev 류 캐러셀을 그대로 쓰지 않고 아래로 치환한다 (참고 구현: git 이력의 `components/sections/ShowcaseCarousel.tsx`):
 
 - `<style jsx>` → Tailwind 클래스. 위치별 transform 은 `Record<Position, string>` 상수 맵으로 두고 `%` 단위 translate 를 써서 컨테이너 폭 측정용 resize 리스너를 없앤다.
 - `framer-motion` 단어 리빌 → `globals.css` 의 `@keyframes word-in` + `animation-delay: calc(var(--i) * 25ms)`. 슬라이드 전환 시 텍스트 블록에 `key={slide.id}` 를 줘 애니메이션을 재생.
@@ -107,7 +106,7 @@ public/                  # 정적 에셋
 
 네이티브 `<dialog>` + React Context 조합으로 구성한다. backdrop·focus trap·ESC·role 을 직접 구현하지 않는다.
 
-구조 (예: `ContactDialog.tsx`):
+현재 사이트에는 다이얼로그가 없다 (문의 폼 제거). 다시 쓸 때의 구조 (예: git 이력의 `ContactDialog.tsx`):
 - `XxxDialogProvider` — Client. `useState<isOpen>`, `open()`, `close()` 를 컨텍스트로 노출. 자식에 `<DialogShell />` 을 `isOpen` 일 때만 마운트.
 - `useXxxDialog()` 훅 — `open` 함수 반환. Provider 밖에서 호출 시 throw 해 사용 경계를 강제.
 - `XxxTrigger` — Client leaf. `useXxxDialog().open` 을 `onClick` 에 바인딩한 `<button>`. 여러 위치(TopBar / Footer / hero CTA)가 같은 다이얼로그를 열어야 하면 트리거만 여러 개 두고 Provider 는 하나로 유지.
@@ -118,9 +117,9 @@ public/                  # 정적 에셋
 - **backdrop 클릭 닫기**: `onClick={e => { if (e.target === ref.current) onClose() }}`. event target 이 dialog 요소 자신이면 backdrop 클릭.
 - **ESC 닫기**: 네이티브가 자동. React 측은 `onClose={onClose}` 로 close 이벤트만 받아 `isOpen` 동기화.
 - **focus trap / `aria-modal` / `role=dialog`**: `showModal()` 호출 시 브라우저가 자동 부여 — 따로 안 붙인다.
-- **닫기 버튼 aria-label**: 다이얼로그 안 `×` 버튼은 i18n 키(예: `closeLabel`) 로 KO "닫기" / EN "Close".
+- **닫기 버튼 aria-label**: 다이얼로그 안 `×` 버튼은 메시지 키(예: `closeLabel` → "닫기") 로 둔다.
 
-참고 구현: `components/sections/ContactDialog.tsx` + `ContactTrigger.tsx`.
+참고 구현: git 이력의 `components/sections/ContactDialog.tsx` + `ContactTrigger.tsx`.
 
 ## 스타일
 

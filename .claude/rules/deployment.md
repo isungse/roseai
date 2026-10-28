@@ -19,14 +19,13 @@ Vercel Pro 배포. 도메인 `roseai.co.kr` (+ `www.roseai.co.kr` → apex 리�
 | 키                                     | 범위         | 용도                                                                                                 |
 | -------------------------------------- | ------------ | ---------------------------------------------------------------------------------------------------- |
 | `NEXT_PUBLIC_SITE_URL`                 | All          | 절대 URL 생성, OG, sitemap (`https://roseai.co.kr`)                                                  |
-| `NEXT_PUBLIC_SUPABASE_URL`             | All          | Supabase 프로젝트 REST 엔드포인트. `https://<ref>.supabase.co`                                       |
-| `SUPABASE_SECRET_KEY`                  | All (서버)   | service*role 키 (`sb_secret*…`). `/api/contact`가 RLS 우회 insert 에 사용. 비밀 —`NEXT*PUBLIC*` 금지 |
-| `IP_HASH_SECRET`                       | All (서버)   | `/api/contact` 의 HMAC-SHA256 키 (`openssl rand -hex 32`). 미설정 시 `ip_hash = NULL`. 비밀          |
 | `NEXT_PUBLIC_GA_ID`                    | Prod         | Google Analytics (선택)                                                                              |
 | `NEXT_PUBLIC_PLAUSIBLE_DOMAIN`         | Prod         | Plausible (선택)                                                                                     |
 | `REVALIDATE_TOKEN`                     | All (서버)   | On-demand ISR secret                                                                                 |
-| `RESEND_API_KEY`                       | Prod/Preview | 문의 폼 이메일 전송 (차기 단계)                                                                      |
-| `CONTACT_FORM_TO`                      | Prod/Preview | 문의 폼 수신 주소                                                                                    |
+| `VERCEL_ENV`                           | Vercel 자동  | `app/robots.ts` 가 `production` 일 때만 크롤링을 허용한다. 직접 등록하지 않는다                      |
+
+문의 폼(`/api/contact`, Supabase `contact_inquiries`)은 제거되었다 — 사이트에는 더 이상 서버 비밀값이 없다. Vercel 에 남아 있는
+`NEXT_PUBLIC_SUPABASE_URL` · `SUPABASE_SECRET_KEY` · `IP_HASH_SECRET` 은 사용처가 없으므로 지워도 된다.
 
 규칙:
 
@@ -43,13 +42,14 @@ Vercel Pro 배포. 도메인 `roseai.co.kr` (+ `www.roseai.co.kr` → apex 리�
 - 선택(optional) 변수는 이 패턴을 쓰지 않는다 — 기본값이 있거나 런타임에 분기 처리.
 - **사용처 없는 키는 `required` 로 두지 않는다** — 실제 컴포넌트/유틸에서 import 되지 않는 env 는 추가하지 말고, 추가했다가 더는 안 쓰면 정리한다. "보험용 required" 는 빌드 실패만 만들고 보호 효과 없음.
 
-### 서버 전용 비밀값은 `lib/env.server.ts` 경유
+### 서버 전용 비밀값은 `lib/env.server.ts` 경유 (현재 사용처 없음)
 
-`SUPABASE_SECRET_KEY` 같은 **서버에서만 읽혀야 하는 비밀값**은 `lib/env.ts` 와 분리된 `lib/env.server.ts` 에 둔다. 두 가지 안전장치:
+**서버에서만 읽혀야 하는 비밀값**이 다시 생기면 `lib/env.ts` 와 분리된 `lib/env.server.ts` 에 둔다 (문의 폼 제거 전의 구현은 git 이력에 있다). 두 가지 안전장치:
 
 - 파일 상단에 `import "server-only"` — 클라이언트 번들이 이 모듈을 import 하면 빌드가 즉시 실패. 비밀이 브라우저로 새는 것을 컴파일 타임에 차단.
-- `serverEnv.supabaseSecretKey` 는 **getter** 로 정의해 lazy 평가. 모듈 import 만으로는 `throw` 하지 않고, 실제 접근 시점에 검증. 이로써 빈 값이어도 비관련 페이지 빌드는 통과 — secret 가 등록되지 않은 환경에서 unrelated 페이지가 무관한 이유로 깨지지 않음.
-- 사용처는 server-only 모듈에서만 (`app/api/**/route.ts`, `lib/supabase/admin.ts` 등). Server Component 에서도 import 가능하지만 비밀을 직접 렌더하지 않을 것.
+- 비밀값은 **getter** 로 정의해 lazy 평가. 모듈 import 만으로는 `throw` 하지 않고, 실제 접근 시점에 검증. 이로써 빈 값이어도 비관련 페이지 빌드는 통과 — secret 가 등록되지 않은 환경에서 unrelated 페이지가 무관한 이유로 깨지지 않음.
+- 사용처는 server-only 모듈에서만 (`app/api/**/route.ts` 등). Server Component 에서도 import 가능하지만 비밀을 직접 렌더하지 않을 것.
+- 같은 `server-only` 가드는 빌드 시 파일시스템을 읽는 `lib/works/images.ts` 에도 쓴다 — 비밀은 아니지만 클라이언트 번들에 `node:fs` 가 들어오는 것을 막는다.
 
 ### Vercel scope 분리 — Production / Preview / Development
 
@@ -178,7 +178,7 @@ dev 서버가 망가지는 특징적 증상이 있다. **첫 요청은 정상 �
 3. `npm run dev` 재기동. fresh 상태에서 resolve 에러가 사라지면 캐시 corruption 이 원인이었던 것.
 4. 재발하면 `next.config.ts` 에 `turbopack: { root: __dirname }` 명시 검토 — 자동 root 추론을 끄고 프로젝트 디렉토리에 고정.
 
-브라우저 측 행도 같이 보이면 308 Permanent Redirect 캐시 가능성도 함께 의심 (i18n 의 미들웨어 매처 노트 참조).
+브라우저 측 행도 같이 보이면 308 Permanent Redirect 캐시 가능성도 함께 의심 (i18n.md 「정적 자산 URL」 참조).
 
 ## 캐싱 / ISR
 
@@ -188,19 +188,19 @@ dev 서버가 망가지는 특징적 증상이 있다. **첫 요청은 정상 �
 
 ## 도메인·리다이렉트
 
-- apex `roseai.co.kr` 가 canonical. `www` 는 301 → apex.
+- apex `roseai.co.kr` 가 정규 호스트(canonical). `www` 는 apex 로 영구 리다이렉트 — Vercel 도메인 설정에서 apex 를 주 도메인으로 둔다. 설정이 반대(apex → www)면 canonical 이 리다이렉트되는 주소를 가리키게 되므로 설정을 이 규칙에 맞춘다. `NEXT_PUBLIC_SITE_URL` 도 apex.
 - HTTP → HTTPS 자동 (Vercel 기본).
-- 루트 `/` → `/ko` 는 미들웨어에서 처리 (i18n 문서 참조).
-- 구 URL 이 생기면 `next.config.ts` 의 `redirects()` 에 영구 리다이렉트 등록.
+- 미들웨어(proxy)는 없다. 옛 주소(`/ko`·`/en`·`/ko/works/**`·옛 데모)는 `next.config.ts` 의 `redirects()` 가 308 한 번으로 새 주소에 보낸다.
+- 구 URL 이 생기면 `next.config.ts` 의 `redirects()` 에 영구 리다이렉트 등록 — 구체적인 규칙을 먼저 둔다(첫 일치 적용).
 
 ## 배포 전 체크리스트
 
 - [ ] `npm run build` 로컬 통과
 - [ ] `npm run lint` 경고 0
-- [ ] Lighthouse Performance / SEO / A11y ≥ 95 (Preview 에서 측정)
+- [ ] Lighthouse 모바일 Performance ≥ 90 · SEO / A11y ≥ 95 (Preview 에서 측정 — SEO 는 프리뷰 차단 두 항목 `is-crawlable`·`robots-txt` 를 빼고 본다)
 - [ ] 새 환경변수가 Vercel Preview·Prod 양쪽에 등록됨
 - [ ] OG 프리뷰 (Slack/카톡) 로 최종 이미지 확인
-- [ ] 다국어 페이지 모두 200 응답 (`/ko`, `/en`, sitemap, robots)
+- [ ] 공개 페이지 모두 200 응답 (`/`, 기능 상세, `/tour`, sitemap, robots), 옛 주소는 308 한 번
 
 ## 롤백
 
