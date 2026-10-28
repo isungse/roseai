@@ -40,3 +40,13 @@ export function snapshotAvailable(slug: string): boolean {
     path.join(process.cwd(), "public", "demos", "works", slug, "index.html"),
   );
 }
+
+// The composed home hero artwork (works spec §3): real UI snapshots laid out
+// as one image. It exists once the owner-picked draft is published; until then
+// the hero overlaps the raw desktop and mobile captures.
+const HERO_ARTWORK = { src: "/images/home-hero.jpg", width: 1600, height: 1200 };
+
+export function heroArtwork(): WorksImage | null {
+  const exists = existsSync(path.join(process.cwd(), "public", HERO_ARTWORK.src));
+  return exists ? { ...HERO_ARTWORK, placeholder: false } : null;
+}

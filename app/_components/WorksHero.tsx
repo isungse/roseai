@@ -1,8 +1,9 @@
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { TOUR_HREF, WORKS_HUB_IMAGES } from "@/lib/data/works";
-import { worksImage } from "@/lib/works/images";
+import { heroArtwork, worksImage } from "@/lib/works/images";
 
 import { ScreenImage } from "./ScreenImage";
 
@@ -24,10 +25,11 @@ function Accented({ text, accent }: AccentedProps) {
   );
 }
 
-// Home S1 (works spec §4). The visual is the desktop + phone capture pair
-// until the product composition artwork (spec §3, plan R6) replaces it.
+// Home S1 (works spec §4). The visual is the composed product artwork
+// (spec §3) once it is published, and the desktop + phone capture pair before.
 export function WorksHero() {
   const t = useTranslations("works.hero");
+  const art = heroArtwork();
   const desktop = worksImage(WORKS_HUB_IMAGES.heroDesktop);
   const mobile = worksImage(WORKS_HUB_IMAGES.heroMobile, "mobile");
 
@@ -52,22 +54,36 @@ export function WorksHero() {
           </div>
         </div>
 
-        {/* Desktop capture with the phone capture overlapping its bottom-right
-            corner; the padding reserves room for the overhang. */}
-        <div className="relative pb-14 pr-8 sm:pr-14">
-          <ScreenImage
-            image={desktop}
-            alt={t("desktopAlt")}
+        {art ? (
+          // The artwork carries its own frames and background; the hero panel
+          // radius (design-system "rounded-2xl") is the only framing it gets.
+          <Image
+            src={art.src}
+            alt={t("artAlt")}
+            width={art.width}
+            height={art.height}
             priority
             sizes="(min-width: 1024px) 58vw, 100vw"
+            className="block h-auto w-full rounded-2xl"
           />
-          <ScreenImage
-            image={mobile}
-            alt={t("mobileAlt")}
-            sizes="200px"
-            className="absolute bottom-0 right-0 w-[30%] max-w-[200px] rounded-2xl"
-          />
-        </div>
+        ) : (
+          // Desktop capture with the phone capture overlapping its bottom-right
+          // corner; the padding reserves room for the overhang.
+          <div className="relative pb-14 pr-8 sm:pr-14">
+            <ScreenImage
+              image={desktop}
+              alt={t("desktopAlt")}
+              priority
+              sizes="(min-width: 1024px) 58vw, 100vw"
+            />
+            <ScreenImage
+              image={mobile}
+              alt={t("mobileAlt")}
+              sizes="200px"
+              className="absolute bottom-0 right-0 w-[30%] max-w-[200px] rounded-2xl"
+            />
+          </div>
+        )}
       </div>
     </section>
   );
