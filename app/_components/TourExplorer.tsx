@@ -50,15 +50,20 @@ interface TourExplorerProps {
   groups: TourGroupView[];
   labels: TourLabels;
   defaultKey: string;
+  /** Deep-linked menu (`?menu=`); null opens the default menu. */
+  requested?: string | null;
 }
 
 type Role = "employee" | "admin";
 
 const ROLES: readonly Role[] = ["employee", "admin"];
 
-export function TourExplorer({ groups, labels, defaultKey }: TourExplorerProps) {
-  const requested = useSearchParams().get("menu");
+/** Reads the `?menu=` deep link. Needs a Suspense boundary; its fallback is the plain explorer. */
+export function TourExplorerFromUrl(props: Omit<TourExplorerProps, "requested">) {
+  return <TourExplorer {...props} requested={useSearchParams().get("menu")} />;
+}
 
+export function TourExplorer({ groups, labels, defaultKey, requested = null }: TourExplorerProps) {
   const entries = useMemo(
     () =>
       groups.flatMap((g) =>
@@ -141,8 +146,9 @@ export function TourExplorer({ groups, labels, defaultKey }: TourExplorerProps) 
                         className={cn(
                           "flex min-h-10 w-full items-center gap-3 border-l-2 px-3 text-left text-sm transition-colors",
                           group.icon && "pl-8",
+                          // Brand text on the brand tint is 4.2:1 — the bar and the tint mark the row, the text stays ink.
                           on
-                            ? "border-brand bg-brand/5 font-semibold text-brand"
+                            ? "border-brand bg-brand/5 font-semibold text-ink"
                             : "border-transparent font-medium text-ink hover:bg-g50",
                         )}
                       >

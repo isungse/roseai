@@ -56,9 +56,10 @@
 
 - **Inter** — `next/font/google`. 본문·헤딩 기본. **variable font — weight 배열을 지정하지 않는다**, `next/font` 가 전 축(100–900)을 로드한다.
 - **JetBrains Mono** — `next/font/google`. 모노스페이스 (인덱스 숫자, 메타 라인, 버튼 화살표). variable font, weight 배열 없음.
-- **Pretendard Variable** — `npm i pretendard` → `next/font/local` 로 variable woff2 로드. 한국어 본문 우선.
-  - 경로: `node_modules/pretendard/dist/web/variable/woff2/PretendardVariable.woff2`
-  - 프로젝트에서는 `public/fonts/` 로 복사하지 말고 로컬 import 로 번들링. 자체 호스팅으로 CLS·개인정보·오프라인 빌드 모두 해결.
+- **Pretendard Variable** — `npm i pretendard` → **사이트가 쓰는 글자만 남긴 서브셋**을 `next/font/local` 로 로드. 한국어 본문 우선.
+  - 경로: `app/fonts/PretendardVariable.subset.woff2` (약 100 KB, 굵기 축 전부 유지). 원본(`node_modules/pretendard/dist/web/variable/woff2/PretendardVariable.woff2`)은 2 MB 라 모든 페이지에 preload 되면 모바일 LCP 가 13초까지 밀렸다(2026-10-28 W9 Lighthouse).
+  - 문구를 바꾸면 `npm run font:subset` 으로 다시 만든다(`app/fonts/subset.mjs` — `messages/`·`app/`·`components/`·`lib/` 의 글자 + 출력 가능한 ASCII). `messages/ko.json` 에 서브셋에 없는 글자가 있으면 `lib/fonts.ts` 가 빌드를 멈춘다 — 시스템 폰트로 조용히 바뀌는 글자를 배포하지 않는다.
+  - `public/fonts/` 로 복사하지 말고 로컬 import 로 번들링. 자체 호스팅으로 CLS·개인정보·오프라인 빌드 모두 해결.
 - 세 폰트 모두 CSS 변수로 노출 (`--font-inter`, `--font-mono`, `--font-pretendard`) 해서 `@theme` 에서 참조.
 
 ```css

@@ -11,6 +11,7 @@ app/                     # 한국어 고정 — 로케일 세그먼트 없음 (i
   [feature]/page.tsx     # 기능 상세 (generateStaticParams + dynamicParams = false)
   tour/page.tsx          # 전체 메뉴 투어
   _components/           # 홈·상세·투어가 함께 쓰는 페이지 컴포넌트
+  fonts/                 # Pretendard 서브셋(생성물) + 생성 스크립트 subset.mjs (design-system.md)
   not-found.tsx · opengraph-image.tsx · sitemap.ts · robots.ts
 components/
   ui/                    # 원자 단위 (ButtonLink, RevealText…)

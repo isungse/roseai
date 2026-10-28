@@ -62,7 +62,8 @@ export function WorksHero() {
             alt={t("artAlt")}
             width={art.width}
             height={art.height}
-            priority
+            preload
+            fetchPriority="high"
             sizes="(min-width: 1024px) 58vw, 100vw"
             className="block h-auto w-full rounded-2xl"
           />

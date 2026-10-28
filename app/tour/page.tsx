@@ -5,7 +5,7 @@ import { Suspense } from "react";
 import { TOUR_HREF } from "@/lib/data/works";
 import { worksMetadata } from "@/lib/works/metadata";
 
-import { TourExplorer } from "../_components/TourExplorer";
+import { TourExplorer, TourExplorerFromUrl } from "../_components/TourExplorer";
 import { buildTourGroups } from "../_components/tourData";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -55,9 +55,11 @@ export default async function WorksTourPage() {
       <section>
         <div className="px-7 py-10 md:px-10 md:py-12">
           {/* `useSearchParams` (deep link `?menu=`) needs a Suspense boundary
-              to keep the rest of the page statically rendered. */}
-          <Suspense fallback={null}>
-            <TourExplorer groups={groups} labels={labels} defaultKey="dashboard" />
+              to keep the rest of the page statically rendered. The fallback is the
+              explorer on its default menu, so the static HTML already holds it and
+              nothing below moves when the deep-link reader takes over. */}
+          <Suspense fallback={<TourExplorer groups={groups} labels={labels} defaultKey="dashboard" />}>
+            <TourExplorerFromUrl groups={groups} labels={labels} defaultKey="dashboard" />
           </Suspense>
         </div>
       </section>

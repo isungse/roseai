@@ -33,7 +33,10 @@ export function ScreenImage({
         width={image.width}
         height={image.height}
         sizes={sizes}
-        priority={priority}
+        // The page's largest image: preloaded and fetched first (`preload` replaces Next 16's
+        // deprecated `priority`, and the preload stays low priority without `fetchPriority`).
+        preload={priority}
+        fetchPriority={priority ? "high" : undefined}
         className="block h-auto w-full"
       />
     </figure>
