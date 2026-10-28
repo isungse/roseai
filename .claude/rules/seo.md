@@ -12,8 +12,9 @@
 
 ## Open Graph / Twitter
 
-- OG 이미지: `1200x630`, `<2MB`. 사이트 공통 이미지 `app/opengraph-image.tsx` (`next/og` ImageResponse) — 루트 세그먼트의 파일 컨벤션이 하위 라우트까지 상속된다.
-- Satori 는 woff2 를 읽지 못하므로 한글 폰트는 `node_modules/pretendard/dist/public/static/*.otf` 를 `fs` 로 읽어 넘긴다.
+- OG 이미지: `1200x630`, `<2MB`. 사이트 공통 이미지 `app/opengraph-image.tsx` (`next/og` ImageResponse) — 제품명·문구 옆에 홈 히어로 아트워크(`public/images/home-hero.jpg`)를 그린다. 아트워크가 없으면 글자만 그린다.
+- **메타데이터 병합은 얕다.** 페이지가 `openGraph` 를 직접 정하면 루트의 파일 컨벤션 이미지가 통째로 빠진다. 그래서 공통 헬퍼(`lib/works/metadata.ts`)가 `openGraph.images`·`twitter.images` 에 공유 카드(`/opengraph-image`)를 직접 넣는다 — 새 페이지도 이 헬퍼를 쓴다.
+- Satori 는 woff2 를 읽지 못하므로 한글 폰트는 `node_modules/pretendard/dist/public/static/*.otf` 를 `fs` 로 읽어 넘긴다. 이미지는 `<img src="data:…">` 로만 그린다(`next/image` 미적용).
 - `twitter.card: 'summary_large_image'`.
 
 ## canonical (hreflang 없음)
