@@ -1,40 +1,51 @@
 "use client";
 
-import { Link, usePathname } from "@/i18n/navigation";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
 import { cn } from "@/lib/utils";
 
-import { LangToggle } from "./LangToggle";
+interface TopBarLink {
+  href: string;
+  label: string;
+}
 
 interface TopBarNavProps {
   /** Accessible name of the product nav landmark (i18n). */
   label: string;
+  links: readonly TopBarLink[];
 }
 
-// Client leaf: needs the pathname to mark WORKS as current and to hide the
-// language toggle inside the Korean-only product section (i18n.md).
-export function TopBarNav({ label }: TopBarNavProps) {
+// Client leaf: only the current-page mark needs the pathname. A single list
+// serves both layouts — a scrolling chip row under the logo below `lg`, an
+// inline row beside it from `lg` — so there is one nav landmark, not two.
+export function TopBarNav({ label, links }: TopBarNavProps) {
   const pathname = usePathname();
-  const inWorks = pathname === "/works" || pathname.startsWith("/works/");
 
   return (
-    <div className="flex items-center gap-5 md:gap-8">
-      <nav aria-label={label}>
-        <Link
-          href="/works"
-          locale="ko"
-          aria-current={inWorks ? "page" : undefined}
-          className={cn(
-            // `WORKS` is a locale-invariant design element, like the logo.
-            "mono cap inline-flex h-16 items-center border-b-2 text-xs font-semibold tracking-[0.08em] transition-colors",
-            inWorks
-              ? "border-brand text-ink"
-              : "border-transparent text-g500 hover:text-ink",
-          )}
-        >
-          WORKS
-        </Link>
-      </nav>
-      {!inWorks && <LangToggle />}
-    </div>
+    <nav aria-label={label} className="border-t border-hair lg:border-t-0">
+      <ul className="flex h-12 items-center gap-1 overflow-x-auto px-7 md:px-10 lg:h-16 lg:overflow-visible lg:px-0">
+        {links.map((link) => {
+          const on =
+            pathname === link.href || pathname.startsWith(`${link.href}/`);
+          return (
+            <li key={link.href} className="shrink-0">
+              <Link
+                href={link.href}
+                aria-current={on ? "page" : undefined}
+                className={cn(
+                  "inline-flex h-12 items-center border-b-2 px-3 text-sm font-medium transition-colors lg:h-16",
+                  on
+                    ? "border-brand text-ink"
+                    : "border-transparent text-g500 hover:text-ink",
+                )}
+              >
+                {link.label}
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
   );
 }

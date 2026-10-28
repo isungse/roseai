@@ -1,15 +1,12 @@
+import Link from "next/link";
 import type { ReactNode } from "react";
 
-import { Link } from "@/i18n/navigation";
-import type { Locale } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 
 interface ButtonLinkProps {
   href: string;
   children: ReactNode;
   variant?: "primary" | "secondary";
-  /** Force a locale (the Korean-only product section passes `ko`). */
-  locale?: Locale;
   className?: string;
 }
 
@@ -25,15 +22,10 @@ export function ButtonLink({
   href,
   children,
   variant = "primary",
-  locale,
   className,
 }: ButtonLinkProps) {
   return (
-    <Link
-      href={href}
-      locale={locale}
-      className={cn(BASE, VARIANT[variant], className)}
-    >
+    <Link href={href} className={cn(BASE, VARIANT[variant], className)}>
       <span>{children}</span>
       <span aria-hidden="true">→</span>
     </Link>

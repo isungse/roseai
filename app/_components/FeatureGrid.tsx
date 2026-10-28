@@ -1,7 +1,12 @@
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 
-import { Link } from "@/i18n/navigation";
-import { WORKS_MENU, type WorksMenuItem } from "@/lib/data/works";
+import {
+  featureHref,
+  tourMenuHref,
+  WORKS_MENU,
+  type WorksMenuItem,
+} from "@/lib/data/works";
 
 import { SectionHeading } from "./SectionHeading";
 
@@ -13,7 +18,7 @@ function CardAction({ item }: { item: WorksMenuItem }) {
 
   if (item.feature) {
     return (
-      <Link href={`/works/${item.feature}`} locale="ko" className={LINK_CLASS}>
+      <Link href={featureHref(item.feature)} className={LINK_CLASS}>
         {t("detail")} <span aria-hidden="true">→</span>
       </Link>
     );
@@ -21,8 +26,7 @@ function CardAction({ item }: { item: WorksMenuItem }) {
   if (item.snapshot) {
     return (
       <Link
-        href={`/works/tour?menu=${item.key}`}
-        locale="ko"
+        href={tourMenuHref(item.key)}
         className={LINK_CLASS}
       >
         {t("screen")} <span aria-hidden="true">→</span>
@@ -41,7 +45,7 @@ export function FeatureGrid() {
   const t = useTranslations("works");
 
   return (
-    <section id="features" className="scroll-mt-28 border-b border-hair">
+    <section id="features" className="scroll-mt-28 border-b border-hair lg:scroll-mt-20">
       <div className="px-7 py-16 md:px-10 md:py-20 lg:py-28">
         <SectionHeading
           eyebrow={t("grid.eyebrow")}

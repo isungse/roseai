@@ -24,7 +24,7 @@ function font(file: string) {
   );
 }
 
-// Shared by every /works route (file convention cascades to nested segments).
+// Shared by every route: the root segment's image cascades to nested segments.
 export default async function Image() {
   const t = await getTranslations({ locale: "ko", namespace: "works.og" });
   const [bold, medium] = await Promise.all([

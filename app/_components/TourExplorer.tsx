@@ -1,11 +1,11 @@
 "use client";
 
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useMemo, useState, type ReactNode } from "react";
 
 import { ArrowLeft, ExternalLink, Lock } from "lucide-react";
 
-import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 
 export interface TourItemView {
@@ -195,7 +195,6 @@ function TourPane({ item, labels }: { item: TourItemView; labels: TourLabels }) 
         {item.featureHref && (
           <Link
             href={item.featureHref}
-            locale="ko"
             className="mono cap inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.06em] hover:text-brand"
           >
             {labels.detail} <span aria-hidden="true">→</span>

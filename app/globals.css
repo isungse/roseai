@@ -17,9 +17,8 @@
     ui-monospace, monospace;
   --font-display: var(--font-inter), var(--font-pretendard), sans-serif;
 
-  /* Type scale from design-system.md "타이포그래피". Declared here so the
-     works section can use `text-h1` … `text-body-lg` instead of ad-hoc
-     clamp() values; the showcase keeps its own single-use clamp scale. */
+  /* Type scale from design-system.md "타이포그래피". Declared here so pages
+     use `text-h1` … `text-body-lg` instead of ad-hoc clamp() values. */
   --text-display: 56px;
   --text-display--line-height: 1.05;
   --text-h1: 40px;

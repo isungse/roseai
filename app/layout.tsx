@@ -1,50 +1,33 @@
 import type { Metadata } from "next";
-import { hasLocale, NextIntlClientProvider } from "next-intl";
-import { getTranslations, setRequestLocale } from "next-intl/server";
-import { notFound } from "next/navigation";
+import { NextIntlClientProvider } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
 import { Footer } from "@/components/layout/Footer";
 import { TopBar } from "@/components/layout/TopBar";
-import { routing, type Locale } from "@/i18n/routing";
+import { WORKS_PRODUCT_NAME } from "@/lib/data/works";
 import { env } from "@/lib/env";
 import { inter, jetbrainsMono, pretendard } from "@/lib/fonts";
 
-import "../globals.css";
+import "./globals.css";
 
-export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }));
-}
-
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ locale: Locale }>;
-}): Promise<Metadata> {
-  const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "meta" });
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("works.meta");
 
   return {
     metadataBase: new URL(env.siteUrl),
     title: {
       default: t("title"),
-      template: "%s | ROSE-AI",
+      template: `%s | ${WORKS_PRODUCT_NAME}`,
     },
     description: t("description"),
-    alternates: {
-      canonical: `/${locale}`,
-      languages: {
-        ko: "/ko",
-        en: "/en",
-        "x-default": "/ko",
-      },
-    },
+    alternates: { canonical: "/" },
     openGraph: {
       type: "website",
-      siteName: "ROSE-AI",
+      siteName: WORKS_PRODUCT_NAME,
       title: t("title"),
       description: t("description"),
-      url: `/${locale}`,
-      locale: locale === "ko" ? "ko_KR" : "en_US",
+      url: "/",
+      locale: "ko_KR",
     },
     twitter: {
       card: "summary_large_image",
@@ -54,28 +37,61 @@ export async function generateMetadata({
   };
 }
 
-export default async function LocaleLayout({
+export default async function RootLayout({
   children,
-  params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ locale: string }>;
 }) {
-  const { locale } = await params;
-  if (!hasLocale(routing.locales, locale)) {
-    notFound();
-  }
+  const t = await getTranslations("common");
+  const meta = await getTranslations("works.meta");
 
-  setRequestLocale(locale);
-  const t = await getTranslations({ locale, namespace: "common" });
+  // seo.md "구조화 데이터": the maker, the site and the product it presents.
+  // No `offers` (the site states no prices) and no SearchAction (no search).
+  const organization = { "@id": `${env.siteUrl}/#organization` };
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        ...organization,
+        name: "ROSE-AI",
+        url: env.siteUrl,
+      },
+      {
+        "@type": "WebSite",
+        name: WORKS_PRODUCT_NAME,
+        url: env.siteUrl,
+        inLanguage: "ko",
+        publisher: organization,
+      },
+      {
+        "@type": "SoftwareApplication",
+        name: WORKS_PRODUCT_NAME,
+        applicationCategory: "BusinessApplication",
+        operatingSystem: "Web",
+        inLanguage: "ko",
+        description: meta("description"),
+        url: env.siteUrl,
+        publisher: organization,
+      },
+    ],
+  };
 
   return (
     <html
-      lang={locale}
+      lang="ko"
       className={`${pretendard.variable} ${inter.variable} ${jetbrainsMono.variable}`}
     >
       <body className="text-ink antialiased">
         <NextIntlClientProvider>
+          {/* Static data from our own messages; `<` is escaped so no string
+              can close the script element (Next.js JSON-LD guide). */}
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+            }}
+          />
           <a href="#main" className="skip-link">
             {t("skipToContent")}
           </a>

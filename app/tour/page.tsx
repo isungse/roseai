@@ -1,39 +1,24 @@
 import type { Metadata } from "next";
-import { getTranslations, setRequestLocale } from "next-intl/server";
-import { permanentRedirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 
-import { type Locale } from "@/i18n/routing";
+import { TOUR_HREF } from "@/lib/data/works";
 import { worksMetadata } from "@/lib/works/metadata";
 
 import { TourExplorer } from "../_components/TourExplorer";
-import { WorksSubnav } from "../_components/WorksSubnav";
 import { buildTourGroups } from "../_components/tourData";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ locale: Locale }>;
-}): Promise<Metadata> {
-  const { locale } = await params;
-  if (locale !== "ko") return {};
-  const t = await getTranslations({ locale, namespace: "works.tour.meta" });
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("works.tour.meta");
   return worksMetadata({
-    path: "/works/tour",
+    path: TOUR_HREF,
     title: t("title"),
     description: t("description"),
   });
 }
 
-export default async function WorksTourPage({
-  params,
-}: {
-  params: Promise<{ locale: Locale }>;
-}) {
-  const { locale } = await params;
-  if (locale !== "ko") permanentRedirect("/ko/works/tour");
-  setRequestLocale(locale);
-  const t = await getTranslations({ locale, namespace: "works" });
+export default async function WorksTourPage() {
+  const t = await getTranslations("works");
 
   const groups = buildTourGroups((key) => t(key));
   const labels = {
@@ -54,7 +39,6 @@ export default async function WorksTourPage({
 
   return (
     <>
-      <WorksSubnav current="tour" />
       <section className="border-b border-hair">
         <div className="px-7 py-12 md:px-10 md:py-16">
           <p className="mono cap text-xs font-medium tracking-[0.08em] text-brand">

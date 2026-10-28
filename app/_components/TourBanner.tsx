@@ -1,7 +1,7 @@
 import { useTranslations } from "next-intl";
 
 import { ButtonLink } from "@/components/ui/ButtonLink";
-import { WORKS_HUB_IMAGES } from "@/lib/data/works";
+import { TOUR_HREF, WORKS_HUB_IMAGES } from "@/lib/data/works";
 import { worksImage } from "@/lib/works/images";
 
 import { ScreenImage } from "./ScreenImage";
@@ -21,7 +21,7 @@ export function TourBanner() {
             {t("title")}
           </h2>
           <p className="mt-5 text-body-lg text-g500">{t("body")}</p>
-          <ButtonLink href="/works/tour" locale="ko" className="mt-8">
+          <ButtonLink href={TOUR_HREF} className="mt-8">
             {t("button")}
           </ButtonLink>
         </div>

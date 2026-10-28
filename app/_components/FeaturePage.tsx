@@ -1,15 +1,19 @@
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 
 import { ButtonLink } from "@/components/ui/ButtonLink";
-import { Link } from "@/i18n/navigation";
-import { WORKS_FEATURES, type WorksFeature } from "@/lib/data/works";
+import {
+  featureHref,
+  TOUR_HREF,
+  WORKS_FEATURES,
+  type WorksFeature,
+} from "@/lib/data/works";
 import { cn } from "@/lib/utils";
 import { worksImage } from "@/lib/works/images";
 
 import { FeatureTabs } from "./FeatureTabs";
 import { ScreenImage } from "./ScreenImage";
 import { SectionHeading } from "./SectionHeading";
-import { WorksSubnav } from "./WorksSubnav";
 
 interface FeaturePageProps {
   feature: WorksFeature;
@@ -38,7 +42,6 @@ export function FeaturePage({ feature }: FeaturePageProps) {
 
   return (
     <>
-      <WorksSubnav current={feature.slug} />
 
       {/* T1 — hero */}
       <section className="border-b border-hair">
@@ -125,8 +128,7 @@ export function FeaturePage({ feature }: FeaturePageProps) {
               return (
                 <li key={other.slug}>
                   <Link
-                    href={`/works/${other.slug}`}
-                    locale="ko"
+                    href={featureHref(other.slug)}
                     className="flex h-full flex-col rounded-lg border border-hair p-5 transition-colors hover:border-ink"
                   >
                     <Icon
@@ -149,7 +151,7 @@ export function FeaturePage({ feature }: FeaturePageProps) {
               );
             })}
           </ul>
-          <ButtonLink href="/works/tour" locale="ko" className="mt-10">
+          <ButtonLink href={TOUR_HREF} className="mt-10">
             {t("featurePage.tourButton")}
           </ButtonLink>
         </div>

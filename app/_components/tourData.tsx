@@ -1,4 +1,4 @@
-import { WORKS_MENU } from "@/lib/data/works";
+import { featureHref, WORKS_MENU } from "@/lib/data/works";
 import { snapshotAvailable } from "@/lib/works/images";
 
 import type { TourGroupView } from "./TourExplorer";
@@ -37,7 +37,7 @@ export function buildTourGroups(t: Translate): TourGroupView[] {
             : null,
           external: item.external === true,
           available: item.snapshot ? snapshotAvailable(item.snapshot) : false,
-          featureHref: item.feature ? `/works/${item.feature}` : null,
+          featureHref: item.feature ? featureHref(item.feature) : null,
         };
       }),
     };

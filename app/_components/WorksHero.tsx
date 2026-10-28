@@ -1,11 +1,31 @@
 import { useTranslations } from "next-intl";
 
 import { ButtonLink } from "@/components/ui/ButtonLink";
-import { WORKS_HUB_IMAGES } from "@/lib/data/works";
+import { TOUR_HREF, WORKS_HUB_IMAGES } from "@/lib/data/works";
 import { worksImage } from "@/lib/works/images";
 
 import { ScreenImage } from "./ScreenImage";
 
+interface AccentedProps {
+  text: string;
+  /** One phrase inside `text` drawn in brand red (design-system: accent phrase). */
+  accent: string;
+}
+
+function Accented({ text, accent }: AccentedProps) {
+  const at = text.indexOf(accent);
+  if (!accent || at < 0) return text;
+  return (
+    <>
+      {text.slice(0, at)}
+      <span className="text-brand">{accent}</span>
+      {text.slice(at + accent.length)}
+    </>
+  );
+}
+
+// Home S1 (works spec §4). The visual is the desktop + phone capture pair
+// until the product composition artwork (spec §3, plan R6) replaces it.
 export function WorksHero() {
   const t = useTranslations("works.hero");
   const desktop = worksImage(WORKS_HUB_IMAGES.heroDesktop);
@@ -22,13 +42,11 @@ export function WorksHero() {
             {t("title")}
           </h1>
           <p className="mt-6 whitespace-pre-line text-body-lg text-g500">
-            {t("lead")}
+            <Accented text={t("lead")} accent={t("accent")} />
           </p>
           <div className="mt-10 flex flex-wrap gap-3">
-            <ButtonLink href="/works/tour" locale="ko">
-              {t("ctaTour")}
-            </ButtonLink>
-            <ButtonLink href="/works#features" locale="ko" variant="secondary">
+            <ButtonLink href={TOUR_HREF}>{t("ctaTour")}</ButtonLink>
+            <ButtonLink href="/#features" variant="secondary">
               {t("ctaFeatures")}
             </ButtonLink>
           </div>

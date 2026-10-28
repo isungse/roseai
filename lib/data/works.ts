@@ -49,10 +49,9 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
-// Locale-invariant product metadata for the /works section. Human-readable
-// strings live under `works.*` in messages/works.ko.json (ko-only, see
-// i18n.md). Icons mirror the product's own sidebar so the tour reads as the
-// real menu.
+// Locale-invariant product metadata for the site. Human-readable strings live
+// under `works.*` in messages/ko.json (Korean-only, see i18n.md). Icons mirror
+// the product's own sidebar so the tour reads as the real menu.
 
 /** Latin letters only, by owner decision — never transliterated. */
 export const WORKS_PRODUCT_NAME = "ROSE-AI WORKS";
@@ -66,6 +65,19 @@ export const WORKS_FEATURE_SLUGS = [
 ] as const;
 
 export type WorksFeatureSlug = (typeof WORKS_FEATURE_SLUGS)[number];
+
+// Site paths. The product is the whole site, so the feature pages sit at the
+// top level; every link is built here rather than spelled out in components.
+export const TOUR_HREF = "/tour";
+
+export function featureHref(slug: WorksFeatureSlug): string {
+  return `/${slug}`;
+}
+
+/** Deep link into the tour with one menu selected (`TourExplorer` reads `?menu=`). */
+export function tourMenuHref(menuKey: string): string {
+  return `${TOUR_HREF}?menu=${menuKey}`;
+}
 
 export interface WorksFeature {
   slug: WorksFeatureSlug;

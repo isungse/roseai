@@ -1,38 +1,41 @@
 import type { Metadata } from "next";
 
+import { WORKS_PRODUCT_NAME } from "@/lib/data/works";
+
 interface WorksMetadataInput {
-  /** Path under the locale prefix, e.g. `/works/approval`. */
+  /** Site path, e.g. `/` or `/approval` — the site has no locale prefix. */
   path: string;
   title: string;
   description: string;
+  /** Home keeps its title as-is instead of the layout's `%s | …` template. */
+  absoluteTitle?: boolean;
 }
 
-// The product section exists in Korean only (i18n.md "ko 전용 네임스페이스"),
-// so hreflang lists `ko` and `x-default` and nothing else.
+// The site exists in Korean only (i18n.md), so a page carries its canonical
+// URL and no hreflang alternates. Share cards don't get the layout's title
+// template, so they carry the product name themselves.
 export function worksMetadata({
   path,
   title,
   description,
+  absoluteTitle = false,
 }: WorksMetadataInput): Metadata {
-  const url = `/ko${path}`;
+  const shareTitle = absoluteTitle ? title : `${title} | ${WORKS_PRODUCT_NAME}`;
   return {
-    title,
+    title: absoluteTitle ? { absolute: title } : title,
     description,
-    alternates: {
-      canonical: url,
-      languages: { ko: url, "x-default": url },
-    },
+    alternates: { canonical: path },
     openGraph: {
       type: "website",
-      siteName: "ROSE-AI",
-      title,
+      siteName: WORKS_PRODUCT_NAME,
+      title: shareTitle,
       description,
-      url,
+      url: path,
       locale: "ko_KR",
     },
     twitter: {
       card: "summary_large_image",
-      title,
+      title: shareTitle,
       description,
     },
   };
