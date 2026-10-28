@@ -98,14 +98,10 @@ export const WORKS_FEATURES: readonly WorksFeature[] = [
     tabs: [
       { key: "builder", image: "/images/works/approval/02-builder.jpg" },
       { key: "line", image: "/images/works/approval/03-line.jpg" },
-      { key: "preapprove", image: "/images/works/approval/04-preapprove.jpg" },
-      { key: "bulk", image: "/images/works/approval/05-bulk.jpg" },
-      { key: "proofread", image: "/images/works/approval/06-proofread.jpg" },
+      { key: "progress", image: "/images/works/approval/04-progress.jpg" },
     ],
     sections: [
       { key: "numbering", image: "/images/works/approval/07-numbering.jpg" },
-      { key: "backup", image: "/images/works/approval/08-backup.jpg" },
-      { key: "stats", image: "/images/works/approval/09-stats.jpg" },
     ],
   },
   {
@@ -115,13 +111,9 @@ export const WORKS_FEATURES: readonly WorksFeature[] = [
     tabs: [
       { key: "rooms", image: "/images/works/messenger/02-rooms.jpg" },
       { key: "files", image: "/images/works/messenger/03-files.jpg" },
-      { key: "deletion", image: "/images/works/messenger/04-deletion.jpg" },
-      { key: "badges", image: "/images/works/messenger/05-badges.jpg" },
       { key: "desktop", image: "/images/works/messenger/06-desktop.jpg" },
     ],
     sections: [
-      { key: "orgchart", image: "/images/works/messenger/07-orgchart.jpg" },
-      { key: "retention", image: "/images/works/messenger/08-retention.jpg" },
       { key: "mobile", image: "/images/works/messenger/09-mobile.jpg" },
     ],
   },
@@ -133,12 +125,9 @@ export const WORKS_FEATURES: readonly WorksFeature[] = [
       { key: "schedule", image: "/images/works/attendance/02-schedule.jpg" },
       { key: "leave", image: "/images/works/attendance/03-leave.jpg" },
       { key: "wifi", image: "/images/works/attendance/04-wifi.jpg" },
-      { key: "records", image: "/images/works/attendance/05-records.jpg" },
     ],
     sections: [
       { key: "manager", image: "/images/works/attendance/06-manager.jpg" },
-      { key: "checkin", image: "/images/works/attendance/07-checkin.jpg" },
-      { key: "exceptions", image: "/images/works/attendance/08-exceptions.jpg" },
     ],
   },
   {
@@ -148,14 +137,10 @@ export const WORKS_FEATURES: readonly WorksFeature[] = [
     tabs: [
       { key: "boards", image: "/images/works/board/02-boards.jpg" },
       { key: "notice", image: "/images/works/board/03-notice.jpg" },
-      { key: "editor", image: "/images/works/board/04-editor.jpg" },
       { key: "comments", image: "/images/works/board/05-comments.jpg" },
-      { key: "moderators", image: "/images/works/board/06-moderators.jpg" },
     ],
     sections: [
       { key: "writing", image: "/images/works/board/07-writing.jpg" },
-      { key: "admin", image: "/images/works/board/08-admin.jpg" },
-      { key: "print", image: "/images/works/board/09-print.jpg" },
     ],
   },
   {
@@ -165,14 +150,10 @@ export const WORKS_FEATURES: readonly WorksFeature[] = [
     tabs: [
       { key: "intake", image: "/images/works/support/02-intake.jpg" },
       { key: "routing", image: "/images/works/support/03-routing.jpg" },
-      { key: "badge", image: "/images/works/support/04-badge.jpg" },
       { key: "status", image: "/images/works/support/05-status.jpg" },
-      { key: "manuals", image: "/images/works/support/06-manuals.jpg" },
     ],
     sections: [
       { key: "detail", image: "/images/works/support/07-detail.jpg" },
-      { key: "assignee", image: "/images/works/support/08-assignee.jpg" },
-      { key: "tasks", image: "/images/works/support/09-tasks.jpg" },
     ],
   },
 ];
