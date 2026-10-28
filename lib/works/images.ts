@@ -7,7 +7,6 @@ export interface WorksImage {
   src: string;
   width: number;
   height: number;
-  placeholder: boolean;
 }
 
 type Kind = "desktop" | "mobile";
@@ -17,22 +16,14 @@ const DIMENSIONS: Record<Kind, { width: number; height: number }> = {
   mobile: { width: 390, height: 844 },
 };
 
-const PLACEHOLDER: Record<Kind, string> = {
-  desktop: "/images/works/_placeholder-desktop.svg",
-  mobile: "/images/works/_placeholder-mobile.svg",
-};
-
-// Captures arrive from the snapshot pipeline after the pages are built. Until
-// a file exists the layout renders a same-ratio placeholder; shipping with any
-// placeholder left is blocked by the acceptance checks, so this never reaches
-// production silently.
+// Every capture comes from the snapshot pipeline and is committed with the
+// page that shows it. A missing file fails the build here rather than shipping
+// an empty frame.
 export function worksImage(src: string, kind: Kind = "desktop"): WorksImage {
-  const exists = existsSync(path.join(process.cwd(), "public", src));
-  return {
-    src: exists ? src : PLACEHOLDER[kind],
-    ...DIMENSIONS[kind],
-    placeholder: !exists,
-  };
+  if (!existsSync(path.join(process.cwd(), "public", src))) {
+    throw new Error(`Missing product capture ${src} — run the snapshot pipeline before building.`);
+  }
+  return { src, ...DIMENSIONS[kind] };
 }
 
 export function snapshotAvailable(slug: string): boolean {
@@ -48,5 +39,5 @@ const HERO_ARTWORK = { src: "/images/home-hero.jpg", width: 1600, height: 1200 }
 
 export function heroArtwork(): WorksImage | null {
   const exists = existsSync(path.join(process.cwd(), "public", HERO_ARTWORK.src));
-  return exists ? { ...HERO_ARTWORK, placeholder: false } : null;
+  return exists ? { ...HERO_ARTWORK } : null;
 }
