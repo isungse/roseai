@@ -68,3 +68,10 @@ checkin-home · messenger → 나머지 화면 → 51장 전부 → `lib/works/i
 ## 다음
 보관 태그 push(확인 뒤) → 홈 히어로 아트워크 시안 2종 → 나머지 스냅샷 → 자리표시 0 → 프리뷰 Lighthouse → 문구 확정 → PR.
 정규 호스트는 apex — Vercel 도메인 설정(`www` → apex)을 교체 때 맞춘다.
+
+## 보관 태그 · 결재 문서 상세 스냅샷 (같은 날 밤)
+- 보관 태그 `archive/brand-site`(→ `bd73552`)를 오너 확인 뒤 origin 에 push 했다.
+- `public/demos/works/approval-detail/index.html` 추가: 구매요청서 결재 진행 중 화면 — 결재선(기안 · 승인 2 · 합의 현재 · 원장 대기, 참조 확인 1) · 품목 표 · 첨부 1 · 관련문서 2 · 결재 이력 4 · 의견 2. 인물·문서는 전부 가상 데이터다.
+- `public/images/works/approval/04-preapprove.jpg` 추가(결재선 표가 보이는 데스크톱 캡처) — 전자결재 페이지의 선결재 탭 이미지.
+- 이 문서의 목록 배지를 상세와 맞추려고 댓글 수를 2로 했다. 그래서 `approval-inbox` · `approval-my-documents` 스냅샷에 「댓글 2개」 배지 하나가 더해졌고(다른 변경 없음), 그 화면에서 찍은 `hub/04-approval` · `approval/01-hero` · `approval/07-numbering` 을 다시 찍었다.
+- 확인: 첫 화면 호출 12건 전부 200 · 콘솔 오류 0 · 외부 요청 0 · 두 번 추출 결과 동일 · 살아 있는 링크는 배너 `/tour` 하나 · 스냅샷 검사 7항목 통과(공개 스냅샷 13장, 이미지 20/51).
