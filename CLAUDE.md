@@ -1,11 +1,11 @@
 # ROSE-AI Homepage
 
-ROSE-AI의 공식 홍보 웹사이트. `roseai.co.kr` 도메인으로 배포.
+ROSE-AI 가 만든 병원 그룹웨어 **ROSE-AI WORKS** 의 제품 소개 사이트 (한국어 전용). `roseai.co.kr` 도메인으로 배포.
 
 ## Stack
 
 - Next.js 16 (App Router, async params) + TypeScript + Tailwind CSS v4
-- next-intl (KO/EN i18n)
+- next-intl (한국어 고정 — 메시지 JSON 한 파일, 로케일 라우팅 없음)
 - Deployed on Vercel Pro
 - Fonts: Pretendard (KR) + Inter + JetBrains Mono (mono)
 
@@ -31,8 +31,8 @@ ROSE-AI의 공식 홍보 웹사이트. `roseai.co.kr` 도메인으로 배포.
 - `meta.md` — 룰 파일 작성·갱신 원칙 (다른 룰 파일을 수정할 때 먼저 따를 메타 규칙)
 - `code-style.md` — 코드 컨벤션, 네이밍, 폴더 구조
 - `design-system.md` — 색상/폰트/스페이싱 토큰
-- `i18n.md` — 한국어/영어 번역 관리
-- `content.md` — 슬라이드 소개글 톤·형식·작성 절차
+- `i18n.md` — 메시지(문구) 관리, 한국어 고정 구성
+- `content.md` — 제품 문구 원칙·형식·작성 절차
 - `seo.md` — 메타태그, sitemap, OG 이미지
 - `accessibility.md` — a11y 체크리스트
 - `deployment.md` — Vercel 배포 & 환경변수

@@ -45,7 +45,7 @@ WCAG 2.1 AA 기준. Lighthouse A11y ≥ 95. 한국어 사용자 환경도 함께
 
 ## 언어
 
-- `<html lang={locale}>` 반드시. `ko` 또는 `en`.
+- `<html lang="ko">` 반드시 — 사이트는 한국어 전용이다 (i18n.md).
 - 혼용 구간은 `<span lang="en">...</span>` 으로 표시. 스크린리더 발음 개선.
 
 ## 한국어 특화
@@ -74,14 +74,17 @@ WCAG 2.1 AA 기준. Lighthouse A11y ≥ 95. 한국어 사용자 환경도 함께
 - [ ] `prefers-reduced-motion` 대응
 - [ ] Lighthouse A11y ≥ 95
 
-## 캐러셀 (Showcase)
+## 탭 · 메뉴 탐색
 
-구현 패턴은 `code-style.md` 의 "Carousel / Autoplay 패턴" 참조. 접근성 요구사항만 여기 둔다.
+- 기능 상세의 탭(`FeatureTabs`): `role="tablist"` / `tab` / `tabpanel`, 좌우 방향키로 이동, 선택 탭에 `aria-selected`.
+- 상단 내비(`TopBarNav`)와 투어 메뉴: 현재 항목에 `aria-current="page"`(내비) 또는 선택 상태 표시. 좁은 화면의 가로 스크롤 칩도 Tab 으로 전부 닿아야 한다.
+- 스냅샷 iframe 에는 화면 이름이 든 `title` 을 준다.
 
-- 루트: `role="region"` + `aria-roledescription="carousel"` + `aria-label`(i18n).
-- 텍스트 블록: `aria-live="polite"` + `aria-atomic` — 슬라이드 전환 시 새 문구를 읽는다.
-- 자동 재생: hover / focus-within 에서 정지, `prefers-reduced-motion: reduce` 면 시작하지 않는다 (WCAG 2.2.2). 슬라이드가 1개면 컨트롤 자체를 렌더하지 않는다.
-- 키보드: 좌우 방향키는 캐러셀 루트의 `onKeyDown` — 포커스가 안에 있을 때만. `window` 리스너로 페이지 전체의 방향키를 가로채지 않는다.
-- 컨트롤: 화살표는 `aria-label`(이전/다음), 인디케이터 점은 `aria-label="{n}번 슬라이드로 이동"` + 활성 점에 `aria-current="true"`.
-- h1 하나 규칙: 활성 슬라이드에 제목이 없어도 슬라이드 01 제목을 `sr-only` h1 으로 DOM 에 유지한다.
-- 강조색: 브랜드 레드 텍스트는 흰 배경 대비 4.6:1 — 큰 텍스트(24px 이상) 기준은 여유, 본문 크기(4.5:1)에서는 경계값이라 강조 구절은 스테이트먼트 크기에서만 쓴다.
+## 자동 재생 콘텐츠
+
+현재 사이트에는 자동 재생 요소가 없다 (2026-10-28 개편으로 쇼케이스 캐러셀 삭제 — 구현 패턴은 `code-style.md` "Carousel / Autoplay 패턴"). 다시 넣으면:
+
+- 자동 재생은 hover / focus-within 에서 정지하고, `prefers-reduced-motion: reduce` 면 시작하지 않는다 (WCAG 2.2.2). 항목이 1개면 컨트롤을 렌더하지 않는다.
+- 전환되는 문구 블록은 `aria-live="polite"` + `aria-atomic`. 키보드 방향키는 컴포넌트 루트의 `onKeyDown` — `window` 리스너로 페이지 전체를 가로채지 않는다.
+- 컨트롤에는 `aria-label`(이전/다음, "{n}번 항목으로 이동"), 활성 표시는 `aria-current`. 페이지 h1 은 하나로 유지한다.
+- 브랜드 레드 텍스트는 흰 배경 대비 4.6:1 — 본문 크기(4.5:1 기준)에서는 경계값이라 강조 구절은 큰 글자에서 쓰는 편이 안전하다.

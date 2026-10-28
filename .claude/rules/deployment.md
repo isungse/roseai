@@ -178,7 +178,7 @@ dev 서버가 망가지는 특징적 증상이 있다. **첫 요청은 정상 �
 3. `npm run dev` 재기동. fresh 상태에서 resolve 에러가 사라지면 캐시 corruption 이 원인이었던 것.
 4. 재발하면 `next.config.ts` 에 `turbopack: { root: __dirname }` 명시 검토 — 자동 root 추론을 끄고 프로젝트 디렉토리에 고정.
 
-브라우저 측 행도 같이 보이면 308 Permanent Redirect 캐시 가능성도 함께 의심 (i18n 의 미들웨어 매처 노트 참조).
+브라우저 측 행도 같이 보이면 308 Permanent Redirect 캐시 가능성도 함께 의심 (i18n.md 「정적 자산 URL」 참조).
 
 ## 캐싱 / ISR
 
@@ -188,10 +188,10 @@ dev 서버가 망가지는 특징적 증상이 있다. **첫 요청은 정상 �
 
 ## 도메인·리다이렉트
 
-- apex `roseai.co.kr` 가 canonical. `www` 는 301 → apex.
+- apex `roseai.co.kr` 가 정규 호스트(canonical). `www` 는 apex 로 영구 리다이렉트 — Vercel 도메인 설정에서 apex 를 주 도메인으로 둔다. 설정이 반대(apex → www)면 canonical 이 리다이렉트되는 주소를 가리키게 되므로 설정을 이 규칙에 맞춘다. `NEXT_PUBLIC_SITE_URL` 도 apex.
 - HTTP → HTTPS 자동 (Vercel 기본).
-- 루트 `/` → `/ko` 는 미들웨어에서 처리 (i18n 문서 참조).
-- 구 URL 이 생기면 `next.config.ts` 의 `redirects()` 에 영구 리다이렉트 등록.
+- 미들웨어(proxy)는 없다. 옛 주소(`/ko`·`/en`·`/ko/works/**`·옛 데모)는 `next.config.ts` 의 `redirects()` 가 308 한 번으로 새 주소에 보낸다.
+- 구 URL 이 생기면 `next.config.ts` 의 `redirects()` 에 영구 리다이렉트 등록 — 구체적인 규칙을 먼저 둔다(첫 일치 적용).
 
 ## 배포 전 체크리스트
 
@@ -200,7 +200,7 @@ dev 서버가 망가지는 특징적 증상이 있다. **첫 요청은 정상 �
 - [ ] Lighthouse Performance / SEO / A11y ≥ 95 (Preview 에서 측정)
 - [ ] 새 환경변수가 Vercel Preview·Prod 양쪽에 등록됨
 - [ ] OG 프리뷰 (Slack/카톡) 로 최종 이미지 확인
-- [ ] 다국어 페이지 모두 200 응답 (`/ko`, `/en`, sitemap, robots)
+- [ ] 공개 페이지 모두 200 응답 (`/`, 기능 상세, `/tour`, sitemap, robots), 옛 주소는 308 한 번
 
 ## 롤백
 

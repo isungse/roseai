@@ -52,7 +52,7 @@
 
 ## 타이포그래피
 
-폰트 스택 — 모두 `app/[locale]/layout.tsx` 에서 통합 로드. CDN 링크/`<link rel="stylesheet">` 금지.
+폰트 스택 — 모두 `app/layout.tsx` 에서 통합 로드. CDN 링크/`<link rel="stylesheet">` 금지.
 
 - **Inter** — `next/font/google`. 본문·헤딩 기본. **variable font — weight 배열을 지정하지 않는다**, `next/font` 가 전 축(100–900)을 로드한다.
 - **JetBrains Mono** — `next/font/google`. 모노스페이스 (인덱스 숫자, 메타 라인, 버튼 화살표). variable font, weight 배열 없음.
@@ -89,16 +89,16 @@
 
 Tailwind 기본 스케일 (4px grid) 만 사용. 섹션 세로 리듬은 다음 값으로 통일:
 
-- 섹션 수직 패딩: `py-16 md:py-20 lg:py-28`. **예외** — 셸 높이를 채우는 단일 섹션(Showcase)은 flex 중앙 정렬이 여백을 공급하므로 `py-12 md:py-16` 으로 낮춰, 900px 높이 노트북에서도 스크롤 없이 카드 전체가 한 화면에 들어오게 한다.
+- 섹션 수직 패딩: `py-16 md:py-20 lg:py-28`.
 - 컨테이너 가로 패딩: `px-7 md:px-10`
 - 최대 너비: **`max-w-[1360px]` 페이지 셸** (아래 "Page Shell" 절). 좁은 독해 영역은 `max-w-prose`.
 
 ### Page Shell (Naver-style 고정 너비)
 
-페이지 전체는 `app/[locale]/layout.tsx` 의 단일 셸 안에서 렌더된다. 셸이 **유일한 너비 제어 지점** — 섹션·헤더·푸터 안에 `mx-auto max-w-screen-xl` 같은 보조 클램프를 두지 않는다.
+페이지 전체는 `app/layout.tsx` 의 단일 셸 안에서 렌더된다. 셸이 **유일한 너비 제어 지점** — 섹션·헤더·푸터 안에 `mx-auto max-w-screen-xl` 같은 보조 클램프를 두지 않는다.
 
 ```tsx
-// app/[locale]/layout.tsx
+// app/layout.tsx
 <body className="text-ink antialiased">  {/* body bg 는 globals.css 에서 g50 */}
   <div className="mx-auto my-10 flex min-h-[calc(100svh-5rem)] max-w-[1360px] flex-col border border-hair bg-paper md:my-16 md:min-h-[calc(100svh-8rem)]">
     <TopBar />     {/* sticky top-0 — 셸 마진과 동기하지 않는다 (아래 설명) */}
@@ -149,25 +149,11 @@ Lucide 단일 세트. 크기는 `16/20/24` 3단계만. `stroke-width={1.75}` 기
 
 `class` 전략. `<html class="dark">` 토글. 시스템 prefers-color-scheme 으로 초기값 결정하고 사용자 선택은 localStorage에 저장.
 
-## Showcase 타이포 스케일
-
-랜딩의 유일한 섹션이라 위 토큰 표와 별도로 `clamp` 로 직접 지정한다 (단일 사용처 — 토큰화하지 않음):
-
-| 역할 | 값 | 비고 |
-|---|---|---|
-| 슬라이드 제목 (h1 / h2) | `clamp(24px, 2.8vw, 36px)` · 1.25 · -0.02em | 2줄 고정은 JSON 값의 `\n` |
-| 본문 (제목 있는 슬라이드) | `clamp(16px, 1.25vw, 19px)` · 1.8 | 591px 컬럼에서 **4줄 이내** 유지 (1440 기준 한 줄 ≈ 한글 32자; 넘치면 wrap 되어 줄 수가 는다) |
-| 스테이트먼트 본문 (제목 없는 슬라이드) | `clamp(22px, 2vw, 26px)` · 1.6 · medium | 첫 줄이 제목 역할. 현재 4장 모두 제목이 있어 미사용 — 기능은 유지 |
-| 카운터 `01 / 04` | mono `text-xs` g500 `tabular-nums` | |
-
-- 원형 요소는 캐러셀 컨트롤에만 허용 (Radius 표의 예외): 화살표 `h-12 w-12 rounded-full bg-ink hover:bg-brand`, 인디케이터 점 `h-2.5 rounded-full` (활성 `w-7 bg-brand`).
-- 카드 스택: 이미지 `max-w-[460px] rounded-2xl shadow-lg`, 뒤 카드는 ±18% / -13% / scale .88 / rotateY 15°. 카드 폭·컬럼 간격(`lg:gap-24`)·정렬(md 이상 좌측)은 **뒤 카드 모서리에서 본문까지 100px 이상** 확보하도록 맞춘 값 — 카드를 가운데 정렬하면 줄인 폭의 절반이 왼쪽으로 가서 효과가 반감된다.
-
 ## 이미지 에셋 파이프라인
 
 - **생성**: Higgsfield MCP 로 직접 생성 가능. 계정이 무료 플랜이면 GPT Image 2.5 · Recraft 는 "Requires basic plan or higher" 로 거부되고 **Google Nano Banana Pro** (`nano_banana_pro`, 1:1, 2k, 2048² 출력, 후보 2장 ≈ 소액 크레딧) 가 동작한다. 후보는 스크래치패드에 내려받아 사용자에게 보내고, 사용자가 외부(ChatGPT 등)에서 편집한 뒤 Downloads 에 저장한 파일을 최종본으로 쓴다 — 편집본은 1254² 로 줄어 돌아오는 경우가 많다.
 - 원본은 생성 도구에서 받은 PNG (사용자 Downloads 폴더). 저장소에는 **정사각 JPEG q86** 만 커밋한다. `next/image` 가 AVIF/WebP 로 재인코딩하므로 원본 PNG(2–5MB) 는 커밋하지 않는다.
-- 파일명은 `public/images/showcase-<슬라이드번호>-<i18nKey>.jpg` (예: `showcase-03-evening.jpg`). 번호는 슬라이드 순서, 접미사는 `SHOWCASE_SLIDES` 의 `i18nKey` 와 동일 — 파일명만 봐도 어느 슬라이드인지 알 수 있어 순서 교체·이미지 교체 시 번호만 있는 이름보다 실수가 적다. 순서를 바꿀 때 데이터의 `src` 만 바꾸지 말고 `git mv` 로 파일도 함께 교체.
+- 파일명: 제품 화면 이미지는 `public/images/works/<feature|hub>/<nn>-<desc>.jpg` (스냅샷 파이프라인 산출물 — 손으로 고치지 않는다), 홈 히어로 아트워크는 `public/images/home-hero.jpg`. 사진 에셋을 다시 쓰게 되면 `<용도>-<번호>-<키>.jpg` 처럼 파일명만 보고 쓰임을 알 수 있게 짓고, 순서를 바꿀 때 데이터의 `src` 만 바꾸지 말고 `git mv` 로 파일도 함께 옮긴다.
 - 해상도: 원본 짧은 변이 1600 이상이면 1600² 로 리사이즈, 그보다 작으면 (예: 16:9 1672×941 원본 → 941²) **업스케일하지 않고 짧은 변 크기 그대로** 둔다. 카드 최대 렌더 폭이 460px(2x DPR 920px) 이라 900px 대 소스로 충분하고, 업스케일은 픽셀 정보 없이 파일만 키운다.
 - 크롭: 정사각 원본은 그대로, 16:9 원본은 기계적 중앙 크롭 대신 **인물이 왼쪽 1/3, 시선 방향으로 배경(스카이라인·호수) 이 열리도록** 가로 오프셋(0.5 = 중앙, 보통 0.55–0.6) 을 정한다. 후보 오프셋 3–4개를 콘택트 시트 한 장으로 비교한 뒤 확정.
 - 변환은 Python Pillow: `Image.open().convert("RGB")` (생성 도구 메타데이터 제거) → `crop` → `save(quality=86, optimize=True, progressive=True)`. PowerShell `System.Drawing` 도 되지만 WebP 원본은 읽지 못한다.
