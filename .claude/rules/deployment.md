@@ -197,7 +197,7 @@ dev 서버가 망가지는 특징적 증상이 있다. **첫 요청은 정상 �
 
 - [ ] `npm run build` 로컬 통과
 - [ ] `npm run lint` 경고 0
-- [ ] Lighthouse Performance / SEO / A11y ≥ 95 (Preview 에서 측정)
+- [ ] Lighthouse 모바일 Performance ≥ 90 · SEO / A11y ≥ 95 (Preview 에서 측정 — SEO 는 프리뷰 차단 두 항목 `is-crawlable`·`robots-txt` 를 빼고 본다)
 - [ ] 새 환경변수가 Vercel Preview·Prod 양쪽에 등록됨
 - [ ] OG 프리뷰 (Slack/카톡) 로 최종 이미지 확인
 - [ ] 공개 페이지 모두 200 응답 (`/`, 기능 상세, `/tour`, sitemap, robots), 옛 주소는 308 한 번

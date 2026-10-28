@@ -129,3 +129,4 @@ checkin-home · messenger → 나머지 화면 → 51장 전부 → `lib/works/i
 - 링크: 홈·기능 5·투어에서 내부 대상 82개 전부 200. 기능이 아닌 slug(`/calendar`)와 `/api/contact`는 404.
 - 옛 주소: `/ko`·`/en`·`/ko/works`·`/ko/works/approval`·`/en/works/tour?menu=todo`·`/works/board`·옛 데모 3개(`…/index.html`)가 308 한 번에 새 주소(200). `/ko/아무거나`는 규칙대로 `/아무거나`로 한 번에 가고 그 주소가 없어 404다.
 - 그 밖: 옛 사이트 흔적 0, 메시지 파일 `ko.json` 하나, `<html lang="ko">`, 스냅샷 검사 최종 모드 통과, lint·build 통과.
+- 오너 결정: Lighthouse 모바일 성능 기준을 95에서 **90**으로 낮춘다(SEO·접근성은 95 그대로). 위 측정(중앙값 92)으로 W9 통과, 운영 교체 뒤 다시 잰다. `CLAUDE.md`·`.claude/rules/deployment.md`·`seo.md` 체크리스트를 고쳤다.

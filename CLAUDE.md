@@ -56,4 +56,4 @@ ROSE-AI 가 만든 병원 그룹웨어 **ROSE-AI WORKS** 의 제품 소개 사�
 - [ ] 새 컴포넌트는 Props 인터페이스 명시
 - [ ] 텍스트는 하드코딩 금지, i18n JSON에 추가
 - [ ] `npm run build` 통과 확인
-- [ ] Lighthouse 기준 Performance/SEO/A11y ≥ 95
+- [ ] Lighthouse 모바일 Performance ≥ 90 · SEO/A11y ≥ 95

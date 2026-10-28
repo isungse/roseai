@@ -69,4 +69,4 @@ SEO 점수의 절반은 CWV. 배포 전 확인:
 - [ ] canonical 이 정규 호스트의 자기 경로이고, 그 주소가 리다이렉트 없이 200 이다
 - [ ] 옛 주소가 308 한 번으로 새 주소에 닿는다
 - [ ] sitemap.xml, robots.txt 가 200으로 응답한다
-- [ ] Lighthouse SEO ≥ 95, Performance ≥ 95
+- [ ] Lighthouse SEO ≥ 95, Performance ≥ 90 (모바일)
