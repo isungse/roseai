@@ -1,3 +1,4 @@
+import { existsSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
@@ -18,18 +19,30 @@ const PAPER = "#ffffff";
 const BRAND = "#e03131";
 const G500 = "#737373";
 
+// The home hero artwork (works spec §3), 1600×1200 → drawn at 4:3.
+const ART = { width: 600, height: 450 };
+
 function font(file: string) {
   return readFile(
     path.join(process.cwd(), "node_modules/pretendard/dist/public/static", file),
   );
 }
 
+// The share card reuses the hero artwork when it is published (spec §10);
+// without it the card is text only.
+async function artwork(): Promise<string | null> {
+  const file = path.join(process.cwd(), "public/images/home-hero.jpg");
+  if (!existsSync(file)) return null;
+  return `data:image/jpeg;base64,${(await readFile(file)).toString("base64")}`;
+}
+
 // Shared by every route: the root segment's image cascades to nested segments.
 export default async function Image() {
-  const t = await getTranslations({ locale: "ko", namespace: "works.og" });
-  const [bold, medium] = await Promise.all([
+  const t = await getTranslations("works.og");
+  const [bold, medium, art] = await Promise.all([
     font("Pretendard-Bold.otf"),
     font("Pretendard-Medium.otf"),
+    artwork(),
   ]);
 
   return new ImageResponse(
@@ -39,9 +52,6 @@ export default async function Image() {
           width: "100%",
           height: "100%",
           display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          padding: 72,
           background: PAPER,
           color: INK,
           fontFamily: "Pretendard",
@@ -50,37 +60,68 @@ export default async function Image() {
         <div
           style={{
             display: "flex",
-            alignItems: "center",
-            gap: 18,
-            fontSize: 30,
-            fontWeight: 700,
+            flexDirection: "column",
+            justifyContent: "space-between",
+            width: art ? 540 : "100%",
+            padding: 64,
           }}
         >
-          <div style={{ display: "flex", flexWrap: "wrap", width: 30, height: 30, gap: 2 }}>
-            <div style={{ width: 14, height: 14, background: INK }} />
-            <div style={{ width: 14, height: 14, background: BRAND }} />
-            <div style={{ width: 14, height: 14, background: INK }} />
-            <div style={{ width: 14, height: 14, background: INK }} />
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 18,
+              fontSize: 30,
+              fontWeight: 700,
+            }}
+          >
+            <div style={{ display: "flex", flexWrap: "wrap", width: 30, height: 30, gap: 2 }}>
+              <div style={{ width: 14, height: 14, background: INK }} />
+              <div style={{ width: 14, height: 14, background: BRAND }} />
+              <div style={{ width: 14, height: 14, background: INK }} />
+              <div style={{ width: 14, height: 14, background: INK }} />
+            </div>
+            <div style={{ width: 1, height: 28, background: INK }} />
+            <div style={{ display: "flex" }}>
+              ROSE<span style={{ color: BRAND }}>·AI</span>
+            </div>
           </div>
-          <div style={{ width: 1, height: 28, background: INK }} />
-          <div style={{ display: "flex" }}>
-            ROSE<span style={{ color: BRAND }}>·AI</span>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: art ? 18 : 24 }}>
+            <div style={{ width: 96, height: 6, background: BRAND }} />
+            <div style={{ fontSize: art ? 30 : 40, fontWeight: 500, color: G500 }}>
+              {t("title")}
+            </div>
+            <div
+              style={{
+                fontSize: art ? 56 : 104,
+                fontWeight: 700,
+                letterSpacing: art ? -2 : -4,
+                lineHeight: 1,
+              }}
+            >
+              {WORKS_PRODUCT_NAME}
+            </div>
+          </div>
+
+          <div style={{ fontSize: 24, fontWeight: 500, color: G500 }}>
+            {t("footer")}
           </div>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-          <div style={{ width: 96, height: 6, background: BRAND }} />
-          <div style={{ fontSize: 40, fontWeight: 500, color: G500 }}>
-            {t("title")}
+        {art && (
+          <div style={{ display: "flex", flex: 1, alignItems: "center", paddingRight: 48 }}>
+            {/* Satori draws plain <img> only; next/image does not apply here. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={art}
+              alt=""
+              width={ART.width}
+              height={ART.height}
+              style={{ borderRadius: 24 }}
+            />
           </div>
-          <div style={{ fontSize: 104, fontWeight: 700, letterSpacing: -4, lineHeight: 1 }}>
-            {WORKS_PRODUCT_NAME}
-          </div>
-        </div>
-
-        <div style={{ fontSize: 24, fontWeight: 500, color: G500 }}>
-          {t("footer")}
-        </div>
+        )}
       </div>
     ),
     {
