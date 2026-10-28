@@ -4,16 +4,20 @@ import localFont from "next/font/local";
 import { SUBSET_CHARS } from "@/app/fonts/subset-chars";
 import messages from "@/messages/ko.json";
 
+// Inter (the 404 headline, otherwise behind Pretendard, which already covers Latin) and JetBrains Mono
+// (small `.mono` labels) load when text uses them; preloading them on every page held back the LCP image.
 export const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
+  preload: false,
 });
 
 export const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains-mono",
   display: "swap",
+  preload: false,
 });
 
 // Pretendard Variable cut down to the characters the site uses (app/fonts/subset.mjs): 100 KB instead
