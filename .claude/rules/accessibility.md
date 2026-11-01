@@ -76,7 +76,7 @@ WCAG 2.1 AA 기준. Lighthouse A11y ≥ 95. 한국어 사용자 환경도 함께
 
 ## 탭 · 메뉴 탐색
 
-- 기능 상세의 탭(`FeatureTabs`): `role="tablist"` / `tab` / `tabpanel`, 모바일 가로 배치에서는 좌우 방향키, 데스크톱 세로 배치에서는 위아래 방향키로 이동한다. 실제 방향과 `aria-orientation`을 맞추고 선택 탭에 `aria-selected`를 지정한다.
+- 기능 상세의 탭(`FeatureTabs`): `role="tablist"` / `tab` / `tabpanel`, 모바일 가로 배치에서는 좌우 방향키, 데스크톱 세로 배치에서는 위아래 방향키로 이동한다. 실제 방향과 `aria-orientation`을 맞추고 선택 탭에 `aria-selected`를 지정한다. 탭 버튼의 접근 가능한 이름은 보이는 제목·설명 내용에서 그대로 나오게 두고 `aria-label` 로 제목만 남기지 않는다 — 데스크톱에서는 설명까지 보이므로 이름이 보이는 글자와 어긋나면 WCAG 2.5.3(Label in Name)·axe `label-content-name-mismatch` 에 걸린다.
 - 상단 내비(`TopBarNav`)와 투어 메뉴: 현재 항목에 `aria-current="page"`(내비) 또는 선택 상태 표시. 가로 메뉴는 페이지 진입·폭 변경·키보드 포커스 시 해당 항목 전체가 보이게 한다. 옆으로 이동할 수 있을 때 번역된 label 의 방향 버튼을 제공하고, 버튼이 항목을 가리지 않게 한다.
 - 기능 레일의 카드 링크는 Tab 으로 모두 접근할 수 있어야 한다. 이전/다음 버튼은 `aria-controls` 로 실제 레일을 가리키고 양 끝의 상태를 disabled 로 표현한다. 수동 스크롤 구현 원칙은 `code-style.md` 를 따른다.
 - 스냅샷 iframe 에는 화면 이름이 든 `title` 을 준다. 모바일 목록↔미리보기 전환에서는 새로 보이는 내용이나 선택 메뉴로 포커스를 옮기며, 원본을 여는 새 탭 링크를 유지한다.
