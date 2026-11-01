@@ -125,3 +125,35 @@
 
 - 브랜치 `fix/feature-tabs-label-in-name`, 커밋 `2a673d8` → [PR #4](https://github.com/isungse/roseai/pull/4). 체크 3개 통과, 머지 가능 상태.
 - 오너 「머지 진행」 → merge commit `a8c8a18`(2026-11-01). Vercel 운영 배포 성공 뒤 운영 `/approval` 데스크톱 Lighthouse 13.6.0: 접근성 100, `label-content-name-mismatch` 통과(0건), 실패 감사 0. 운영 HTML의 탭 버튼에 `aria-label` 없음 확인.
+
+## 후속 세션 — 문구의 「병원」을 「회사」로 (PR #6)
+
+### 요청과 범위
+
+오너 요청 「병원 이라는 단어 대신 회사로 모두 변경 하세요」(2026-11-01). 사이트 문구에서 고객을 가리키는 일반 명사 「병원」을 전부 「회사」로 바꿨다. 실명 「평택성모병원」은 고유명사라 그대로 두었고(3곳), 제품 화면 이미지·스냅샷 속 글자는 손대지 않았다. `content.md`에 이 원칙을 적었고, 홈페이지 `CLAUDE.md`의 "병원 그룹웨어"도 "그룹웨어"로 고쳤다.
+
+### 변경 문구 전문
+
+`messages/ko.json`의 이번 diff다. `\n`은 UI의 줄바꿈이다.
+
+| 키 | 변경 전 | 반영 문구 |
+|---|---|---|
+| `meta.title` | ROSE-AI WORKS — 병원이 매일 쓰는 올인원 그룹웨어 | ROSE-AI WORKS — 회사가 매일 쓰는 올인원 그룹웨어 |
+| `meta.description` | …하나로 묶은 병원 그룹웨어 ROSE-AI WORKS. 평택성모병원에서… | …하나로 묶은 회사 그룹웨어 ROSE-AI WORKS. 평택성모병원에서… |
+| `works.meta.home.title` | 병원이 매일 쓰는 올인원 그룹웨어 | 회사가 매일 쓰는 올인원 그룹웨어 |
+| `works.hero.eyebrow` | 병원 그룹웨어 | 회사 그룹웨어 |
+| `works.hero.title` | 병원이 매일 쓰는 그룹웨어,\nROSE-AI WORKS | 회사가 매일 쓰는 그룹웨어,\nROSE-AI WORKS |
+| `works.values.hr.title` | 교대근무와 인사 업무를\n병원에 맞게 관리합니다 | 교대근무와 인사 업무를\n회사에 맞게 관리합니다 |
+| `works.highlights.proven.body` | 병원 현장에서 실제로 운영 중인 그룹웨어입니다. … 병원이 매일 부딪히는 요구를… | 회사 현장에서 실제로 운영 중인 그룹웨어입니다. … 회사가 매일 부딪히는 요구를… |
+| `works.grid.title` | 병원에 필요한 핵심 기능을 한곳에 | 회사에 필요한 핵심 기능을 한곳에 |
+| `works.menu.items.companies.blurb` | 회사 기본 정보와 소속 병원 관리. | 회사 기본 정보와 소속 회사 관리. |
+| `works.meta.approval.description` | …보존 연한까지 병원 전자결재의 전 과정을… | …보존 연한까지 회사 전자결재의 전 과정을… |
+| `works.meta.attendance.description` | …지각·외근 처리 흐름. 병원 근태를 한 화면에… | …지각·외근 처리 흐름. 회사 근태를 한 화면에… |
+| `works.meta.board.description` | …게시판별 관리자 권한. 병원 공지와 부서 소통을… | …게시판별 관리자 권한. 회사 공지와 부서 소통을… |
+
+그대로 둔 것: `meta.description`·`works.hero.lead`의 「평택성모병원에서 실제 운영 중인」, `works.highlights.proven.title` 「평택성모병원이 매일 쓰는 제품」.
+
+### 검증
+
+- `npm run font:subset` 재생성(457자, 글자 수 변화 없음), `tsc --noEmit`·`eslint`·`npm run build` 통과.
+- 문구 외 코드 변경 없음. 운영 반영은 PR 머지 뒤 Vercel 배포.

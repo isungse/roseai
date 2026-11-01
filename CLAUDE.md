@@ -1,6 +1,6 @@
 # ROSE-AI Homepage
 
-ROSE-AI 가 만든 병원 그룹웨어 **ROSE-AI WORKS** 의 제품 소개 사이트 (한국어 전용). `roseai.co.kr` 도메인으로 배포.
+ROSE-AI 가 만든 그룹웨어 **ROSE-AI WORKS** 의 제품 소개 사이트 (한국어 전용). `roseai.co.kr` 도메인으로 배포.
 
 ## Stack
 
