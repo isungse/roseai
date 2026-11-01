@@ -96,3 +96,32 @@
 모바일 투어에서 메뉴 복귀 → 다른 메뉴 선택 → 새로고침 → 뒤로가기·앞으로가기 순서를 실제 운영 사이트에서 확인했다. 선택과 query/hash가 보존되며 iframe 높이는 512px이다. 검사 중 페이지 JavaScript 오류 0건. [운영 투어 검증 JSON](C:/Users/SPW/ai-project/rose-ai-homepage/work-log/2026-11-01/evidence/production-tour-verification.json)
 
 해당 기능 배포의 최근 10분 Vercel 오류 수준 로그 조회 결과는 0건이었다. 이 기록은 배포 직후 확인 범위이며 지속 모니터링 결과는 아니다. 기능 배포 이후의 문서 커밋은 배포 기록만 추가한다.
+
+## 후속 세션 — 기능 탭 접근 이름 수정 (PR #4)
+
+### 요청과 범위
+
+위 변경을 검수한 결과(groupware-demo `docs/research/naver-works-core/03-code-review.md`) 접근성 회귀 1건을 고쳤다. 그 밖의 지적과 제안(치수용 static import의 중복 산출물, 반경 토큰 `xl`, 모바일 내비 왼쪽 여백, 투어 history 적재, 미사용 코드, 공개 저장소의 미추적 잔재)은 groupware-demo plan W14로 넘겼고 이 PR에는 넣지 않았다.
+
+### 무엇을 고쳤나
+
+- `app/_components/FeatureTabs.tsx`: 탭 버튼의 `aria-label={item.title}` 제거. 데스크톱(`lg` 이상)에서는 버튼 안에 제목과 설명이 함께 보이는데 접근 가능한 이름이 제목뿐이어서, 운영 `/approval` 데스크톱의 axe 규칙 `label-content-name-mismatch`(WCAG 2.5.3 Label in Name)가 탭 3개 모두에서 실패했다. Lighthouse에서는 이 규칙의 가중치가 0이라 점수는 100으로 남았고, 당일 접근성 검증이 홈(모바일)과 로고만 대상이라 드러나지 않았다. 모바일은 설명이 숨겨져 영향이 없다.
+- `.claude/rules/accessibility.md`: 탭 이름은 보이는 제목·설명에서 그대로 나오게 두고 `aria-label`로 제목만 남기지 않는다는 규칙과 그 이유를 추가.
+- 문구 변경 없음(폰트 서브셋 재생성 불필요). 이미지·스냅샷 변경 없음.
+
+### 검증
+
+| 검증 | 결과 |
+|---|---|
+| `tsc --noEmit` · `eslint` · `npm run build` | 통과 |
+| 운영(수정 전) `/approval` 데스크톱 Lighthouse 13.6.0 | 접근성 100, `label-content-name-mismatch` 실패 3건(탭 버튼) |
+| 프리뷰(수정 후) `/approval` 데스크톱 Lighthouse | 접근성 100, `label-content-name-mismatch` 통과(0건), 실패 감사 0 |
+| 프리뷰(수정 후) `/approval` 모바일 Lighthouse | 접근성 100, 같은 규칙 통과 |
+| 운영 홈 모바일 Lighthouse(검수 때 측정, 이 수정과 무관) | 성능 97 · 접근성 100 · SEO 100, LCP 2.6초, CLS 0 |
+
+프리뷰는 Vercel 보호가 걸려 있어 공유 링크로 받은 `_vercel_jwt` 쿠키를 Lighthouse `--extra-headers`로 넘겨 측정했다. 측정 원본은 로컬 작업 폴더에만 두고 저장소에는 넣지 않았다(쿠키 값이 설정에 남는다).
+
+### 커밋과 배포
+
+- 브랜치 `fix/feature-tabs-label-in-name`, 커밋 `2a673d8` → [PR #4](https://github.com/isungse/roseai/pull/4). 체크 3개 통과, 머지 가능 상태.
+- 운영 반영은 머지 뒤 Vercel 배포로 이루어진다. 이 절을 쓰는 시점에는 머지 전이며, 머지 후 배포 ID와 운영 재확인은 머지한 세션이 이 절에 덧붙인다.
