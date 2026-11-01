@@ -83,7 +83,6 @@ export function FeatureTabs({ label, tabs }: FeatureTabsProps) {
               type="button"
               role="tab"
               id={`${baseId}-tab-${item.key}`}
-              aria-label={item.title}
               aria-selected={selected}
               aria-controls={`${baseId}-panel-${item.key}`}
               tabIndex={selected ? 0 : -1}
