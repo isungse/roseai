@@ -1,0 +1,27 @@
+{
+  "commit": "a0084ce9581b506fafef989ceb36bbf31dd0fab6",
+  "deploymentId": "dpl_AEMbRLGBx8DawcC6uCRCaZ1uUKq5",
+  "menuView": {
+    "url": "https://roseai.co.kr/tour?menu=todo&release=check&view=menu#preview",
+    "dashboardVisible": true
+  },
+  "reloaded": {
+    "url": "https://roseai.co.kr/tour?menu=dashboard&release=check#preview",
+    "heading": "대시보드",
+    "iframe": {
+      "width": 317.3333435058594,
+      "height": 512,
+      "src": "/demos/works/dashboard/index.html"
+    }
+  },
+  "back": {
+    "url": "https://roseai.co.kr/tour?menu=todo&release=check&view=menu#preview",
+    "menuVisible": true
+  },
+  "original": {
+    "url": "https://roseai.co.kr/tour?menu=todo&release=check#preview",
+    "heading": "TO-DO"
+  },
+  "forwardUrl": "https://roseai.co.kr/tour?menu=todo&release=check&view=menu#preview",
+  "pageErrors": []
+}

@@ -4,7 +4,7 @@
 
 네이버웍스 코어 서비스 소개 분석을 바탕으로 ROSE-AI WORKS 소개 사이트를 개선하고, 이미지 비율·모바일 정보 밀도·투어 URL 동작을 수정했다. 이번 사용자 요청에 따라 홈에서 전체 41개 메뉴를 펼치던 구성을 **핵심 5기능 레일 + 전체 메뉴 투어**로 바꿨다. 전체 메뉴와 관리자 메뉴의 접근 경로는 투어에 유지했다.
 
-제품명, 실제 제품 화면, 한국어 전용 구성, FAQ·문의·요금·연락처를 두지 않는 정책은 유지했다. 공개 원본 이미지와 스냅샷 파일은 수정하지 않았다. 브랜치는 `codex/works-intro-improvements`이며 이 기록 시점에는 커밋·푸시·배포하지 않았다.
+제품명, 실제 제품 화면, 한국어 전용 구성, FAQ·문의·요금·연락처를 두지 않는 정책은 유지했다. 공개 원본 이미지와 스냅샷 파일은 수정하지 않았다. 작업 브랜치는 `codex/works-intro-improvements`이며, 후속 사용자 요청에 따라 커밋과 운영 배포까지 완료했다.
 
 ## 구현 결과
 
@@ -76,6 +76,23 @@
 
 ## 실행과 측정 범위
 
-로컬 미리보기는 [http://localhost:3011](http://localhost:3011)에서 실행 중이다. 다시 실행할 때는 프로젝트 루트에서 `npm run start -- --port 3011`을 사용한다. 최종 폰트 서브셋 생성, lint, 프로덕션 빌드와 화면 검증을 마쳤으며 공개 사이트에는 배포하지 않았다.
+로컬 미리보기는 [http://localhost:3011](http://localhost:3011)에서 실행 중이다. 다시 실행할 때는 프로젝트 루트에서 `npm run start -- --port 3011`을 사용한다. 최종 폰트 서브셋 생성, lint, 프로덕션 빌드와 화면 검증을 마쳤으며, 운영 사이트에도 반영했다.
 
 프로덕션 화면 측정은 스크롤바를 포함한 브라우저로 수행했으며, 스크롤바 없는 headless 390px 결과(높이 약 5967px)와 문서 폭이 달라 줄바꿈·총높이에 차이가 있다. Lighthouse 전체 측정 뒤 로고 이름을 수정했으며 해당 변경은 최종 빌드에서 별도 axe 검사로 확인했다. 기존 미결 콘텐츠인 양식 편집 방식·업무지원 상태 표현은 제품 사실 확인 없이 이번 디자인 변경에서 새로 단정하지 않았다.
+
+## 커밋과 운영 배포
+
+후속 사용자 요청으로 개선 파일과 검증 자료를 선택 커밋한 뒤 GitHub `main`에 반영했다. 기존 미추적 파일은 커밋에 넣지 않았다.
+
+- 기능 변경 커밋: [`a0084ce9581b506fafef989ceb36bbf31dd0fab6`](https://github.com/isungse/roseai/commit/a0084ce9581b506fafef989ceb36bbf31dd0fab6)
+- 대상: Vercel `isungses-projects/roseai`, 프로젝트 `prj_c3moLOdHSyFFv2Lae1Q2UXQfYrUu`, Production, Git `main`
+- 기능 배포: `dpl_AEMbRLGBx8DawcC6uCRCaZ1uUKq5`, **READY**, 원격 빌드 약 22초
+- 운영 주소: [https://roseai.co.kr](https://roseai.co.kr)
+- 기능 배포 고유 주소: [roseai-2a3kjrs4e-isungses-projects.vercel.app](https://roseai-2a3kjrs4e-isungses-projects.vercel.app)
+- 직전 정상 배포: `dpl_HY2s1dbjs3ZSM71Qx7QWcfgeqVBF` (롤백 기준)
+
+운영 도메인에서 `/`, 5개 기능 상세, `/tour`, sitemap, robots, OG 이미지 등 10개 경로의 200 응답을 확인했다. 홈에 핵심 카드 5개와 신규 문구가 표시되며, 390px 모바일에서 페이지 가로 넘침이 없다. robots는 `Allow: /`와 `Disallow: /demos/`, sitemap은 운영 도메인의 7개 페이지를 반환한다. 기존 언어·제품 URL은 308로 연결된다.
+
+모바일 투어에서 메뉴 복귀 → 다른 메뉴 선택 → 새로고침 → 뒤로가기·앞으로가기 순서를 실제 운영 사이트에서 확인했다. 선택과 query/hash가 보존되며 iframe 높이는 512px이다. 검사 중 페이지 JavaScript 오류 0건. [운영 투어 검증 JSON](C:/Users/SPW/ai-project/rose-ai-homepage/work-log/2026-11-01/evidence/production-tour-verification.json)
+
+해당 기능 배포의 최근 10분 Vercel 오류 수준 로그 조회 결과는 0건이었다. 이 기록은 배포 직후 확인 범위이며 지속 모니터링 결과는 아니다. 기능 배포 이후의 문서 커밋은 배포 기록만 추가한다.
