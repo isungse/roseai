@@ -124,4 +124,4 @@
 ### 커밋과 배포
 
 - 브랜치 `fix/feature-tabs-label-in-name`, 커밋 `2a673d8` → [PR #4](https://github.com/isungse/roseai/pull/4). 체크 3개 통과, 머지 가능 상태.
-- 운영 반영은 머지 뒤 Vercel 배포로 이루어진다. 이 절을 쓰는 시점에는 머지 전이며, 머지 후 배포 ID와 운영 재확인은 머지한 세션이 이 절에 덧붙인다.
+- 오너 「머지 진행」 → merge commit `a8c8a18`(2026-11-01). Vercel 운영 배포 성공 뒤 운영 `/approval` 데스크톱 Lighthouse 13.6.0: 접근성 100, `label-content-name-mismatch` 통과(0건), 실패 감사 0. 운영 HTML의 탭 버튼에 `aria-label` 없음 확인.
