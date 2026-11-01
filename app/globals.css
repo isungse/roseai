@@ -8,6 +8,12 @@
   --color-g50: #f4f4f4;
   --color-g500: #737373;
   --color-hair: #e5e5e5;
+  --color-copy: #525252;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-2xl: 24px;
 
   --font-sans: var(--font-pretendard), var(--font-inter), system-ui, sans-serif;
   /* JetBrains Mono lacks Korean glyphs; Pretendard fallback catches Korean
@@ -21,6 +27,10 @@
      use `text-h1` … `text-body-lg` instead of ad-hoc clamp() values. */
   --text-display: 56px;
   --text-display--line-height: 1.05;
+  --text-intro: 48px;
+  --text-intro--line-height: 1.4;
+  --text-section: 36px;
+  --text-section--line-height: 1.35;
   --text-h1: 40px;
   --text-h1--line-height: 1.15;
   --text-h2: 32px;
@@ -109,6 +119,37 @@ textarea:focus-visible {
    the stagger is 25ms per word. Reduced-motion collapses duration + delay
    via the block above. */
 @layer utilities {
+  .benefit-section {
+    display: grid;
+    grid-template-areas: "heading" "visual" "description" "links";
+    gap: 24px;
+    min-width: 0;
+  }
+  .benefit-heading { grid-area: heading; }
+  .benefit-visual { grid-area: visual; min-width: 0; align-self: center; }
+  .benefit-description { grid-area: description; }
+  .benefit-links { grid-area: links; }
+  .feature-rail { scroll-padding-inline: 24px; }
+  .hide-scrollbar, .feature-rail { scrollbar-width: none; }
+  .hide-scrollbar::-webkit-scrollbar, .feature-rail::-webkit-scrollbar { display: none; }
+  .feature-card { flex: 0 0 296px; }
+  @media (min-width: 768px) {
+    .feature-rail { scroll-padding-inline: 40px; }
+    .feature-card { flex-basis: 400px; }
+  }
+  @media (min-width: 1024px) {
+    .benefit-section {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      grid-template-rows: 1fr auto auto auto 1fr;
+      grid-template-areas: ". visual" "heading visual" "description visual" "links visual" ". visual";
+      column-gap: 64px;
+      row-gap: 20px;
+      align-content: center;
+    }
+    .benefit-section-reverse {
+      grid-template-areas: "visual ." "visual heading" "visual description" "visual links" "visual .";
+    }
+  }
   @keyframes word-in {
     from {
       opacity: 0;

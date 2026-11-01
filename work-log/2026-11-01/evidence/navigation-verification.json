@@ -1,0 +1,95 @@
+{
+  "date": "2026-11-01",
+  "base": "http://localhost:3010",
+  "passed": true,
+  "checks": [
+    {
+      "label": "deep-link",
+      "url": "http://localhost:3010/tour?menu=todo&campaign=qa#retained",
+      "heading": "TO-DO",
+      "admin": "false"
+    },
+    {
+      "label": "select-dashboard-preserves-query-hash",
+      "url": "http://localhost:3010/tour?menu=dashboard&campaign=qa#retained",
+      "heading": "대시보드",
+      "admin": "false"
+    },
+    {
+      "label": "reload",
+      "url": "http://localhost:3010/tour?menu=dashboard&campaign=qa#retained",
+      "heading": "대시보드",
+      "admin": "false"
+    },
+    {
+      "label": "admin-user",
+      "url": "http://localhost:3010/tour?menu=users&campaign=qa&role=admin#retained",
+      "heading": "사용자 관리",
+      "admin": "true"
+    },
+    {
+      "label": "browser-back",
+      "url": "http://localhost:3010/tour?menu=dashboard&campaign=qa&role=admin#retained",
+      "heading": "대시보드",
+      "admin": "true"
+    },
+    {
+      "label": "browser-forward",
+      "url": "http://localhost:3010/tour?menu=users&campaign=qa&role=admin#retained",
+      "heading": "사용자 관리",
+      "admin": "true"
+    },
+    {
+      "label": "role-employee-resets-admin-screen",
+      "url": "http://localhost:3010/tour?menu=dashboard&campaign=qa#retained",
+      "heading": "대시보드",
+      "admin": "false"
+    },
+    {
+      "label": "admin-deeplink-then-general-item",
+      "url": "http://localhost:3010/tour?menu=dashboard&campaign=keep&role=admin#retained",
+      "heading": "대시보드",
+      "admin": "true"
+    },
+    {
+      "label": "invalid-query-safe-fallback",
+      "url": "http://localhost:3010/tour?menu=invalid&role=invalid",
+      "heading": "대시보드",
+      "admin": "false"
+    },
+    {
+      "label": "mobile-active-nav",
+      "left": 120.4375,
+      "right": 269.5,
+      "width": 390,
+      "scrollLeft": 209,
+      "scrollWidth": 390,
+      "previous": "이전 메뉴 보기"
+    },
+    {
+      "label": "mobile-scroll-control",
+      "previous": 209,
+      "after": 0
+    },
+    {
+      "label": "mobile-preview",
+      "url": "http://localhost:3010/tour?menu=dashboard&campaign=mobile#retained",
+      "frame": {
+        "x": 29,
+        "y": 364.15625,
+        "width": 332,
+        "height": 512
+      }
+    },
+    {
+      "label": "mobile-back-restores-menu",
+      "url": "http://localhost:3010/tour?menu=todo&campaign=mobile&view=menu#retained"
+    },
+    {
+      "label": "mobile-forward-reload",
+      "url": "http://localhost:3010/tour?menu=dashboard&campaign=mobile#retained",
+      "heading": "대시보드"
+    }
+  ],
+  "pageErrors": []
+}

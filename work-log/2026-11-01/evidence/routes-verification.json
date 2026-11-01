@@ -1,0 +1,57 @@
+[
+  {
+    "path": "/",
+    "status": 200
+  },
+  {
+    "path": "/approval",
+    "status": 200
+  },
+  {
+    "path": "/messenger",
+    "status": 200
+  },
+  {
+    "path": "/attendance",
+    "status": 200
+  },
+  {
+    "path": "/board",
+    "status": 200
+  },
+  {
+    "path": "/support",
+    "status": 200
+  },
+  {
+    "path": "/tour",
+    "status": 200
+  },
+  {
+    "path": "/sitemap.xml",
+    "status": 200
+  },
+  {
+    "path": "/robots.txt",
+    "status": 200
+  },
+  {
+    "path": "/opengraph-image",
+    "status": 200
+  },
+  {
+    "path": "/works",
+    "status": 308,
+    "location": "/"
+  },
+  {
+    "path": "/ko/works/approval",
+    "status": 308,
+    "location": "/approval"
+  },
+  {
+    "path": "/en/tour",
+    "status": 308,
+    "location": "/tour"
+  }
+]

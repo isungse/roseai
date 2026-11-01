@@ -24,7 +24,12 @@ export function TopBar() {
         <div className="flex h-16 items-center px-7 md:px-10 lg:px-0">
           <Logo product />
         </div>
-        <TopBarNav label={t("common.productNav")} links={links} />
+        <TopBarNav
+          label={t("common.productNav")}
+          links={links}
+          previousLabel={t("works.nav.previous")}
+          nextLabel={t("works.nav.next")}
+        />
       </div>
     </header>
   );

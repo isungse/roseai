@@ -11,24 +11,27 @@ export function TourBanner() {
   const t = useTranslations("works.tourBanner");
 
   return (
-    <section>
-      <div className="grid items-center gap-10 px-7 py-16 md:px-10 md:py-20 lg:grid-cols-2 lg:gap-16 lg:py-28">
+    <section className="border-t border-hair">
+      <div className="grid items-center gap-10 px-6 py-16 md:px-10 md:py-20 lg:grid-cols-2 lg:gap-16 lg:py-28">
         <div>
-          <p className="mono cap text-xs font-medium tracking-[0.08em] text-brand">
+          <p className="text-sm font-semibold text-brand">
             {t("eyebrow")}
           </p>
-          <h2 className="mt-4 text-h2 font-bold tracking-[-0.02em] md:text-h1">
+          <h2 className="mt-4 text-h3 font-bold tracking-tight md:text-section">
             {t("title")}
           </h2>
-          <p className="mt-5 text-body-lg text-g500">{t("body")}</p>
+          <p className="mt-5 text-body leading-7 text-copy">{t("body")}</p>
           <ButtonLink href={TOUR_HREF} className="mt-8">
             {t("button")}
           </ButtonLink>
         </div>
-        <ScreenImage
-          image={worksImage(WORKS_HUB_IMAGES.sidebar)}
-          alt={t("alt")}
-        />
+        <div className="rounded-2xl bg-g50 p-4 md:p-6">
+          <ScreenImage
+            image={worksImage(WORKS_HUB_IMAGES.heroDesktop)}
+            alt={t("alt")}
+            sizes="(min-width: 1360px) 560px, (min-width: 1024px) 43vw, 85vw"
+          />
+        </div>
       </div>
     </section>
   );

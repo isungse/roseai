@@ -1,0 +1,39 @@
+{
+  "server": "local production build http://localhost:3011",
+  "viewports": [
+    {
+      "viewport": 390,
+      "documentWidth": 375,
+      "height": 6043,
+      "featureCards": 5
+    },
+    {
+      "viewport": 768,
+      "documentWidth": 753,
+      "height": 7212,
+      "featureCards": 5
+    },
+    {
+      "viewport": 1440,
+      "documentWidth": 1425,
+      "height": 6026,
+      "featureCards": 5
+    },
+    {
+      "viewport": 1920,
+      "documentWidth": 1905,
+      "height": 6026,
+      "featureCards": 5
+    }
+  ],
+  "overflow": false,
+  "featureRail": {
+    "mobileCardWidth": 296,
+    "gap": 16,
+    "lastOffset": 1217.333,
+    "maxOffsetRounded": 1217,
+    "nextDisabledAtEnd": true,
+    "reverseOffset": 936
+  },
+  "note": "Windows scrollbar consumes approximately15px; compare within the same actual document width. Screenshots after lazy image scroll."
+}

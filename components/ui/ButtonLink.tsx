@@ -11,7 +11,7 @@ interface ButtonLinkProps {
 }
 
 const BASE =
-  "mono cap inline-flex items-center gap-4 px-6 py-[14px] text-[13px] font-semibold tracking-[0.04em] transition-colors";
+  "inline-flex min-h-12 items-center justify-center gap-3 rounded-md px-5 py-3 text-sm font-semibold transition-colors";
 
 const VARIANT: Record<NonNullable<ButtonLinkProps["variant"]>, string> = {
   primary: "bg-brand text-paper hover:bg-ink",

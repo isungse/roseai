@@ -8,16 +8,16 @@ interface SectionHeadingProps {
 export function SectionHeading({ eyebrow, title, lead, id }: SectionHeadingProps) {
   return (
     <div className="max-w-prose">
-      <p className="mono cap text-xs font-medium tracking-[0.08em] text-brand">
+      <p className="text-sm font-semibold text-brand">
         {eyebrow}
       </p>
       <h2
         id={id}
-        className="mt-4 text-h2 font-bold tracking-[-0.02em] md:text-h1"
+        className="mt-3 text-h3 font-bold tracking-tight md:text-section"
       >
         {title}
       </h2>
-      {lead && <p className="mt-5 text-body-lg text-g500">{lead}</p>}
+      {lead && <p className="mt-5 text-body text-copy md:text-body-lg">{lead}</p>}
     </div>
   );
 }

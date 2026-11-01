@@ -17,7 +17,7 @@ export function Logo({ size = "md", product = false }: LogoProps) {
   const word = size === "sm" ? "text-sm" : "text-lg";
 
   return (
-    <Link href="/" aria-label={t("homeLabel")} className="flex items-center gap-3">
+    <Link href="/" className="flex items-center gap-3">
       <span
         aria-hidden="true"
         className={`grid grid-cols-2 grid-rows-2 gap-px ${mark}`}
@@ -40,6 +40,7 @@ export function Logo({ size = "md", product = false }: LogoProps) {
           </span>
         )}
       </span>
+      <span className="sr-only">{t("homeSuffix")}</span>
     </Link>
   );
 }

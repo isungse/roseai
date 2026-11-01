@@ -1,0 +1,17 @@
+{
+  "url": "http://localhost:3011/",
+  "logo": [
+    {
+      "text": "ROSE·AIWORKS홈으로 이동",
+      "ariaLabel": null
+    }
+  ],
+  "violations": [],
+  "incomplete": [],
+  "passes": [
+    {
+      "id": "label-content-name-mismatch",
+      "nodes": 5
+    }
+  ]
+}

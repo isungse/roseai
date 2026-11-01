@@ -19,8 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
-// Home = the product hub (works spec §4): hero → values → highlights → every
-// menu as a card → tour banner. No FAQ, no inquiry CTA, no company page.
+// The introduction explains the product; the tour owns the complete menu.
 export default function HomePage() {
   return (
     <>

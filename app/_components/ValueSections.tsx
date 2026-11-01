@@ -50,52 +50,55 @@ export function ValueSections() {
   const t = useTranslations("works.values");
 
   return (
-    <section className="border-b border-hair">
-      <div className="px-7 py-16 md:px-10 md:py-20 lg:py-28">
+    <section>
+      <div className="px-6 py-16 md:px-10 md:py-20 lg:py-28">
         <SectionHeading eyebrow={t("eyebrow")} title={t("title")} />
 
-        <div className="mt-14 flex flex-col gap-16 lg:gap-24">
+        <div className="mt-12 flex flex-col gap-16 lg:mt-16 lg:gap-28">
           {ZONES.map((zone, index) => {
             const items = t.raw(`${zone.key}.items`) as string[];
             const flip = index % 2 === 1;
             return (
-              <div
+              <article
                 key={zone.key}
-                className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16"
+                className={cn("benefit-section", flip && "benefit-section-reverse")}
               >
-                <div className={cn(flip && "lg:order-2")}>
-                  <h3 className="text-h3 font-bold tracking-[-0.01em]">
+                <div className="benefit-heading">
+                  <p className="text-sm font-semibold text-brand">{t(`${zone.key}.eyebrow`)}</p>
+                  <h3 className="mt-3 whitespace-pre-line text-h3 font-bold leading-snug tracking-tight md:text-section">
                     {t(`${zone.key}.title`)}
                   </h3>
-                  <p className="mt-4 text-body text-g500">
-                    {t(`${zone.key}.body`)}
-                  </p>
-                  <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-3">
-                    {items.map((label, i) => {
-                      const Icon = zone.icons[i];
-                      return (
-                        <li
-                          key={label}
-                          className="inline-flex items-center gap-2 text-sm font-medium"
-                        >
-                          <Icon
-                            size={16}
-                            strokeWidth={1.75}
-                            aria-hidden="true"
-                            className="text-brand"
-                          />
-                          {label}
-                        </li>
-                      );
-                    })}
-                  </ul>
                 </div>
-                <ScreenImage
-                  image={worksImage(zone.image)}
-                  alt={t(`${zone.key}.alt`)}
-                  className={cn(flip && "lg:order-1")}
-                />
-              </div>
+                <p className="benefit-description text-body leading-7 text-copy">
+                  {t(`${zone.key}.body`)}
+                </p>
+                <ul className="benefit-links flex flex-wrap gap-x-5 gap-y-3">
+                  {items.map((label, i) => {
+                    const Icon = zone.icons[i];
+                    return (
+                      <li
+                        key={label}
+                        className="inline-flex items-center gap-2 text-sm font-medium"
+                      >
+                        <Icon
+                          size={16}
+                          strokeWidth={1.75}
+                          aria-hidden="true"
+                          className="text-brand"
+                        />
+                        {label}
+                      </li>
+                    );
+                  })}
+                </ul>
+                <div className="benefit-visual rounded-2xl bg-g50 p-3 md:p-5">
+                  <ScreenImage
+                    image={worksImage(zone.image)}
+                    alt={t(`${zone.key}.alt`)}
+                    sizes="(min-width: 1360px) 568px, (min-width: 1024px) 44vw, 90vw"
+                  />
+                </div>
+              </article>
             );
           })}
         </div>

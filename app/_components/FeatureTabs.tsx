@@ -1,8 +1,10 @@
 "use client";
 
-import { useId, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
+import { useId, useRef, useState, useSyncExternalStore } from "react";
 
 import { cn } from "@/lib/utils";
+
+import type { KeyboardEvent, ReactNode } from "react";
 
 export interface FeatureTab {
   key: string;
@@ -17,12 +19,29 @@ interface FeatureTabsProps {
   tabs: FeatureTab[];
 }
 
+const DESKTOP_QUERY = "(min-width: 1024px)";
+
+function subscribeToLayout(onChange: () => void) {
+  const query = window.matchMedia(DESKTOP_QUERY);
+  query.addEventListener("change", onChange);
+  return () => query.removeEventListener("change", onChange);
+}
+
+function getDesktopLayout() {
+  return window.matchMedia(DESKTOP_QUERY).matches;
+}
+
+function getServerLayout() {
+  return false;
+}
+
 // WAI-ARIA tabs: one tab in the Tab order, arrows/Home/End move between tabs,
 // the panel is labelled by its tab (ids must exist in the DOM — accessibility.md).
 export function FeatureTabs({ label, tabs }: FeatureTabsProps) {
   const [active, setActive] = useState(0);
   const baseId = useId();
   const refs = useRef<(HTMLButtonElement | null)[]>([]);
+  const isDesktop = useSyncExternalStore(subscribeToLayout, getDesktopLayout, getServerLayout);
 
   function focusTab(index: number) {
     setActive(index);
@@ -32,10 +51,8 @@ export function FeatureTabs({ label, tabs }: FeatureTabsProps) {
   function onKeyDown(e: KeyboardEvent<HTMLButtonElement>, index: number) {
     const last = tabs.length - 1;
     const moves: Record<string, number> = {
-      ArrowRight: index === last ? 0 : index + 1,
-      ArrowDown: index === last ? 0 : index + 1,
-      ArrowLeft: index === 0 ? last : index - 1,
-      ArrowUp: index === 0 ? last : index - 1,
+      [isDesktop ? "ArrowDown" : "ArrowRight"]: index === last ? 0 : index + 1,
+      [isDesktop ? "ArrowUp" : "ArrowLeft"]: index === 0 ? last : index - 1,
       Home: 0,
       End: last,
     };
@@ -45,13 +62,14 @@ export function FeatureTabs({ label, tabs }: FeatureTabsProps) {
     focusTab(target);
   }
 
-  const tab = tabs[active];
+  if (tabs.length === 0) return null;
 
   return (
     <div className="grid gap-8 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-12">
       <div
         role="tablist"
         aria-label={label}
+        aria-orientation={isDesktop ? "vertical" : "horizontal"}
         className="flex gap-2 overflow-x-auto pb-1 lg:flex-col lg:overflow-visible lg:pb-0"
       >
         {tabs.map((item, i) => {
@@ -65,6 +83,7 @@ export function FeatureTabs({ label, tabs }: FeatureTabsProps) {
               type="button"
               role="tab"
               id={`${baseId}-tab-${item.key}`}
+              aria-label={item.title}
               aria-selected={selected}
               aria-controls={`${baseId}-panel-${item.key}`}
               tabIndex={selected ? 0 : -1}
@@ -93,14 +112,24 @@ export function FeatureTabs({ label, tabs }: FeatureTabsProps) {
         })}
       </div>
 
-      <div
-        role="tabpanel"
-        id={`${baseId}-panel-${tab.key}`}
-        aria-labelledby={`${baseId}-tab-${tab.key}`}
-        tabIndex={0}
-      >
-        <p className="mb-4 text-body text-g500 lg:hidden">{tab.body}</p>
-        {tab.panel}
+      <div className="min-w-0">
+        {tabs.map((item, index) => (
+          <div
+            key={item.key}
+            role="tabpanel"
+            id={`${baseId}-panel-${item.key}`}
+            aria-labelledby={`${baseId}-tab-${item.key}`}
+            hidden={index !== active}
+            tabIndex={index === active ? 0 : -1}
+          >
+            {index === active ? (
+              <>
+                <p className="mb-4 text-body text-g500 lg:hidden">{item.body}</p>
+                {item.panel}
+              </>
+            ) : null}
+          </div>
+        ))}
       </div>
     </div>
   );

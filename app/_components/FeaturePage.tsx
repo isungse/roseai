@@ -25,18 +25,21 @@ export function FeaturePage({ feature }: FeaturePageProps) {
   const f = `features.${feature.slug}`;
   const name = t(`${f}.name`);
 
-  const tabs = feature.tabs.map((tab) => ({
-    key: tab.key,
-    title: t(`${f}.tabs.${tab.key}.title`),
-    body: t(`${f}.tabs.${tab.key}.body`),
-    panel: (
-      <ScreenImage
-        image={worksImage(tab.image)}
-        alt={t(`${f}.tabs.${tab.key}.alt`)}
-        sizes="(min-width: 1024px) 60vw, 100vw"
-      />
-    ),
-  }));
+  const tabs = feature.tabs.map((tab) => {
+    const image = worksImage(tab.image);
+    return {
+      key: tab.key,
+      title: t(`${f}.tabs.${tab.key}.title`),
+      body: t(`${f}.tabs.${tab.key}.body`),
+      panel: (
+        <ScreenImage
+          image={image}
+          alt={t(`${f}.tabs.${tab.key}.alt`)}
+          sizes={image.kind === "mobile" || image.kind === "panel" ? "288px" : "(min-width: 1360px) 820px, (min-width: 1024px) 60vw, calc(100vw - 56px)"}
+        />
+      ),
+    };
+  });
 
   const others = WORKS_FEATURES.filter((o) => o.slug !== feature.slug);
 
@@ -53,13 +56,13 @@ export function FeaturePage({ feature }: FeaturePageProps) {
             <h1 className="mt-5 whitespace-pre-line text-h2 font-bold tracking-[-0.02em] md:text-h1">
               {t(`${f}.tagline`)}
             </h1>
-            <p className="mt-6 text-body-lg text-g500">{t(`${f}.lead`)}</p>
+            <p className="mt-6 max-w-prose text-body-lg text-g500">{t(`${f}.lead`)}</p>
           </div>
           <ScreenImage
             image={worksImage(feature.hero)}
             alt={t(`${f}.heroAlt`)}
             priority
-            sizes="(min-width: 1024px) 58vw, 100vw"
+            sizes="(min-width: 1360px) 708px, (min-width: 1024px) 54vw, calc(100vw - 56px)"
           />
         </div>
       </section>
@@ -99,7 +102,7 @@ export function FeaturePage({ feature }: FeaturePageProps) {
                     <h3 className="text-h3 font-bold tracking-[-0.01em]">
                       {t(`${f}.sections.${section.key}.title`)}
                     </h3>
-                    <p className="mt-4 text-body text-g500">
+                    <p className="mt-4 max-w-prose text-body text-g500">
                       {t(`${f}.sections.${section.key}.body`)}
                     </p>
                   </div>

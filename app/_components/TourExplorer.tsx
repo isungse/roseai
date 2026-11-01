@@ -1,69 +1,60 @@
 "use client";
 
-import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef } from "react";
 
-import { ArrowLeft, ExternalLink, Lock } from "lucide-react";
+import { ArrowLeft, ExternalLink } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
-export interface TourItemView {
-  key: string;
-  label: string;
-  blurb: string;
-  icon: ReactNode;
-  /** `/demos/works/<slug>/index.html`, or null for admin-only / external menus. */
-  snapshotUrl: string | null;
-  external: boolean;
-  /** Whether the snapshot file exists yet (checked at build time). */
-  available: boolean;
-  featureHref: string | null;
+import { TourPane } from "./TourPane";
+import type { TourGroupView, TourLabels } from "./TourPane";
+export type { TourGroupView, TourItemView, TourLabels } from "./TourPane";
+
+interface TourUrlState {
+  menu: string | null;
+  role: string | null;
+  showMenu: boolean;
 }
 
-export interface TourGroupView {
-  key: string;
-  label: string;
-  icon: ReactNode | null;
-  adminOnly: boolean;
-  items: TourItemView[];
-}
-
-export interface TourLabels {
-  sidebar: string;
-  role: string;
-  roleEmployee: string;
-  roleAdmin: string;
-  previewLabel: string;
-  openNewTab: string;
-  external: string;
-  adminPanelTitle: string;
-  adminPanelBody: string;
-  pending: string;
-  back: string;
-  /** Contains `{label}`. */
-  frameTitle: string;
-  detail: string;
-}
+const DEFAULT_URL: TourUrlState = { menu: null, role: null, showMenu: false };
 
 interface TourExplorerProps {
   groups: TourGroupView[];
   labels: TourLabels;
   defaultKey: string;
-  /** Deep-linked menu (`?menu=`); null opens the default menu. */
-  requested?: string | null;
+  url?: TourUrlState;
 }
 
 type Role = "employee" | "admin";
 
 const ROLES: readonly Role[] = ["employee", "admin"];
 
-/** Reads the `?menu=` deep link. Needs a Suspense boundary; its fallback is the plain explorer. */
-export function TourExplorerFromUrl(props: Omit<TourExplorerProps, "requested">) {
-  return <TourExplorer {...props} requested={useSearchParams().get("menu")} />;
+function updateTourUrl(values: Record<string, string | null>) {
+  const url = new URL(window.location.href);
+  for (const [key, value] of Object.entries(values)) {
+    if (value === null) url.searchParams.delete(key);
+    else url.searchParams.set(key, value);
+  }
+  if (url.href !== window.location.href) {
+    // Next's native History integration updates useSearchParams without refetching the static tour.
+    window.history.pushState(null, "", `${url.pathname}${url.search}${url.hash}`);
+  }
 }
 
-export function TourExplorer({ groups, labels, defaultKey, requested = null }: TourExplorerProps) {
+/** The URL owns selection, role and mobile view, including browser Back/Forward. */
+export function TourExplorerFromUrl(props: Omit<TourExplorerProps, "url">) {
+  const params = useSearchParams();
+  return (
+    <TourExplorer
+      {...props}
+      url={{ menu: params.get("menu"), role: params.get("role"), showMenu: params.get("view") === "menu" }}
+    />
+  );
+}
+
+export function TourExplorer({ groups, labels, defaultKey, url = DEFAULT_URL }: TourExplorerProps) {
+  const { menu: requested, role: requestedRole, showMenu } = url;
   const entries = useMemo(
     () =>
       groups.flatMap((g) =>
@@ -71,29 +62,38 @@ export function TourExplorer({ groups, labels, defaultKey, requested = null }: T
       ),
     [groups],
   );
-  const initial =
+  const selectedEntry =
     entries.find((e) => e.item.key === requested) ??
     entries.find((e) => e.item.key === defaultKey) ??
     entries[0];
 
-  const [role, setRole] = useState<Role>(initial.admin ? "admin" : "employee");
-  const [selectedKey, setSelectedKey] = useState(initial.item.key);
-  // On phones the menu and the preview are two screens; a deep link opens the preview.
-  const [mobileDetail, setMobileDetail] = useState(requested !== null);
-
+  const role: Role = selectedEntry.admin || requestedRole === "admin" ? "admin" : "employee";
+  const selected = selectedEntry.item;
+  const mobileDetail = requested !== null && !showMenu;
   const visibleGroups = groups.filter((g) => role === "admin" || !g.adminOnly);
-  const selected =
-    entries.find((e) => e.item.key === selectedKey)?.item ?? initial.item;
+  const previewRef = useRef<HTMLDivElement>(null);
+  const selectedMenuRef = useRef<HTMLButtonElement>(null);
+  const pendingFocus = useRef<"preview" | "menu" | null>(null);
+
+  useEffect(() => {
+    const target = pendingFocus.current === "preview" ? previewRef.current : selectedMenuRef.current;
+    if (pendingFocus.current && window.matchMedia("(max-width: 1023px)").matches) {
+      target?.focus({ preventScroll: true });
+      target?.scrollIntoView({ block: "nearest" });
+    }
+    pendingFocus.current = null;
+  }, [requested, requestedRole, showMenu]);
 
   function switchRole(next: Role) {
-    setRole(next);
-    const current = entries.find((e) => e.item.key === selectedKey);
-    if (next === "employee" && current?.admin) setSelectedKey(defaultKey);
+    updateTourUrl({
+      role: next === "admin" ? "admin" : null,
+      menu: next === "employee" && selectedEntry.admin ? defaultKey : requested,
+    });
   }
 
   function select(key: string) {
-    setSelectedKey(key);
-    setMobileDetail(true);
+    pendingFocus.current = "preview";
+    updateTourUrl({ menu: key, role: role === "admin" ? "admin" : null, view: null });
   }
 
   return (
@@ -140,6 +140,7 @@ export function TourExplorer({ groups, labels, defaultKey, requested = null }: T
                   return (
                     <li key={item.key}>
                       <button
+                        ref={on ? selectedMenuRef : undefined}
                         type="button"
                         aria-current={on ? "true" : undefined}
                         onClick={() => select(item.key)}
@@ -172,83 +173,23 @@ export function TourExplorer({ groups, labels, defaultKey, requested = null }: T
         </nav>
       </aside>
 
-      <div className={cn(!mobileDetail && "hidden lg:block")}>
+      <div
+        ref={previewRef}
+        tabIndex={-1}
+        className={cn("scroll-mt-32 lg:scroll-mt-20", !mobileDetail && "hidden lg:block")}
+      >
         <button
           type="button"
-          onClick={() => setMobileDetail(false)}
-          className="mb-4 inline-flex items-center gap-2 text-sm text-g500 hover:text-ink lg:hidden"
+          onClick={() => {
+            pendingFocus.current = "menu";
+            updateTourUrl({ view: "menu" });
+          }}
+          className="mb-4 inline-flex min-h-11 items-center gap-2 text-sm text-g500 hover:text-ink lg:hidden"
         >
           <ArrowLeft size={16} strokeWidth={1.75} aria-hidden="true" />
           {labels.back}
         </button>
         <TourPane item={selected} labels={labels} />
-      </div>
-    </div>
-  );
-}
-
-function TourPane({ item, labels }: { item: TourItemView; labels: TourLabels }) {
-  return (
-    <div>
-      <div className="flex flex-wrap items-start justify-between gap-4">
-        <div>
-          <h2 className="flex items-center gap-2 text-h3 font-bold tracking-[-0.01em]">
-            {item.icon}
-            {item.label}
-          </h2>
-          <p className="mt-1 text-body text-g500">{item.blurb}</p>
-        </div>
-        {item.featureHref && (
-          <Link
-            href={item.featureHref}
-            className="mono cap inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.06em] hover:text-brand"
-          >
-            {labels.detail} <span aria-hidden="true">→</span>
-          </Link>
-        )}
-      </div>
-
-      {/* Paper, not g50: the empty-state copy is g500 and must keep 4.5:1. */}
-      <div className="mt-5 overflow-hidden rounded-lg border border-hair bg-paper shadow-md">
-        {item.snapshotUrl && item.available ? (
-          <>
-            <div className="flex items-center justify-between border-b border-hair bg-paper px-4 py-2">
-              <span className="mono cap text-[11px] font-medium tracking-[0.06em] text-g500">
-                {labels.previewLabel}
-              </span>
-              <a
-                href={item.snapshotUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="mono cap inline-flex items-center gap-1 text-[11px] font-semibold tracking-[0.06em] hover:text-brand"
-              >
-                {labels.openNewTab}
-                <ExternalLink size={12} strokeWidth={1.75} aria-hidden="true" />
-              </a>
-            </div>
-            <iframe
-              key={item.key}
-              src={item.snapshotUrl}
-              title={labels.frameTitle.replace("{label}", item.label)}
-              loading="lazy"
-              className="block aspect-[16/10] w-full bg-paper"
-            />
-          </>
-        ) : (
-          <div className="flex aspect-[16/10] flex-col items-center justify-center gap-3 px-6 text-center">
-            {item.snapshotUrl === null && !item.external ? (
-              <>
-                <Lock size={24} strokeWidth={1.75} aria-hidden="true" className="text-g500" />
-                <p className="text-body font-semibold">{labels.adminPanelTitle}</p>
-                <p className="text-sm text-g500">{labels.adminPanelBody}</p>
-              </>
-            ) : (
-              <p className="text-sm text-g500">
-                {item.external ? labels.external : labels.pending}
-              </p>
-            )}
-          </div>
-        )}
       </div>
     </div>
   );

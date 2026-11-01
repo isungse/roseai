@@ -66,9 +66,10 @@ public/                  # 정적 에셋 (images/works, demos/works)
 | 요소 | 경계 |
 |---|---|
 | `TopBar` shell | Server — 메시지로 링크 라벨을 풀어 plain props 로 `TopBarNav` 에 넘긴다 |
-| `TopBarNav` | Client leaf — `usePathname` 으로 현재 페이지 표시(`aria-current`)만 |
+| `TopBarNav` | Client leaf — 현재 페이지 표시와 가로 메뉴의 노출·스크롤 제어 |
 | `FeatureTabs` | Client — 활성 탭 상태, 방향키. 첫 탭은 SSR |
-| `TourExplorer` | Client — 선택 메뉴·역할 토글·`?menu=` 딥링크(`useSearchParams` — 페이지에서 `Suspense` 로 감싼다) |
+| `FeatureRail` | Client leaf — 서버에서 만든 기능 카드를 children 으로 받아 수동 스크롤만 처리 |
+| `TourExplorer` | Client — URL에서 선택·역할·모바일 보기를 파생(`useSearchParams`, 페이지의 `Suspense` 유지) |
 | 그 밖의 섹션 (`WorksHero`, `FeatureGrid` …) | Server — `useTranslations` 로 문자열을 해석해 렌더 |
 | `RevealText` | Server-safe 순수 컴포넌트 — 단어를 `--i` 인덱스 span 으로 분해만 하고 애니메이션은 CSS (`.word-in`) 가 담당 |
 
@@ -85,17 +86,20 @@ public/                  # 정적 에셋 (images/works, demos/works)
 
 참고 구현: git 이력의 `components/sections/HeroTimestamp.tsx` (쇼케이스 리디자인에서 제거됨 — 패턴은 유지).
 
-### Carousel / Autoplay 패턴
+### URL과 투어 상태
 
-현재 사이트에는 캐러셀이 없다 (2026-10-28 개편으로 쇼케이스 캐러셀 삭제). 다시 넣을 때 21st.dev 류 캐러셀을 그대로 쓰지 않고 아래로 치환한다 (참고 구현: git 이력의 `components/sections/ShowcaseCarousel.tsx`):
+- 선택 메뉴(`menu`), 보기 역할(`role`), 모바일 목록 보기(`view=menu`)는 URL이 단일 기준이다. URL을 처음 읽은 뒤 별도 `useState` 로 복제하지 않는다. 그래야 주소 공유·새로고침·뒤로가기·앞으로가기가 같은 화면을 복원한다.
+- 정적 투어의 화면 선택은 Next.js가 지원하는 native `history.pushState` 로 바꿔 불필요한 서버 요청을 피한다. 현재 URL에서 필요한 파라미터만 고쳐 기존 query와 hash 를 유지한다.
+- 관리자 메뉴 딥링크는 관리자 보기를 연다. 일반 직원 보기로 전환할 때 관리자 화면은 기본 메뉴로 돌아간다. 유효하지 않은 값은 기본 메뉴·일반 직원 보기로 해석한다.
+- `useSearchParams` 는 별도 reader 안에 두고 기존 `Suspense` fallback 을 유지한다. URL 변화를 effect로 다시 선택 state에 복사하지 않는다.
+- URL 필드는 `TourUrlState` 객체로 묶고, 미리보기 렌더와 view 타입은 `TourPane` 으로 분리한다. 서버의 `tourData` 에서는 타입만 import 하며, 기존 타입 경로가 필요하면 type-only re-export 로 유지한다.
 
-- `<style jsx>` → Tailwind 클래스. 위치별 transform 은 `Record<Position, string>` 상수 맵으로 두고 `%` 단위 translate 를 써서 컨테이너 폭 측정용 resize 리스너를 없앤다.
-- `framer-motion` 단어 리빌 → `globals.css` 의 `@keyframes word-in` + `animation-delay: calc(var(--i) * 25ms)`. 슬라이드 전환 시 텍스트 블록에 `key={slide.id}` 를 줘 애니메이션을 재생.
-- `window` keydown 리스너 → 캐러셀 루트 div 의 `onKeyDown`. 포커스가 안에 있을 때만 방향키가 동작.
-- autoplay 는 hover / focus-within 에서 일시정지, `prefers-reduced-motion` 이면 아예 시작하지 않는다 (WCAG 2.2.2). 슬라이드가 1개면 화살표·카운터를 렌더하지 않는다.
-- 하드코딩 hex / `<img>` / react-icons → 토큰 · `next/image` · Lucide.
-- 슬라이드 `heading` 은 선택. 양쪽 로케일 JSON 에서 키를 빼면 (`t.has()` 로 감지) 본문을 스테이트먼트 크기로 렌더한다 — 첫 줄이 제목 역할. 페이지 h1 은 슬라이드 01 제목으로 고정하고 다른 슬라이드가 활성일 때는 `sr-only` 로 DOM 에 남긴다 (h1 하나 규칙 유지). 이후 슬라이드의 제목은 h2.
-- 본문 강조는 슬라이드 JSON 의 선택 키 `accent` (본문의 정확한 부분 문자열). `RevealText` 가 문자 범위로 `text-brand` 를 입혀 조사가 붙은 단어("네이티브로.")에서도 구절만 붉게 남는다. 레드는 핵심 구절 하나에만 — 줄 전체를 칠하면 제목처럼 보여 다른 슬라이드와 형식이 어긋난다.
+### 수동 기능 레일
+
+- 기능 카드는 서버 컴포넌트에서 만들고 `FeatureRail` 에 children 으로 전달한다. 레일의 클라이언트 책임은 스크롤과 양 끝의 버튼 상태뿐이다.
+- CSS 가로 overflow와 scroll snap 을 사용한다. 이동량은 실제 카드 폭 + gap 에서 읽고, 레이아웃 치수를 JavaScript 상수로 중복하지 않는다. 카드 치수는 `design-system.md` 에 정의한다.
+- 자동 재생·무한 순환·복제 카드를 넣지 않는다. 터치·트랙패드·이전/다음 버튼·카드의 키보드 포커스로 탐색하며, 양 끝에서는 해당 버튼을 비활성화한다.
+- `ResizeObserver` 와 passive scroll listener 는 해제 함수를 갖춘다. 모션 감소 환경에서는 부드러운 이동을 생략한다. 접근성 조건은 `accessibility.md` 를 따른다.
 
 ### 리스트 렌더의 key
 

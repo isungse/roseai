@@ -32,6 +32,7 @@
 | `--color-brand` | `brand` | `#E03131` | ROSE 레드 포인트 |
 | `--color-g50` | `g50` | `#F4F4F4` | 보조 배경 (Evidence 섹션 등) |
 | `--color-g500` | `g500` | `#737373` | 서브 텍스트 |
+| `--color-copy` | `copy` | `#525252` | 긴 소개 본문과 회색 배경 위 본문 |
 | `--color-hair` | `hair` | `#E5E5E5` | 얇은 구분선 |
 
 `@theme` 예시:
@@ -46,6 +47,7 @@
   --color-brand: #e03131;
   --color-g50: #f4f4f4;
   --color-g500: #737373;
+  --color-copy: #525252;
   --color-hair: #e5e5e5;
 }
 ```
@@ -54,7 +56,7 @@
 
 폰트 스택 — 모두 `app/layout.tsx` 에서 통합 로드. CDN 링크/`<link rel="stylesheet">` 금지.
 
-- **Inter** — `next/font/google`. 본문·헤딩 기본. **variable font — weight 배열을 지정하지 않는다**, `next/font` 가 전 축(100–900)을 로드한다.
+- **Inter** — `next/font/google`. 라틴 문자와 display 폰트. **variable font — weight 배열을 지정하지 않는다**, `next/font` 가 전 축(100–900)을 로드한다.
 - **JetBrains Mono** — `next/font/google`. 모노스페이스 (인덱스 숫자, 메타 라인, 버튼 화살표). variable font, weight 배열 없음.
 - **Pretendard Variable** — `npm i pretendard` → **사이트가 쓰는 글자만 남긴 서브셋**을 `next/font/local` 로 로드. 한국어 본문 우선.
   - 경로: `app/fonts/PretendardVariable.subset.woff2` (약 100 KB, 굵기 축 전부 유지). 원본(`node_modules/pretendard/dist/web/variable/woff2/PretendardVariable.woff2`)은 2 MB 라 모든 페이지에 preload 되면 모바일 LCP 가 13초까지 밀렸다(2026-10-28 W9 Lighthouse).
@@ -70,11 +72,13 @@
 }
 ```
 
-우선순위 이유: 한국어가 섞인 본문은 Pretendard 가 먼저 glyph 를 커버하고, 없는 문자(대부분 라틴)만 Inter 로 fallback. Display (히어로 헤드라인 "Architecture of Intelligence")는 순수 라틴이므로 Inter 를 먼저.
+한국어 소개 본문과 제목은 Pretendard 를 먼저 사용한다. `font-display` 는 Inter 우선이며, 폰트 역할은 CSS 변수로 선택한다.
 
 | 토큰 | 크기 | Line-height | 용도 |
 |---|---|---|---|
-| `text-display` | 56/72 | 1.05 | 히어로 헤드라인 |
+| `text-display` | 56 | 1.05 | 큰 display 문구 |
+| `text-intro` | 48 | 1.4 | 데스크톱 소개 히어로 |
+| `text-section` | 36 | 1.35 | 소개 섹션·업무 이점 제목 |
 | `text-h1` | 40 | 1.15 | 섹션 타이틀 |
 | `text-h2` | 32 | 1.2 | 서브 섹션 |
 | `text-h3` | 24 | 1.3 | 카드 타이틀 |
@@ -91,35 +95,38 @@
 Tailwind 기본 스케일 (4px grid) 만 사용. 섹션 세로 리듬은 다음 값으로 통일:
 
 - 섹션 수직 패딩: `py-16 md:py-20 lg:py-28`.
-- 컨테이너 가로 패딩: `px-7 md:px-10`
+- 홈 소개 컨테이너 가로 패딩: `px-6 md:px-10` (24 / 40px). 기능 상세·투어의 기존 `px-7 md:px-10` 은 별도 화면의 독해 폭으로 유지한다.
 - 최대 너비: **`max-w-[1360px]` 페이지 셸** (아래 "Page Shell" 절). 좁은 독해 영역은 `max-w-prose`.
 
-### Page Shell (Naver-style 고정 너비)
+### Page Shell
 
 페이지 전체는 `app/layout.tsx` 의 단일 셸 안에서 렌더된다. 셸이 **유일한 너비 제어 지점** — 섹션·헤더·푸터 안에 `mx-auto max-w-screen-xl` 같은 보조 클램프를 두지 않는다.
 
 ```tsx
 // app/layout.tsx
 <body className="text-ink antialiased">  {/* body bg 는 globals.css 에서 g50 */}
-  <div className="mx-auto my-10 flex min-h-[calc(100svh-5rem)] max-w-[1360px] flex-col border border-hair bg-paper md:my-16 md:min-h-[calc(100svh-8rem)]">
-    <TopBar />     {/* sticky top-0 — 셸 마진과 동기하지 않는다 (아래 설명) */}
+  <div className="mx-auto flex min-h-svh max-w-[1360px] flex-col bg-paper">
+    <TopBar />     {/* sticky top-0 */}
     <main className="flex flex-1 flex-col">{children}</main>
     <Footer />
   </div>
 </body>
 ```
 
-핵심 디테일:
-
-- **외곽 캔버스**: `globals.css` 의 `html, body { background: var(--color-g50) }`. 셸의 paper bg 가 그 위에 floating 카드처럼 떠 보이고, `border border-hair` (사방) 가 카드 윤곽을 닫는다.
-- **셸 너비**: `1360px` 고정 (Tailwind 의 `max-w-screen-xl` = 1280px 가 아닌 임의값). 처음엔 Naver 표준에 가까운 1200 이었으나, 2-컬럼 쇼케이스(이미지 카드 스택 + 본문)가 1200 에서는 답답하고 뒤에 겹친 카드가 드러날 여유가 없어 1360 으로 넓혔다. 1440 뷰포트에서 좌우 40px 여백이 남아 floating-card 시각은 유지된다.
-- **셸 상하 여백**: `my-10 md:my-16` (40 / 64px). viewport 가장자리에 붙이지 않는다 — 답답한 풀-블리드 느낌을 차단하고 카드 floating 효과를 만든다. **셸은 `flex flex-col` + `min-h-[calc(100svh-5rem)] md:min-h-[calc(100svh-8rem)]`** (100svh − 상하 마진 합) 로 첫 화면을 채운다. 섹션이 하나뿐인 랜딩에서 셸이 콘텐츠 높이만큼만 서면 카드 아래 g50 캔버스가 크게 남아 페이지가 잘린 것처럼 보인다. `<main>` 은 `flex flex-1 flex-col`, 유일한 섹션은 `flex flex-1 items-center` 로 남는 높이를 차지하며 콘텐츠를 수직 중앙에 둔다. 콘텐츠가 더 길면 min-height 는 무시되고 평소처럼 스크롤된다.
-- **Sticky 오프셋은 `top-0` (셸 마진과 동기 금지)**: TopBar 가 `sticky top-10 md:top-16` 처럼 셸 마진과 같은 값을 쓰면, 바 위쪽에 40-64px 의 빈 공간이 viewport 안에 남고 그 영역으로 **스크롤 중인 섹션 콘텐츠가 비쳐 흘러간다** — 바가 페이지 중간에 떠 있는 것처럼 보이고 위·아래로 동시에 콘텐츠가 지나가는 시각 부조화 발생. `top-0` 으로 두면 floating-card 시각은 scroll=0 에서만 보이고, 스크롤이 시작되면 바가 자연스럽게 viewport 최상단으로 올라가 콘텐츠를 완전히 덮는다 — 이게 정상.
-- **섹션 측 책임**: 각 섹션은 `border-b border-hair` + `relative` 만 두고, **자체 내부 div** 가 `px-7 md:px-10` 좌우 패딩 + `py-{n}` 세로 패딩만 책임진다. 너비 클램프 없음.
+- **외곽 캔버스**는 `g50`, 셸은 `paper`. 최대 1360px에서 가운데 정렬하며, 1440px 화면에는 좌우 40px 캔버스가 남는다.
+- **상하 마진은 0**이고 셸 테두리는 두지 않는다. 제품 소개가 뷰포트 위에서 바로 시작하고, `min-h-svh` 와 flex main 이 짧은 페이지에서도 화면 높이를 채운다.
+- **Sticky 오프셋은 `top-0`**. 헤더 위 빈틈으로 본문이 비치지 않게 하며, 레이아웃에 상하 마진을 다시 넣어 보정하지 않는다.
+- **섹션은 내부 패딩만 책임진다.** 너비 클램프를 중복하지 않고, 구분선은 정보 그룹을 나눌 때 사용한다.
 
 ### Sticky TopBar 클리어런스
 
-TopBar 높이는 `h-16` (64px), sticky 오프셋 `top-0`. 섹션 상단 패딩은 sticky 바와 첫 페인트에서 겹치지 않을 만큼(`pt-12` 이상) 둔다. 구 `SectionLabel` 절대 배치 규칙은 컴포넌트 제거와 함께 폐기.
+TopBar 는 데스크톱 64px, 모바일 로고 64px + 메뉴 48px이며 sticky 오프셋은 `top-0`. 앵커에는 해당 높이보다 큰 scroll margin 을 두어 도착 제목이 헤더에 가려지지 않게 한다.
+
+### 소개 화면 구성
+
+- 홈은 제품 소개 → 업무 이점 3개 → 제품 근거 → 핵심 5기능 → 전체 메뉴 투어 순서다. 전체 메뉴의 세부 항목은 투어에서 탐색한다.
+- 업무 이점은 모바일에서 **제목 → 화면 → 설명 → 관련 기능** 순서로 보여 준다. 데스크톱은 2열을 좌우 교차하며, 설명과 그 장면을 가까이 둔다. `benefit-section` 의 grid area 로 표현하고 DOM 을 복제하지 않는다.
+- 기능 레일 카드 폭은 모바일 **296px**, `md` 이상 **400px**, 간격은 **16 / 24px**, 스크롤 시작 패딩은 **24 / 40px**다. 다음 카드 일부가 보여 수평 탐색을 알 수 있게 한다. 동작은 `code-style.md` 의 수동 레일 원칙을 따른다.
 
 ## Radius / Shadow
 
@@ -130,7 +137,7 @@ TopBar 높이는 `h-16` (64px), sticky 오프셋 `top-0`. 섹션 상단 패딩�
 | `rounded-lg` | 16px | 섹션 카드 |
 | `rounded-2xl` | 24px | 히어로 패널 |
 
-그림자는 3단계만: `shadow-sm`, `shadow-md`, `shadow-lg`. 다크모드에서는 border 대비를 우선.
+반경은 위 값을 `globals.css` 의 `--radius-sm/md/lg/2xl` 에 명시한다. Tailwind 기본값과 문서값이 다르게 적용되지 않게 한다. 그림자는 `shadow-sm`, `shadow-md`, `shadow-lg` 만 사용한다.
 
 ## 모션
 
@@ -151,6 +158,15 @@ Lucide 단일 세트. 크기는 `16/20/24` 3단계만. `stroke-width={1.75}` 기
 `class` 전략. `<html class="dark">` 토글. 시스템 prefers-color-scheme 으로 초기값 결정하고 사용자 선택은 localStorage에 저장.
 
 ## 이미지 에셋 파이프라인
+
+### 제품 화면 표시
+
+- `lib/works/image-metadata.ts` 의 static import 에서 실제 `width`·`height` 를 읽는다. `worksImage()` 는 이미지별 치수와 kind 를 반환하며, 모든 이미지를 1440×900으로 가정하지 않는다. 파일이나 메타데이터가 빠지면 빌드 오류로 드러낸다.
+- `ScreenImage` 는 비율을 유지하고, `mobile` 과 `panel` 은 최대 **288px**, `sidebar` 는 최대 **192px**로 제한한다. 좁은 캡처를 넓은 본문 폭에 맞춰 확대하면 장면이 지나치게 길어지고 주변 설명과 떨어지기 때문이다.
+- 축소된 제품 화면은 **원본 크게 보기** 링크로 원본을 새 탭에서 열 수 있게 한다. 캡처 안 글자를 읽을 경로를 제공하면서 원본 제품 UI를 왜곡하거나 재합성하지 않는다.
+- 이미지 교체는 표시용 치수만 바꾸는 작업과 구분한다. 표시 문제를 해결하기 위해 공개 원본 이미지를 재압축·크롭하지 않는다.
+
+### 자산 제작
 
 - **생성**: Higgsfield MCP 로 직접 생성 가능. 계정이 무료 플랜이면 GPT Image 2.5 · Recraft 는 "Requires basic plan or higher" 로 거부되고 **Google Nano Banana Pro** (`nano_banana_pro`, 1:1, 2k, 2048² 출력, 후보 2장 ≈ 소액 크레딧) 가 동작한다. 후보는 스크래치패드에 내려받아 사용자에게 보내고, 사용자가 외부(ChatGPT 등)에서 편집한 뒤 Downloads 에 저장한 파일을 최종본으로 쓴다 — 편집본은 1254² 로 줄어 돌아오는 경우가 많다.
 - 원본은 생성 도구에서 받은 PNG (사용자 Downloads 폴더). 저장소에는 **정사각 JPEG q86** 만 커밋한다. `next/image` 가 AVIF/WebP 로 재인코딩하므로 원본 PNG(2–5MB) 는 커밋하지 않는다.

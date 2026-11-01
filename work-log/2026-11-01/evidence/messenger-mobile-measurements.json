@@ -1,0 +1,54 @@
+{
+  "url": "http://localhost:3010/messenger",
+  "width": 390,
+  "scrollWidth": 390,
+  "images": [
+    {
+      "alt": "메신저 대화 목록과 대화방 화면",
+      "width": 332,
+      "height": 208,
+      "attrWidth": "2880",
+      "attrHeight": "1800",
+      "currentSrc": "http://localhost:3010/_next/image?url=%2Fimages%2Fworks%2Fmessenger%2F01-hero.jpg&w=750&q=75",
+      "loaded": true
+    },
+    {
+      "alt": "그룹 대화방 화면",
+      "width": 286,
+      "height": 757,
+      "attrWidth": "598",
+      "attrHeight": "1582",
+      "currentSrc": "http://localhost:3010/_next/image?url=%2Fimages%2Fworks%2Fmessenger%2F02-rooms.jpg&w=384&q=75",
+      "loaded": true
+    },
+    {
+      "alt": "모바일 웹 메신저 화면",
+      "width": 286,
+      "height": 619,
+      "attrWidth": "1170",
+      "attrHeight": "2532",
+      "currentSrc": "http://localhost:3010/_next/image?url=%2Fimages%2Fworks%2Fmessenger%2F09-mobile.jpg&w=384&q=75",
+      "loaded": true
+    }
+  ],
+  "panelRelationships": [
+    {
+      "id": "_R_4klritrlb_-panel-rooms",
+      "labelExists": true,
+      "hidden": false,
+      "tabIndex": 0
+    },
+    {
+      "id": "_R_4klritrlb_-panel-files",
+      "labelExists": true,
+      "hidden": true,
+      "tabIndex": -1
+    },
+    {
+      "id": "_R_4klritrlb_-panel-desktop",
+      "labelExists": true,
+      "hidden": true,
+      "tabIndex": -1
+    }
+  ]
+}

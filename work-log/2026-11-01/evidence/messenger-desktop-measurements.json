@@ -1,0 +1,28 @@
+{
+  "url": "http://localhost:3010/messenger",
+  "width": 1440,
+  "scrollWidth": 1440,
+  "images": [
+    {
+      "alt": "메신저 대화 목록과 대화방 화면",
+      "width": 707,
+      "height": 442,
+      "attrWidth": "2880",
+      "attrHeight": "1800"
+    },
+    {
+      "alt": "그룹 대화방 화면",
+      "width": 286,
+      "height": 757,
+      "attrWidth": "598",
+      "attrHeight": "1582"
+    },
+    {
+      "alt": "모바일 웹 메신저 화면",
+      "width": 286,
+      "height": 619,
+      "attrWidth": "1170",
+      "attrHeight": "2532"
+    }
+  ]
+}

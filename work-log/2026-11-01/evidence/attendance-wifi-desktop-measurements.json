@@ -1,0 +1,50 @@
+{
+  "url": "http://localhost:3010/attendance",
+  "width": 1440,
+  "scrollWidth": 1440,
+  "orientation": "vertical",
+  "tabs": [
+    {
+      "name": "근무표",
+      "selected": "false",
+      "controlsExists": true
+    },
+    {
+      "name": "연차",
+      "selected": "false",
+      "controlsExists": true
+    },
+    {
+      "name": "Wi-Fi 출퇴근",
+      "selected": "true",
+      "controlsExists": true
+    }
+  ],
+  "panelImage": [
+    {
+      "src": "/_next/image?url=%2Fimages%2Fworks%2Fattendance%2F04-wifi.jpg&w=3840&q=75",
+      "width": 286,
+      "height": 619,
+      "attrWidth": "1170",
+      "attrHeight": "2532",
+      "naturalWidth": 288,
+      "naturalHeight": 623,
+      "link": "http://localhost:3010/images/works/attendance/04-wifi.jpg",
+      "target": "_blank"
+    }
+  ],
+  "originalLinks": [
+    {
+      "href": "http://localhost:3010/images/works/attendance/01-hero.jpg",
+      "label": "부서 근무표 격자 화면 원본 크게 보기 (새 탭)"
+    },
+    {
+      "href": "http://localhost:3010/images/works/attendance/04-wifi.jpg",
+      "label": "Wi-Fi 출퇴근 타각 화면 원본 크게 보기 (새 탭)"
+    },
+    {
+      "href": "http://localhost:3010/images/works/attendance/06-manager.jpg",
+      "label": "근태관리자 화면 원본 크게 보기 (새 탭)"
+    }
+  ]
+}
